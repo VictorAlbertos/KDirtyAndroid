@@ -1,8 +1,8 @@
 # DirtyAndroid
 
-![DirtyAndroid](dirty.jpg)
-
 A dirty approach for truly client Android applications. 
+
+![DirtyAndroid](dirty.jpg)
 
 It's time to admit an awfull fact: **almost every Android application is a pure client application**. There is no such a thing as a *domain layer*. In the unlikely event of some *bussines logic* were required, it would be wiped out as a whole new system (there you go a new library!). 
 
@@ -49,7 +49,7 @@ Why is it dirty? Because it's not clean.
 
 There aren't `interface`s to comunicate between boundaries, no data models to limit their responsability to parse json documents, no use cases and so on. To sump up, there is no makeup. What there is instead is coupling, a helthy one to provide enought identity to the project to know that this is an Android project from top to bottom. The abstractions exist because of necesity, to provide a way to unit testing components.
 
-Therefore, there only 2 layers: [data]() and [presentation]() (the domain layer was killed before it was born). And every one of them is divided into two packages, foundation and sections:
+Therefore, there only 2 layers: [data](https://github.com/VictorAlbertos/DirtyAndroid/tree/master/app/src/main/java/app/data) and [presentation](https://github.com/VictorAlbertos/DirtyAndroid/tree/master/app/src/main/java/app/presentation) (the domain layer was killed before it was born). And every one of them is divided into two packages, foundation and sections:
 
 ### Foundation.
 Here is where all the *foundation classes* are placed. And by *foundation classes* I mean the classes which are unlikely to be modified due to app specs. They are the identity of the project, the code base, those which stands up as the backbone of your architecture; those which remind you that this is an Android application and nothing else. This package is the only one who survives the [freshStart gradle task](#freshStart), because only few things need to be tunned to start another Android application. 
