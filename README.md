@@ -51,10 +51,10 @@ There aren't `interface`s to comunicate between boundaries, no data models to li
 
 Therefore, there only 2 layers: [data](https://github.com/VictorAlbertos/DirtyAndroid/tree/master/app/src/main/java/app/data) and [presentation](https://github.com/VictorAlbertos/DirtyAndroid/tree/master/app/src/main/java/app/presentation) (the domain layer was killed before it was born). And every one of them is divided into two packages, foundation and sections:
 
-### Foundation.
+### Foundation package
 Here is where all the *foundation classes* are placed. And by *foundation classes* I mean the classes which are unlikely to be modified due to app specs. They are the identity of the project, the code base, those which stands up as the backbone of your architecture; those which remind you that this is an Android application and nothing else. This package is the only one who survives the [freshStart gradle task](#freshStart), because only few things need to be tunned to start another Android application. 
 
-### Sections
+### Sections package
 Here is where all the funcionality to resolve the application specs are placed. Here is where you are going to write the classes to provide the specific funcionality for your application (repositories, wireframes, presenters and views). This project contains a simple example using the Github API to fecth users, and it tries to be as ilustrative as possible to get you confortable with this architecture.  
 
 ### Data layer
