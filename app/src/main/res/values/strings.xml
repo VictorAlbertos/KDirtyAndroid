@@ -1,0 +1,17 @@
+<resources>
+  <string name="app_name" translatable="false">BaseApp</string>
+  <string name="errors_happen" translatable="false">Errors happen ¯\\_(ツ)_/¯. Sorry for the
+    inconvenience.
+  </string>
+  <string name="fill_missing_fields">Fill missing fields</string>
+  <string name="loading">Loading</string>
+
+  <string name="user">User</string>
+  <string name="users">Users</string>
+  <string name="go_to_list_user">Go to list users</string>
+  <string name="find_user">Find user</string>
+  <string name="mock_add_user">Mock Fcm notification</string>
+  <string name="user_name">Username on Github</string>
+  <string name="logout">Logout</string>
+  <string name="ask_logout">Do you want to exit?</string>
+</resources>

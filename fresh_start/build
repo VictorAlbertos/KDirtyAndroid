@@ -1,0 +1,176 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.fernandocejas.frodo'
+apply from: '../code_quality_tools/quality.gradle'
+
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
+
+  dependencies {
+    classpath "com.neenbedankt.gradle.plugins:android-apt:1.8"
+    classpath "com.fernandocejas.frodo:frodo-plugin:0.8.3"
+  }
+
+}
+
+android {
+  compileSdkVersion 24
+  buildToolsVersion "24.0.1"
+
+  defaultConfig {
+    applicationId "org.base_app_android"
+    minSdkVersion 16
+    targetSdkVersion 24
+    versionCode 1
+    versionName "1.0"
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  signingConfigs {
+    release {
+      storeFile file("keystore")
+      storePassword "storePassword"
+      keyAlias "keyAlias"
+      keyPassword "keyPassword"
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
+    }
+  }
+
+  sourceSets {
+    main {
+      res.srcDirs =
+              [
+                      'src/main/res/sections',
+                      'src/main/res'
+              ]
+    }
+  }
+
+  //retrolambda
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+
+  productFlavors {
+    prod {
+    }
+    mock {
+      applicationIdSuffix = ".mock"
+    }
+  }
+
+  // Remove mockRelease as it's not needed.
+  android.variantFilter { variant ->
+    if (variant.buildType.name.equals('release')
+            && variant.getFlavors().get(0).name.equals('mock')) {
+      variant.setIgnore(true);
+    }
+  }
+
+  //Provide a mock implementation for Android classes to prevent crashing unit tests
+  //of classes decorated with Frodo annotations
+  testOptions {
+    unitTests.returnDefaultValues = true
+  }
+
+
+  lintOptions {
+    disable 'InvalidPackage'
+  }
+}
+
+ext {
+  versions = [
+          support           : "24.1.1",
+          googlePlayServices: "9.2.1",
+          retrofit          : "2.1.0",
+          dagger            : "2.5",
+          mockery           : "0.0.4",
+          autovalue         : "1.2",
+          butterknife       : "8.2.1",
+          rxlifecycle       : "0.6.1",
+          leakCanary        : "1.4-beta2"
+  ]
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  //Common
+  provided "org.glassfish:javax.annotation:10.0-b28"
+  apt "com.google.dagger:dagger-compiler:${versions.dagger}"
+  compile "com.google.dagger:dagger:${versions.dagger}"
+  compile 'com.google.firebase:firebase-core:9.2.1'
+  compile 'com.github.VictorAlbertos:RxFcm:0.0.3'
+  compile 'io.reactivex:rxjava:1.1.7'
+  debugCompile "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
+  releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
+
+  //Data layer
+  compile "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+  compile "com.squareup.retrofit2:adapter-rxjava:${versions.retrofit}"
+  compile "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+  compile 'com.github.VictorAlbertos.Jolyglot:gson_auto_value:0.0.3'
+  compile 'com.github.VictorAlbertos:ReactiveCache:0.0.1'
+  compile "com.github.VictorAlbertos.Mockery:extension_rx_retrofit:${versions.mockery}"
+  apt "com.github.VictorAlbertos.Mockery:test_compiler:${versions.mockery}"
+  provided "com.github.VictorAlbertos.Mockery:test_runtime:${versions.mockery}"
+  provided "junit:junit:4.12"
+  provided "com.google.auto.value:auto-value:${versions.autovalue}"
+  apt "com.google.auto.value:auto-value:${versions.autovalue}"
+  apt 'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
+
+  //Presentation layer
+  compile "com.android.support:appcompat-v7:${versions.support}"
+  compile "com.android.support:design:${versions.support}"
+  compile "io.reactivex:rxandroid:1.2.1"
+  compile "com.squareup.picasso:picasso:2.5.2"
+  compile("com.afollestad.material-dialogs:core:0.8.6.2") {
+    transitive = true
+  }
+  compile "com.jakewharton:butterknife:${versions.butterknife}"
+  apt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+  compile "com.trello:rxlifecycle:${versions.rxlifecycle}"
+  compile "com.trello:rxlifecycle-components:${versions.rxlifecycle}"
+  compile "com.github.miguelbcr:OkAdapters:0.1.9"
+
+  //Testing
+  testCompile 'junit:junit:4.12'
+  testCompile "org.mockito:mockito-core:1.10.19"
+  testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
+
+  androidTestCompile "com.android.support.test:runner:0.5"
+  androidTestCompile "com.android.support.test:rules:0.5"
+  androidTestCompile("com.android.support.test.espresso:espresso-contrib:2.2.2") {
+    exclude module: 'support-annotations'
+    exclude module: 'support-v4'
+    exclude module: 'support-v13'
+    exclude module: 'recyclerview-v7'
+    exclude module: 'appcompat-v7'
+    exclude module: 'design'
+  }
+}
+
+configurations.all {
+  resolutionStrategy.force "com.android.support:support-annotations:${versions.support}"
+}
+
+// Works if you put this line at the bottom of this file, nor at the top
+apply plugin: 'com.google.gms.google-services'

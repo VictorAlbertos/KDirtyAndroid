@@ -1,0 +1,72 @@
+task('freshStart') << {
+  String startFresh = "fresh_start/"
+
+  String androidTest = "app/src/androidTest/java/app/"
+  Helper.removeDir(androidTest + "common")
+  Helper.removeDir(androidTest + "sections")
+
+  String data = "app/src/main/java/app/data/"
+  Helper.moveFileDeleting(startFresh + "DataModule",
+          data + "foundation/dagger/", "DataModule.java")
+  Helper.moveFileDeleting(startFresh + "FcmMessageReceiver",
+          data + "foundation/fcm/", "FcmMessageReceiver.java")
+  Helper.removeDir(data + "sections/users")
+
+  String presentation = "app/src/main/java/app/presentation/"
+  Helper.moveFileDeleting(startFresh + "PresentationComponent",
+          presentation + "foundation/dagger/", "PresentationComponent.java")
+  Helper.moveFileDeleting(startFresh + "FcmReceiverBackground",
+          presentation + "foundation/fcm/", "FcmReceiverBackground.java")
+  Helper.removeDir(presentation + "sections/dashboard")
+  Helper.removeDir(presentation + "sections/users")
+  Helper.removeDir(presentation + "sections/launch")
+
+
+  String resources = "app/src/main/res/"
+  Helper.removeDir(resources+"sections/common")
+  Helper.removeDir(resources+"sections/dashboard")
+  Helper.removeDir(resources+"sections/users")
+  Helper.removeDir(resources+"/drawable")
+  Helper.removeDir(resources+"/drawable-svg")
+  Helper.removeDir(resources+"/menu")
+  Helper.moveFileDeleting(startFresh + "AndroidManifest",
+          "app/src/main/", "AndroidManifest.xml")
+  Helper.moveFileDeleting(startFresh + "strings",
+          "app/src/main/res/values/", "strings.xml")
+  Helper.moveFileDeleting(startFresh + "build",
+          "app/", "build.gradle")
+
+  Helper.moveFileDeleting(startFresh + "ApiModule",
+          "app/src/prod/java/app/data/foundation/net", "ApiModule.java")
+  Helper.moveFileDeleting(startFresh + "ApiModuleMock",
+          "app/src/mock/java/app/data/foundation/net", "ApiModule.java")
+
+
+  String unitTest = "app/src/test/java/app/"
+  Helper.removeDir(unitTest+"/data/sections/users")
+  Helper.removeDir(unitTest+"/presentation/sections/dashboard")
+  Helper.removeDir(unitTest+"/presentation/sections/users")
+  Helper.removeDir(unitTest+"/presentation/sections/launch")
+
+  Helper.moveFileDeleting(startFresh + "README.md", ".", "README.md")
+  Helper.moveFileDeleting(startFresh + "LICENSE.txt", ".", "LICENSE.txt")
+
+  Helper.removeDir(".git")
+  Helper.removeDir(startFresh)
+
+  println("Remember cleaning and building the project")
+}
+
+class Helper {
+  static void removeDir(String path) {
+    new File(path).deleteDir()
+  }
+
+  static void moveFileDeleting(String source, String destination, String nameNewFile) {
+    File fileSrc = new File(source)
+    File dir = new File(destination)
+    File fileDst = new File(dir, nameNewFile)
+    fileDst.delete()
+    if (!fileSrc.renameTo(fileDst)) println("Failed to replace " + fileDst.getAbsolutePath())
+  }
+}

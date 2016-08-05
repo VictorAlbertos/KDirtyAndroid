@@ -1,0 +1,77 @@
+/*
+ * Copyright 2016 Victor Albertos
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package app.data.foundation.fcm;
+
+import android.support.annotation.VisibleForTesting;
+import app.data.sections.users.User;
+import app.data.sections.users.UserRepository;
+import app.presentation.foundation.BaseApp;
+import com.google.gson.TypeAdapterFactory;
+import com.ryanharter.auto.value.gson.AutoValueGsonTypeAdapterFactory;
+import io.victoralbertos.jolyglot.GsonAutoValueSpeaker;
+import io.victoralbertos.jolyglot.JolyglotGenerics;
+import io.victoralbertos.jolyglot.Types;
+import java.lang.reflect.Type;
+import javax.inject.Inject;
+import rx.Observable;
+import rx_fcm.FcmReceiverData;
+import rx_fcm.Message;
+
+/**
+ * Use to update cache data models when a new push notification has been received injecting as much
+ * repositories are needed.
+ */
+public final class FcmMessageReceiver implements FcmReceiverData {
+  public final static String USERS_FCM = "users_fcm";
+
+  private final JolyglotGenerics jolyglot;
+  @Inject UserRepository userRepository;
+
+  @Inject public FcmMessageReceiver() {
+    this.jolyglot = new GsonAutoValueSpeaker() {
+      @Override protected TypeAdapterFactory autoValueGsonTypeAdapterFactory() {
+        return new AutoValueGsonTypeAdapterFactory();
+      }
+    };
+  }
+
+  @Override public Observable<Message> onNotification(Observable<Message> oMessage) {
+    return oMessage.flatMap(message -> {
+      BaseApp baseApp = (BaseApp) message.application();
+
+      //Inject the Dagger graph to access the required dependencies.
+      baseApp.getPresentationComponent().inject(this);
+
+      User user = getModel(User.class, message);
+      return userRepository.addNewUser(user).map(ignore -> message);
+    });
+  }
+
+  /**
+   * Serialize the bundle included in a Message to a model instance specifying the expected type.
+   *
+   * @param classData the class of the associated type.
+   * @param message the notification received from Fcm.
+   * @param <T> the type to serialize the data included in the 'payload' json param.
+   * @return the serialized model.
+   */
+  @VisibleForTesting <T> T getModel(Class<T> classData, Message message) {
+    String payload = message.payload().getString("payload");
+    Type type = Types.newParameterizedType(classData);
+    return jolyglot.fromJson(payload, type);
+  }
+}
