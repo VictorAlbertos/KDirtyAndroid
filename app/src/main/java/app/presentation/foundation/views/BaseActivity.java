@@ -24,7 +24,7 @@ import app.presentation.foundation.presenter.Presenter;
 import app.presentation.foundation.presenter.ViewPresenter;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.trello.rxlifecycle.RxLifecycle;
+import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import javax.inject.Inject;
 import rx.Observable;
@@ -62,7 +62,7 @@ public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActiv
     }
 
     //Bind the lifecycle of this Activity provided by RxLifecycle to the associated presenter.
-    presenter.bindLifeCycle(RxLifecycle.bindActivity(lifecycle()));
+    presenter.bindLifeCycle(RxLifecycleAndroid.bindActivity(lifecycle()));
 
     //At this point is safe calling initViews to let the sub-class to configure its views.
     initViews();

@@ -27,7 +27,7 @@ import app.presentation.foundation.presenter.Presenter;
 import app.presentation.foundation.presenter.ViewPresenter;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.trello.rxlifecycle.RxLifecycle;
+import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 import com.trello.rxlifecycle.components.support.RxFragment;
 import javax.inject.Inject;
 import rx.Observable;
@@ -74,8 +74,8 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    //Bind the lifecycle of this Fragmente provided by RxLifecycle to the associated presenter.
-    presenter.bindLifeCycle(RxLifecycle.bindFragment(lifecycle()));
+    //Bind the lifecycle of this Fragment provided by RxLifecycle to the associated presenter.
+    presenter.bindLifeCycle(RxLifecycleAndroid.bindFragment(lifecycle()));
 
     //At this point is safe calling initViews to let the sub-class to configure its views.
     initViews();
