@@ -18,16 +18,17 @@ package app.data.sections.users;
 
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
+import app.data.foundation.Ignore;
 import app.data.foundation.fcm.FcmMessageReceiver;
 import app.data.foundation.net.NetworkResponse;
 import com.fernandocejas.frodo.annotation.RxLogObservable;
-import io.reactivecache.ProviderGroup;
-import io.reactivecache.ReactiveCache;
-import io.rx_cache.Reply;
+import io.reactivecache2.ProviderGroup;
+import io.reactivecache2.ReactiveCache;
+import io.reactivex.Observable;
+import io.rx_cache2.Reply;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.Observable;
 import rx_fcm.internal.RxFcmMock;
 
 public class UserRepository {
@@ -78,16 +79,16 @@ public class UserRepository {
   }
 
   @RxLogObservable
-  public Observable<Void> addNewUser(User user) {
+  public Observable<Ignore> addNewUser(User user) {
     return cacheProvider.read(FIRST_DEFAULT_ID)
         .doOnNext(users -> users.add(0, user))
         .compose(cacheProvider.replace(FIRST_DEFAULT_ID))
-        .map(ignore -> null);
+        .map(ignore -> Ignore.Get);
   }
 
   @RxLogObservable
-  public Observable<Void> mockAFcmNotification() {
-    return Observable.just(null)
+  public Observable<Ignore> mockAFcmNotification() {
+    return Observable.just(Ignore.Get)
         .delay(3, TimeUnit.SECONDS)
         .flatMap(ignore -> {
           Bundle payload = new Bundle();
@@ -103,7 +104,7 @@ public class UserRepository {
 
           RxFcmMock.Notifications.newNotification(payload);
 
-          return Observable.just(null);
+          return Observable.just(Ignore.Get);
         });
   }
 

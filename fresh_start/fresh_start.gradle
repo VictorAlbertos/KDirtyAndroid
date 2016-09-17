@@ -15,8 +15,6 @@ task('freshStart') << {
   String presentation = "app/src/main/java/app/presentation/"
   Helper.moveFileDeleting(startFresh + "PresentationComponent",
           presentation + "foundation/dagger/", "PresentationComponent.java")
-  Helper.moveFileDeleting(startFresh + "FcmReceiverBackground",
-          presentation + "foundation/fcm/", "FcmReceiverBackground.java")
   Helper.removeDir(presentation + "sections/dashboard")
   Helper.removeDir(presentation + "sections/users")
   Helper.removeDir(presentation + "sections/launch")

@@ -23,7 +23,7 @@ import com.google.gson.TypeAdapterFactory;
 import com.ryanharter.auto.value.gson.AutoValueGsonTypeAdapterFactory;
 import dagger.Module;
 import dagger.Provides;
-import io.reactivecache.ReactiveCache;
+import io.reactivecache2.ReactiveCache;
 import io.victoralbertos.jolyglot.GsonAutoValueSpeaker;
 import javax.inject.Singleton;
 

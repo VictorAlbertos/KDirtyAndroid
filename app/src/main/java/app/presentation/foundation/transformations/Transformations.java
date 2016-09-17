@@ -16,7 +16,7 @@
 
 package app.presentation.foundation.transformations;
 
-import rx.Observable;
+import io.reactivex.ObservableTransformer;
 
 public interface Transformations {
 
@@ -24,29 +24,29 @@ public interface Transformations {
    * Set the associated lifecycle to RxLifecycle be able to handle the observable subscriptions, for
    * both Fragments and Activities.
    */
-  void setLifecycle(Observable.Transformer lifecycle);
+  void setLifecycle(ObservableTransformer lifecycle);
 
   /**
    * Bind the subscription observable to the {@link Transformations#setLifecycle} supplied. Prepare
    * the observable to use an io thread for subscription and to observe on the UI thread only after
    * the stream of data has reached this point.
    */
-  <T> Observable.Transformer<T, T> safely();
+  <T> ObservableTransformer<T, T> safely();
 
   /**
    * Outputs the formatted exception on {@link android.support.design.widget.Snackbar} and resume
    * the error returning an empty observable.
    */
-  <T> Observable.Transformer<T, T> reportOnSnackBar();
+  <T> ObservableTransformer<T, T> reportOnSnackBar();
 
   /**
    * Outputs the formatted exception on {@link android.widget.Toast} and resume the error returning
    * an empty observable.
    */
-  <T> Observable.Transformer<T, T> reportOnToast();
+  <T> ObservableTransformer<T, T> reportOnToast();
 
   /**
    * Show a loading dialog just before observables is subscribed and hide it after it is completed.
    */
-  <T> Observable.Transformer<T, T> loading();
+  <T> ObservableTransformer<T, T> loading();
 }

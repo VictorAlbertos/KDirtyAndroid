@@ -27,12 +27,12 @@ import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.users.UserViewGroup;
 import app.presentation.sections.users.UsersWireframe;
+import io.reactivex.Observable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import miguelbcr.ok_adapters.recycler_view.OkRecyclerViewAdapter;
 import miguelbcr.ok_adapters.recycler_view.Pager;
-import rx.Observable;
 import rx_fcm.Message;
 
 final class UsersPresenter extends Presenter<UsersPresenter.View> {

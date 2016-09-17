@@ -16,13 +16,13 @@
 
 package app.data.foundation;
 
-import io.reactivecache.ReactiveCache;
+import io.reactivecache2.ReactiveCache;
+import io.reactivex.observers.TestObserver;
 import io.victoralbertos.jolyglot.GsonSpeaker;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -40,38 +40,31 @@ public final class WireframeRepositoryTest {
 
   @Test public void Verify_Put_And_Get_Success() {
     wireframeRepositoryUT.put(KEY, new MockModel()).subscribe();
-    TestSubscriber<MockModel> subscriber = new TestSubscriber<>();
-    wireframeRepositoryUT.<MockModel>get(KEY).subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<MockModel> observer = wireframeRepositoryUT.<MockModel>get(KEY).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
-    assertNotNull(subscriber.getOnNextEvents().get(0));
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    assertNotNull(observer.values().get(0));
   }
 
   @Test public void Verify_Get_Failure() {
-    TestSubscriber<MockModel> subscriber = new TestSubscriber<>();
-    wireframeRepositoryUT.<MockModel>get(KEY).subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<MockModel> observer = wireframeRepositoryUT.<MockModel>get(KEY).test();
+    observer.awaitTerminalEvent();
+    observer.assertNoValues();
 
-    subscriber.assertNoValues();
-    Throwable error = subscriber.getOnErrorEvents().get(0);
+    Throwable error = observer.errors().get(0);
     assertEquals(error.getMessage(),
         "There is not cached data in wireframe repository for key mockModel");
   }
 
   @Test public void Verify_Put_Failure() {
-    TestSubscriber<Void> subscriber = new TestSubscriber<>();
-    wireframeRepositoryUT.put(KEY, null)
-        .subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<Ignore> observer = wireframeRepositoryUT.put(KEY, null).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoValues();
-    Throwable error = subscriber.getOnErrorEvents().get(0);
+    observer.assertNoValues();
+    Throwable error = observer.errors().get(0);
     assertEquals(error.getMessage(),
         "A null reference was supplied to be cached on the wireframe with key mockModel");
   }
-
-
-
 }

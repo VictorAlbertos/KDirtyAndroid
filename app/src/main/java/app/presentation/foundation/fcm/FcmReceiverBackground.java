@@ -26,8 +26,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import app.presentation.foundation.BaseApp;
 import app.presentation.sections.dashboard.DashBoardActivity;
+import io.reactivex.Observable;
 import org.base_app_android.R;
-import rx.Observable;
 import rx_fcm.FcmReceiverUIBackground;
 import rx_fcm.Message;
 

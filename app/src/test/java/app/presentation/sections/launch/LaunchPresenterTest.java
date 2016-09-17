@@ -21,6 +21,7 @@ import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.TransformationsMock;
+import io.reactivex.Observable;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +29,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import rx.Observable;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

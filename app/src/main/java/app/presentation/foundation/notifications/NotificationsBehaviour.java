@@ -21,8 +21,8 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 import app.presentation.foundation.BaseApp;
+import io.reactivex.Observable;
 import javax.inject.Inject;
-import rx.Observable;
 import rx_fcm.Message;
 
 public final class NotificationsBehaviour implements Notifications {

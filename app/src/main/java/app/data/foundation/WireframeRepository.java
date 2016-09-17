@@ -16,10 +16,10 @@
 
 package app.data.foundation;
 
-import io.reactivecache.ProviderGroup;
-import io.reactivecache.ReactiveCache;
+import io.reactivecache2.ProviderGroup;
+import io.reactivecache2.ReactiveCache;
+import io.reactivex.Observable;
 import javax.inject.Inject;
-import rx.Observable;
 
 /**
  * A repository to persist on both memory and disk layer the data shared between screens. It's
@@ -44,7 +44,7 @@ public final class WireframeRepository {
         .onErrorResumeNext(error -> {
           String message = String
               .format("There is not cached data in wireframe repository for key %s", key);
-          return Observable.<T>error(new RuntimeException(message, (Throwable) error));
+          return Observable.error(new RuntimeException(message, (Throwable) error));
         });
   }
 
@@ -55,15 +55,16 @@ public final class WireframeRepository {
    * @return
    */
   @SuppressWarnings("unchecked")
-  public Observable<Void> put(String key, Object object) {
+  public Observable<Ignore> put(String key, Object object) {
+    if (object == null) {
+      String message = String
+          .format("A null reference was supplied to be cached "
+              + "on the wireframe with key %s", key);
+      return Observable.error(new RuntimeException(message));
+    }
+
     return Observable.just(object)
         .compose(cacheProvider.replace(key))
-        .onErrorResumeNext(error -> {
-          String message = String
-              .format("A null reference was supplied to be cached "
-                  + "on the wireframe with key %s", key);
-          return Observable.error(new RuntimeException(message, (Throwable) error));
-        })
-        .map(_I -> null);
+        .map(ignored -> Ignore.Get);
   }
 }

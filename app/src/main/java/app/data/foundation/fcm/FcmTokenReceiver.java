@@ -17,7 +17,7 @@
 package app.data.foundation.fcm;
 
 import app.presentation.foundation.BaseApp;
-import rx.Observable;
+import io.reactivex.Observable;
 import rx_fcm.FcmRefreshTokenReceiver;
 import rx_fcm.TokenUpdate;
 

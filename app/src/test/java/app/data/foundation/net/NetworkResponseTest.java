@@ -17,13 +17,13 @@
 package app.data.foundation.net;
 
 import app.data.foundation.MockModel;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import org.junit.Before;
 import org.junit.Test;
 import retrofit2.Response;
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,17 +36,15 @@ public final class NetworkResponseTest {
 
   @Test public void Verify_On_Success() {
     MockModel model = new MockModel();
-    Observable<MockModel> oModel = Observable
+    TestObserver<MockModel> observer = Observable
         .just(Response.success(model))
-        .compose(networkResponseUT.process());
+        .compose(networkResponseUT.process())
+        .test();
 
-    TestSubscriber<MockModel> subscriber = new TestSubscriber<>();
-    oModel.subscribe(subscriber);
-
-    subscriber.awaitTerminalEvent();
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
-    subscriber.assertValue(model);
+    observer.awaitTerminalEvent();
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    observer.assertValue(model);
   }
 
   @Test public void Verify_On_Error() {
@@ -54,16 +52,14 @@ public final class NetworkResponseTest {
     ResponseBody responseBody = ResponseBody
         .create(MediaType.parse("application/json"), jsonError);
 
-    Observable<MockModel> oModel = Observable
+    TestObserver<MockModel> observer = Observable
         .just(Response.<MockModel>error(404, responseBody))
-        .compose(networkResponseUT.process());
+        .compose(networkResponseUT.process())
+        .test();
 
-    TestSubscriber<MockModel> subscriber = new TestSubscriber<>();
-    oModel.subscribe(subscriber);
-
-    subscriber.awaitTerminalEvent();
-    subscriber.assertNoValues();
-    Throwable error = subscriber.getOnErrorEvents().get(0);
+    observer.awaitTerminalEvent();
+    observer.assertNoValues();
+    Throwable error = observer.errors().get(0);
     assertEquals("such a nice error", error.getMessage());
   }
 }

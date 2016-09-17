@@ -16,9 +16,10 @@
 
 package app.data.foundation.net;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
 import javax.inject.Inject;
 import retrofit2.Response;
-import rx.Observable;
 
 /**
  * Process a network response. On success returns the associated data. On error throws a {@link
@@ -32,7 +33,7 @@ public final class NetworkResponse {
     this.errorAdapter = new ErrorAdapter();
   }
 
-  public <T> Observable.Transformer<Response<T>, T> process() {
+  public <T> ObservableTransformer<Response<T>, T> process() {
     return oResponse -> oResponse
         .flatMap(response -> {
           if (response.isSuccessful()) return Observable.just(response.body());

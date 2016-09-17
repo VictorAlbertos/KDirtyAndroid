@@ -18,6 +18,8 @@ package app.presentation.foundation.transformations;
 
 import app.data.foundation.Resources;
 import app.data.foundation.net.NetworkResponse;
+import io.reactivex.exceptions.CompositeException;
+import io.reactivex.observers.TestObserver;
 import org.base_app_android.R;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,9 +28,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import rx.Observable;
-import rx.exceptions.CompositeException;
-import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -48,122 +47,108 @@ public final class ExceptionFormatterTest {
   @Test
   public void When_Build_Is_Production_And_Exception_Is_Not_Networking_Then_Show_Common_Error() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(false);
-    TestSubscriber<String> subscriber = new TestSubscriber<>();
-    Observable<String> oMessage = exceptionFormatterUT.format(new RuntimeException());
-    oMessage.subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<String> observer = exceptionFormatterUT.format(new RuntimeException()).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
-    assertEquals(GENERIC_ERROR, subscriber.getOnNextEvents().get(0));
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    assertEquals(GENERIC_ERROR, observer.values().get(0));
   }
 
   @Test public void When_Build_Is_Production_And_Exception_Is_Networking_Then_Show_Its_Error() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(false);
-    TestSubscriber<String> subscriber = new TestSubscriber<>();
-    Observable<String> oMessage =
-        exceptionFormatterUT.format(new NetworkResponse.NetworkException(SPECIFIC_ERROR));
-    oMessage.subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<String> observer =
+        exceptionFormatterUT.format(new NetworkResponse.NetworkException(SPECIFIC_ERROR)).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
-    assertEquals(SPECIFIC_ERROR, subscriber.getOnNextEvents().get(0));
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    assertEquals(SPECIFIC_ERROR, observer.values().get(0));
   }
 
   @Test public void When_Build_Is_Debug_And_Exception_Is_Not_Networking_Then_Show_Its_Error() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(true);
-    TestSubscriber<String> subscriber = new TestSubscriber<>();
-    Observable<String> oMessage = exceptionFormatterUT.format(new RuntimeException(SPECIFIC_ERROR));
-    oMessage.subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<String> observer =
+        exceptionFormatterUT.format(new RuntimeException(SPECIFIC_ERROR)).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
-    assertEquals(SPECIFIC_ERROR, subscriber.getOnNextEvents().get(0));
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    assertEquals(SPECIFIC_ERROR, observer.values().get(0));
   }
 
   @Test public void When_Build_Is_Debug_And_Exception_Is_Networking_Then_Show_Its_Error() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(true);
-    TestSubscriber<String> subscriber = new TestSubscriber<>();
-    Observable<String> oMessage =
-        exceptionFormatterUT.format(new NetworkResponse.NetworkException(SPECIFIC_ERROR));
-    oMessage.subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<String> observer =
+        exceptionFormatterUT.format(new NetworkResponse.NetworkException(SPECIFIC_ERROR)).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
-    assertEquals(SPECIFIC_ERROR, subscriber.getOnNextEvents().get(0));
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    assertEquals(SPECIFIC_ERROR, observer.values().get(0));
   }
 
   @Test public void When_Build_Is_Production_And_Exception_Has_Cause_Do_Not_Show_It() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(false);
-    TestSubscriber<String> subscriber = new TestSubscriber<>();
 
     NetworkResponse.NetworkException networkException =
         Mockito.spy(new NetworkResponse.NetworkException(SPECIFIC_ERROR));
     when(networkException.getCause()).thenReturn(new NetworkResponse.NetworkException("CAUSE"));
 
-    Observable<String> oMessage = exceptionFormatterUT.format(networkException);
-    oMessage.subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<String> observer = exceptionFormatterUT.format(networkException).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
-    assertEquals(SPECIFIC_ERROR, subscriber.getOnNextEvents().get(0));
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    assertEquals(SPECIFIC_ERROR, observer.values().get(0));
   }
 
   @Test public void When_Build_Is_Debug_And_Exception_Has_Cause_Show_It() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(true);
-    TestSubscriber<String> subscriber = new TestSubscriber<>();
 
     NetworkResponse.NetworkException networkException =
         Mockito.spy(new NetworkResponse.NetworkException(SPECIFIC_ERROR));
     when(networkException.getCause()).thenReturn(new NetworkResponse.NetworkException("CAUSE"));
 
-    Observable<String> oMessage = exceptionFormatterUT.format(networkException);
-    oMessage.subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<String> observer = exceptionFormatterUT.format(networkException).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
     assertEquals("specific_error\nCAUSE",
-        subscriber.getOnNextEvents().get(0));
+        observer.values().get(0));
   }
 
   @Test public void When_Build_Is_Release_And_Exception_Is_Composite_Do_Not_Show_It() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(false);
-    TestSubscriber<String> subscriber = new TestSubscriber<>();
 
     CompositeException exception =
         new CompositeException(new RuntimeException("1"), new RuntimeException("2"));
 
-    Observable<String> oMessage = exceptionFormatterUT.format(exception);
-    oMessage.subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<String> observer = exceptionFormatterUT.format(exception).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
-    assertEquals(GENERIC_ERROR, subscriber.getOnNextEvents().get(0));
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    assertEquals(GENERIC_ERROR, observer.values().get(0));
   }
 
   @Test public void When_Build_Is_Debug_And_Exception_Is_Composite_Do_Not_Show_It() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(true);
-    TestSubscriber<String> subscriber = new TestSubscriber<>();
 
     CompositeException exception =
-        new CompositeException(new RuntimeException("1"), new NetworkResponse.NetworkException("2"));
+        new CompositeException(new RuntimeException("1"),
+            new NetworkResponse.NetworkException("2"));
 
-    Observable<String> oMessage = exceptionFormatterUT.format(exception);
-    oMessage.subscribe(subscriber);
-    subscriber.awaitTerminalEvent();
+    TestObserver<String> observer = exceptionFormatterUT.format(exception).test();
+    observer.awaitTerminalEvent();
 
-    subscriber.assertNoErrors();
-    subscriber.assertValueCount(1);
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
     assertEquals("2 exceptions occurred. \n"
             + "Chain of Causes for CompositeException In Order Received =>\n"
             + "RuntimeException -> 1\n"
             + "NetworkException -> 2\n",
-        subscriber.getOnNextEvents().get(0));
+        observer.values().get(0));
   }
 }

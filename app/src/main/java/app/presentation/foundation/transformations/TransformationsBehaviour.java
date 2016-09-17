@@ -18,13 +18,14 @@ package app.presentation.foundation.transformations;
 
 import app.presentation.foundation.dialogs.Dialogs;
 import app.presentation.foundation.notifications.Notifications;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.Scheduler;
 import javax.inject.Inject;
 import javax.inject.Named;
-import rx.Observable;
-import rx.Scheduler;
 
 public final class TransformationsBehaviour implements Transformations {
-  private Observable.Transformer lifecycle;
+  private ObservableTransformer lifecycle;
   private final ExceptionFormatter exceptionFormatter;
   private final Notifications notifications;
   private final Dialogs dialogs;
@@ -40,14 +41,14 @@ public final class TransformationsBehaviour implements Transformations {
     this.backgroundThread = backgroundThread;
   }
 
-  public void setLifecycle(Observable.Transformer lifecycle) {
+  public void setLifecycle(ObservableTransformer lifecycle) {
     this.lifecycle = lifecycle;
   }
 
   /**
    * {inherit docs}
    */
-  public <T> Observable.Transformer<T, T> safely() {
+  public <T> ObservableTransformer<T, T> safely() {
     return observable -> observable
         .subscribeOn(backgroundThread)
         .observeOn(mainThread)
@@ -57,33 +58,37 @@ public final class TransformationsBehaviour implements Transformations {
   /**
    * {inherit docs}
    */
-  public <T> Observable.Transformer<T, T> reportOnSnackBar() {
+  public <T> ObservableTransformer<T, T> reportOnSnackBar() {
     return observable -> observable
-        .doOnError(throwable -> {
+        .<T>doOnError(throwable -> {
           Observable<String> formattedError = exceptionFormatter.format(throwable);
           notifications.showSnackBar(formattedError);
         })
-        .onErrorResumeNext(throwable -> Observable.empty());
+        .onErrorResumeNext(throwable -> {
+          return Observable.<T>empty();
+        });
   }
 
   /**
    * {inherit docs}
    */
-  public <T> Observable.Transformer<T, T> reportOnToast() {
+  public <T> ObservableTransformer<T, T> reportOnToast() {
     return observable -> observable
-        .doOnError(throwable -> {
+        .<T>doOnError(throwable -> {
           Observable<String> formattedError = exceptionFormatter.format(throwable);
           notifications.showToast(formattedError);
         })
-        .onErrorResumeNext(throwable -> Observable.empty());
+        .<T>onErrorResumeNext(throwable -> {
+          return Observable.empty();
+        });
   }
 
   /**
    * {inherit docs}
    */
-  public <T> Observable.Transformer<T, T> loading() {
+  public <T> ObservableTransformer<T, T> loading() {
     return observable -> observable
-        .doOnSubscribe(dialogs::showLoading)
-        .doOnCompleted(dialogs::hideLoading);
+        .doOnSubscribe(disposable -> dialogs.showLoading())
+        .doOnComplete(dialogs::hideLoading);
   }
 }

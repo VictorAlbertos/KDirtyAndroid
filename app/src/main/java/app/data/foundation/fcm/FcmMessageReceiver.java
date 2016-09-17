@@ -22,12 +22,12 @@ import app.data.sections.users.UserRepository;
 import app.presentation.foundation.BaseApp;
 import com.google.gson.TypeAdapterFactory;
 import com.ryanharter.auto.value.gson.AutoValueGsonTypeAdapterFactory;
+import io.reactivex.Observable;
 import io.victoralbertos.jolyglot.GsonAutoValueSpeaker;
 import io.victoralbertos.jolyglot.JolyglotGenerics;
 import io.victoralbertos.jolyglot.Types;
 import java.lang.reflect.Type;
 import javax.inject.Inject;
-import rx.Observable;
 import rx_fcm.FcmReceiverData;
 import rx_fcm.Message;
 

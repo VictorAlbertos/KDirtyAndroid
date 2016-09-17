@@ -17,12 +17,13 @@
 package app.presentation.sections.users;
 
 import android.content.Intent;
+import app.data.foundation.Ignore;
 import app.data.foundation.WireframeRepository;
 import app.data.sections.users.User;
 import app.presentation.foundation.BaseApp;
 import app.presentation.sections.users.detail.UserActivity;
+import io.reactivex.Observable;
 import javax.inject.Inject;
-import rx.Observable;
 
 public class UsersWireframe {
   private final WireframeRepository wireframeRepository;
@@ -34,7 +35,7 @@ public class UsersWireframe {
     this.wireframeRepository = wireframeRepository;
   }
 
-  public Observable<Void> userScreen(User user) {
+  public Observable<Ignore> userScreen(User user) {
     return wireframeRepository
         .put(UserActivity.class.getName(), user)
         .doOnNext(_I ->

@@ -18,8 +18,9 @@ package app.presentation.foundation.presenter;
 
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.transformations.Transformations;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
 import javax.inject.Inject;
-import rx.Observable;
 import rx_fcm.Message;
 
 /**
@@ -45,7 +46,7 @@ public class Presenter<V extends ViewPresenter> implements SyncView.Matcher {
    *
    * @param lifeCycle the Transformer supplied by RxLifecycle for both Fragment and Activity.
    */
-  public void bindLifeCycle(Observable.Transformer lifeCycle) {
+  public void bindLifeCycle(ObservableTransformer lifeCycle) {
     this.transformations.setLifecycle(lifeCycle);
   }
 

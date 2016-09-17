@@ -99,6 +99,10 @@ android {
   lintOptions {
     disable 'InvalidPackage'
   }
+
+  packagingOptions {
+    pickFirst 'META-INF/rxjava.properties'
+  }
 }
 
 ext {
@@ -107,10 +111,9 @@ ext {
           googlePlayServices: "9.0.0",
           retrofit          : "2.1.0",
           dagger            : "2.6.1",
-          mockery           : "0.0.4",
+          mockery           : "0.0.5",
           autovalue         : "1.2",
           butterknife       : "8.4.0",
-          rxlifecycle       : "0.7.0",
           leakCanary        : "1.4-beta2"
   ]
 }
@@ -123,19 +126,19 @@ dependencies {
   apt "com.google.dagger:dagger-compiler:${versions.dagger}"
   compile "com.google.dagger:dagger:${versions.dagger}"
   compile 'com.google.firebase:firebase-core:9.2.1'
-  compile 'com.github.VictorAlbertos:RxFcm:0.0.5'
-  compile 'io.reactivex:rxjava:1.1.10'
+  compile 'com.github.VictorAlbertos:RxFcm:0.0.6-2.x'
+  compile 'io.reactivex.rxjava2:rxjava:2.0.0-RC2'
   debugCompile "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
   releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
 
   //Data layer
   compile "com.squareup.retrofit2:retrofit:${versions.retrofit}"
-  compile "com.squareup.retrofit2:adapter-rxjava:${versions.retrofit}"
+  compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0-RC2'
   compile "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
   compile 'com.github.VictorAlbertos.Jolyglot:gson_auto_value:0.0.3'
-  compile 'com.github.VictorAlbertos:ReactiveCache:0.0.3'
+  compile 'com.github.VictorAlbertos:ReactiveCache:0.0.5-2.x'
 
-  compile "com.github.VictorAlbertos.Mockery:extension_rx_retrofit:${versions.mockery}"
+  compile "com.github.VictorAlbertos.Mockery:extension_rx2_retrofit:${versions.mockery}"
   apt "com.github.VictorAlbertos.Mockery:test_compiler:${versions.mockery}"
   provided "com.github.VictorAlbertos.Mockery:test_runtime:${versions.mockery}"
   provided "junit:junit:4.12"
@@ -146,16 +149,14 @@ dependencies {
   //Presentation layer
   compile "com.android.support:appcompat-v7:${versions.support}"
   compile "com.android.support:design:${versions.support}"
-  compile "io.reactivex:rxandroid:1.2.1"
+  compile 'io.reactivex.rxjava2:rxandroid:2.0.0-RC1'
   compile "com.squareup.picasso:picasso:2.5.2"
   compile("com.afollestad.material-dialogs:core:0.9.0.1") {
     transitive = true
   }
   compile "com.jakewharton:butterknife:${versions.butterknife}"
   apt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
-  compile "com.trello:rxlifecycle-android:${versions.rxlifecycle}"
-  compile "com.trello:rxlifecycle-components:${versions.rxlifecycle}"
-
+  compile 'com.github.VictorAlbertos:RxLifecycleInterop:0.0.2'
   compile "com.github.miguelbcr:OkAdapters:0.2.1"
 
   //Testing

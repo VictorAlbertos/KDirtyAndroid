@@ -24,10 +24,11 @@ import app.presentation.foundation.presenter.Presenter;
 import app.presentation.foundation.presenter.ViewPresenter;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.trello.rxlifecycle.android.RxLifecycleAndroid;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Observable;
+import io.victoralbertos.rxlifecycle_interop.Rx2LifecycleAndroid;
+import io.victoralbertos.rxlifecycle_interop.support.Rx2AppCompatActivity;
 import javax.inject.Inject;
-import rx.Observable;
 import rx_fcm.FcmReceiverUIForeground;
 import rx_fcm.Message;
 
@@ -37,7 +38,7 @@ import rx_fcm.Message;
  *
  * @param <P> the presenter associated with this Activity.
  */
-public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActivity
+public abstract class BaseActivity<P extends Presenter> extends Rx2AppCompatActivity
     implements ViewPresenter, FcmReceiverUIForeground {
   @Inject P presenter;
   private Unbinder unbinder;
@@ -62,7 +63,8 @@ public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActiv
     }
 
     //Bind the lifecycle of this Activity provided by RxLifecycle to the associated presenter.
-    presenter.bindLifeCycle(RxLifecycleAndroid.bindActivity(lifecycle()));
+    presenter.bindLifeCycle(
+        Rx2LifecycleAndroid.bindActivity(lifecycle2x(), BackpressureStrategy.LATEST));
 
     //At this point is safe calling initViews to let the sub-class to configure its views.
     initViews();
@@ -80,10 +82,10 @@ public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActiv
   }
 
   /**
-   * By calling this method and returning the presenter we make sure that this instance
-   * will be retain between config changes, that way its state will be preserve. Every
-   * data variable not managed by ReactiveCache which needs to survive configs changes must be
-   * declared in the presenter nor in the activity, otherwise it won't survive config changes.
+   * By calling this method and returning the presenter we make sure that this instance will be
+   * retain between config changes, that way its state will be preserve. Every data variable not
+   * managed by ReactiveCache which needs to survive configs changes must be declared in the
+   * presenter nor in the activity, otherwise it won't survive config changes.
    */
   @Override public Object onRetainCustomNonConfigurationInstance() {
     return presenter;

@@ -17,10 +17,11 @@
 package app.presentation.sections.launch;
 
 import android.content.Intent;
+import app.data.foundation.Ignore;
 import app.presentation.foundation.BaseApp;
 import app.presentation.sections.dashboard.DashBoardActivity;
+import io.reactivex.Observable;
 import javax.inject.Inject;
-import rx.Observable;
 
 class LaunchWireframe  {
   private final BaseApp baseApp;
@@ -29,11 +30,11 @@ class LaunchWireframe  {
     this.baseApp = baseApp;
   }
 
-  public Observable<Void> dashboard() {
+  public Observable<Ignore> dashboard() {
     return Observable.defer(() -> {
       baseApp.getLiveActivity()
           .startActivity(new Intent(baseApp, DashBoardActivity.class));
-      return Observable.empty();
+      return Observable.just(Ignore.Get);
     });
   }
 

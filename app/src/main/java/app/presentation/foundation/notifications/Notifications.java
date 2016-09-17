@@ -17,7 +17,7 @@
 package app.presentation.foundation.notifications;
 
 import android.support.annotation.StringRes;
-import rx.Observable;
+import io.reactivex.Observable;
 import rx_fcm.Message;
 
 /**

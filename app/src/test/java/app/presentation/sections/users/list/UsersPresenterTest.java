@@ -23,6 +23,7 @@ import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.TransformationsMock;
 import app.presentation.sections.users.UsersWireframe;
+import io.reactivex.Observable;
 import java.util.Arrays;
 import miguelbcr.ok_adapters.recycler_view.Pager;
 import org.junit.Before;
@@ -32,7 +33,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;

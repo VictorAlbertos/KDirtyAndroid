@@ -17,27 +17,32 @@
 package app.presentation.sections;
 
 import app.presentation.foundation.transformations.Transformations;
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
 
 public class TransformationsMock implements Transformations {
 
-  @Override public void setLifecycle(Observable.Transformer lifecycle) {
+  @Override public void setLifecycle(ObservableTransformer lifecycle) {
     // Do nothing.  Exists to satisfy Transformations.
   }
 
-  @Override public <T> Observable.Transformer<T, T> safely() {
+  @Override public <T> ObservableTransformer<T, T> safely() {
     return observable -> observable;
   }
 
-  @Override public <T> Observable.Transformer<T, T> reportOnSnackBar() {
-    return observable -> observable.onErrorResumeNext(throwable -> Observable.empty());
+  @Override public <T> ObservableTransformer<T, T> reportOnSnackBar() {
+    return observable -> observable.onErrorResumeNext(throwable -> {
+      return Observable.empty();
+    });
   }
 
-  @Override public <T> Observable.Transformer<T, T> reportOnToast() {
-    return observable -> observable.onErrorResumeNext(throwable -> Observable.empty());
+  @Override public <T> ObservableTransformer<T, T> reportOnToast() {
+    return observable -> observable.onErrorResumeNext(throwable -> {
+      return Observable.empty();
+    });
   }
 
-  @Override public <T> Observable.Transformer<T, T> loading() {
+  @Override public <T> ObservableTransformer<T, T> loading() {
     return observable -> observable;
   }
 

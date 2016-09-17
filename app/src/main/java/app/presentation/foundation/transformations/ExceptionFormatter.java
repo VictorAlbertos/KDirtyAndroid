@@ -19,11 +19,11 @@ package app.presentation.foundation.transformations;
 import android.support.annotation.VisibleForTesting;
 import app.data.foundation.Resources;
 import app.data.foundation.net.NetworkResponse;
+import io.reactivex.Observable;
+import io.reactivex.exceptions.CompositeException;
 import javax.inject.Inject;
 import org.base_app_android.BuildConfig;
 import org.base_app_android.R;
-import rx.Observable;
-import rx.exceptions.CompositeException;
 
 /**
  * Format errors to show the most meaningful message depending on the current build variant and the

@@ -17,14 +17,16 @@
 package app.data.foundation.fcm;
 
 import android.support.annotation.VisibleForTesting;
+import app.data.sections.users.User;
+import app.data.sections.users.UserRepository;
 import app.presentation.foundation.BaseApp;
 import com.google.gson.TypeAdapterFactory;
+import io.reactivex.Observable;
 import io.victoralbertos.jolyglot.GsonAutoValueSpeaker;
 import io.victoralbertos.jolyglot.JolyglotGenerics;
 import io.victoralbertos.jolyglot.Types;
 import java.lang.reflect.Type;
 import javax.inject.Inject;
-import rx.Observable;
 import rx_fcm.FcmReceiverData;
 import rx_fcm.Message;
 
@@ -36,6 +38,7 @@ public final class FcmMessageReceiver implements FcmReceiverData {
   public final static String USERS_FCM = "users_fcm";
 
   private final JolyglotGenerics jolyglot;
+  @Inject UserRepository userRepository;
 
   @Inject public FcmMessageReceiver() {
     this.jolyglot = new GsonAutoValueSpeaker() {
@@ -52,7 +55,8 @@ public final class FcmMessageReceiver implements FcmReceiverData {
       //Inject the Dagger graph to access the required dependencies.
       baseApp.getPresentationComponent().inject(this);
 
-      return oMessage;
+      User user = getModel(User.class, message);
+      return userRepository.addNewUser(user).map(ignore -> message);
     });
   }
 

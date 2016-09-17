@@ -27,10 +27,10 @@ import app.presentation.foundation.transformations.Transformations;
 import app.presentation.foundation.transformations.TransformationsBehaviour;
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import javax.inject.Named;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 @Module(includes = DataModule.class) public class PresentationModule {
   private final BaseApp baseApp;
