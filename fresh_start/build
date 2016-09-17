@@ -19,7 +19,7 @@ buildscript {
 
 android {
   compileSdkVersion 24
-  buildToolsVersion "24.0.1"
+  buildToolsVersion "24.0.0"
 
   defaultConfig {
     applicationId "org.base_app_android"
@@ -52,6 +52,10 @@ android {
     main {
       res.srcDirs =
               [
+                      'src/main/res/drawable-svg',
+                      'src/main/res/sections/common',
+                      'src/main/res/sections/users',
+                      'src/main/res/sections/dashboard',
                       'src/main/res/sections',
                       'src/main/res'
               ]
@@ -98,14 +102,14 @@ android {
 
 ext {
   versions = [
-          support           : "24.1.1",
-          googlePlayServices: "9.2.1",
+          support           : "24.2.0",
+          googlePlayServices: "9.0.0",
           retrofit          : "2.1.0",
-          dagger            : "2.5",
+          dagger            : "2.6.1",
           mockery           : "0.0.4",
           autovalue         : "1.2",
-          butterknife       : "8.2.1",
-          rxlifecycle       : "0.6.1",
+          butterknife       : "8.4.0",
+          rxlifecycle       : "0.7.0",
           leakCanary        : "1.4-beta2"
   ]
 }
@@ -118,8 +122,8 @@ dependencies {
   apt "com.google.dagger:dagger-compiler:${versions.dagger}"
   compile "com.google.dagger:dagger:${versions.dagger}"
   compile 'com.google.firebase:firebase-core:9.2.1'
-  compile 'com.github.VictorAlbertos:RxFcm:0.0.3'
-  compile 'io.reactivex:rxjava:1.1.7'
+  compile 'com.github.VictorAlbertos:RxFcm:0.0.5'
+  compile 'io.reactivex:rxjava:1.1.10'
   debugCompile "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
   releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
 
@@ -128,7 +132,8 @@ dependencies {
   compile "com.squareup.retrofit2:adapter-rxjava:${versions.retrofit}"
   compile "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
   compile 'com.github.VictorAlbertos.Jolyglot:gson_auto_value:0.0.3'
-  compile 'com.github.VictorAlbertos:ReactiveCache:0.0.1'
+  compile 'com.github.VictorAlbertos:ReactiveCache:0.0.3'
+
   compile "com.github.VictorAlbertos.Mockery:extension_rx_retrofit:${versions.mockery}"
   apt "com.github.VictorAlbertos.Mockery:test_compiler:${versions.mockery}"
   provided "com.github.VictorAlbertos.Mockery:test_runtime:${versions.mockery}"
@@ -142,14 +147,15 @@ dependencies {
   compile "com.android.support:design:${versions.support}"
   compile "io.reactivex:rxandroid:1.2.1"
   compile "com.squareup.picasso:picasso:2.5.2"
-  compile("com.afollestad.material-dialogs:core:0.8.6.2") {
+  compile("com.afollestad.material-dialogs:core:0.9.0.1") {
     transitive = true
   }
   compile "com.jakewharton:butterknife:${versions.butterknife}"
   apt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
-  compile "com.trello:rxlifecycle:${versions.rxlifecycle}"
+  compile "com.trello:rxlifecycle-android:${versions.rxlifecycle}"
   compile "com.trello:rxlifecycle-components:${versions.rxlifecycle}"
-  compile "com.github.miguelbcr:OkAdapters:0.1.9"
+
+  compile "com.github.miguelbcr:OkAdapters:0.2.1"
 
   //Testing
   testCompile 'junit:junit:4.12'
@@ -170,6 +176,7 @@ dependencies {
 
 configurations.all {
   resolutionStrategy.force "com.android.support:support-annotations:${versions.support}"
+  resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
 }
 
 // Works if you put this line at the bottom of this file, nor at the top
