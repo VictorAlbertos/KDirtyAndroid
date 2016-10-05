@@ -16,16 +16,22 @@
 
 package app.data.foundation.dagger;
 
+import android.support.annotation.StringRes;
+
+import com.google.gson.TypeAdapterFactory;
+
+import java.util.Locale;
+import javax.inject.Singleton;
+
+import app.data.foundation.GsonAdapterFactory;
 import app.data.foundation.Resources;
 import app.data.foundation.net.ApiModule;
 import app.presentation.foundation.BaseApp;
-import com.google.gson.TypeAdapterFactory;
-import com.ryanharter.auto.value.gson.AutoValueGsonTypeAdapterFactory;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivecache.ReactiveCache;
 import io.victoralbertos.jolyglot.GsonAutoValueSpeaker;
-import javax.inject.Singleton;
+import io.victoralbertos.jolyglot.Jolyglot;
 
 /**
  * Resolve the dependencies for data layer. For networking dependencies {@see ApiModule}, which its
@@ -36,7 +42,17 @@ import javax.inject.Singleton;
 public final class DataModule {
 
   @Singleton @Provides Resources provideUiUtils(BaseApp baseApp) {
-    return baseApp::getString;
+    return new Resources() {
+        @Override
+        public String getString(@StringRes int idResource) {
+            return baseApp.getString(idResource);
+        }
+
+        @Override
+        public String getLang() {
+            return Locale.getDefault().getLanguage();
+        }
+    };
   }
 
   @Singleton
@@ -44,7 +60,7 @@ public final class DataModule {
     return new ReactiveCache.Builder()
         .using(baseApp.getFilesDir(), new GsonAutoValueSpeaker() {
           @Override protected TypeAdapterFactory autoValueGsonTypeAdapterFactory() {
-            return new AutoValueGsonTypeAdapterFactory();
+            return GsonAdapterFactory.create();
           }
         });
   }

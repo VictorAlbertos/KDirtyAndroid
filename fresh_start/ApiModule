@@ -16,6 +16,7 @@
 
 package app.data.foundation.net;
 
+import app.data.foundation.GsonAdapterFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dagger.Module;
@@ -33,7 +34,7 @@ public class ApiModule {
 
   @Inject public ApiModule() {
     Gson gson = new GsonBuilder()
-        //.registerTypeAdapterFactory(new AutoValueGsonTypeAdapterFactory())
+        .registerTypeAdapterFactory(GsonAdapterFactory.create())
         .create();
 
     this.retrofit = new Retrofit.Builder()

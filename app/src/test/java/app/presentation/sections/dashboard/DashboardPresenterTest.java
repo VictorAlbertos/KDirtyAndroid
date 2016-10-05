@@ -19,8 +19,8 @@ package app.presentation.sections.dashboard;
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.transformations.Transformations;
+import app.presentation.foundation.views.FragmentsManager;
 import app.presentation.sections.TransformationsMock;
-import app.presentation.sections.users.list.UsersFragment;
 import app.presentation.sections.users.search.SearchUserFragment;
 import org.base_app_android.R;
 import org.junit.Before;
@@ -32,6 +32,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -42,48 +43,46 @@ public final class DashboardPresenterTest {
   @Mock DashboardPresenter.View view;
   @Mock Notifications notifications;
   @Mock SyncView syncView;
+  @Mock FragmentsManager fragmentsManager;
 
   private DashboardPresenter dashboardPresenterUT;
 
   @Before public void init() {
     dashboardPresenterUT = new DashboardPresenter(transformations,
-        notifications, syncView, null);
+        notifications, syncView, null, fragmentsManager);
   }
 
   @Test public void Verify_OnBindView() {
     dashboardPresenterUT.onBindView(view);
 
     verify(view).setNavigationItemSelectedListener(any());
-    verify(view).replaceFragment(any());
+    verify(view).replaceFragment(any(FragmentsManager.class), any());
   }
 
   @Test public void Verify_OnBindView_With_Current_Fragment() {
-    when(view.currentFragment()).thenReturn(new UsersFragment());
     dashboardPresenterUT.onBindView(view);
 
     verify(view).setNavigationItemSelectedListener(any());
-    verify(view, never()).replaceFragment(any());
+    verify(view).replaceFragment(any(FragmentsManager.class), any());
   }
 
-  @Test
-  public void When_Call_ReplaceFragmentIfItIsNotCurrentOne_And_Current_Fragment_Is_The_Current_One_Then_Do_Not_Replace_It() {
-    when(view.currentFragment()).thenReturn(new UsersFragment());
+  @Test public void When_Call_replaceDrawerFragment_And_Current_Fragment_Is_The_Current_One_Then_Do_Not_Replace_It() {
     dashboardPresenterUT.onBindView(view);
-    dashboardPresenterUT.replaceFragmentIfItIsNotCurrentOne(R.id.drawer_users);
+    when(view.replaceFragment(any(FragmentsManager.class), any())).thenReturn(false);
+    dashboardPresenterUT.replaceDrawerFragment(R.id.drawer_users);
 
     verify(view, never()).setCheckedItemMenu(any(int.class));
     verify(view, never()).setTitleActionBar(any(int.class));
-    verify(view, never()).replaceFragment(any());
+    verify(view, atLeastOnce()).replaceFragment(any(fragmentsManager.getClass()), any());
   }
 
-  @Test
-  public void When_Call_ReplaceFragmentIfItIsNotCurrentOne_And_Current_Fragment_Is_Not_The_Current_One_Then_Replace_It() {
-    when(view.currentFragment()).thenReturn(new SearchUserFragment());
+  @Test public void When_Call_replaceDrawerFragment_And_Current_Fragment_Is_Not_The_Current_One_Then_Replace_It() {
     dashboardPresenterUT.onBindView(view);
-    dashboardPresenterUT.replaceFragmentIfItIsNotCurrentOne(R.id.drawer_users);
+    when(view.replaceFragment(any(FragmentsManager.class), any())).thenReturn(true);
+    dashboardPresenterUT.replaceDrawerFragment(R.id.drawer_find_user);
 
-    verify(view).setCheckedItemMenu(R.id.drawer_users);
-    verify(view).setTitleActionBar(R.string.users);
-    verify(view).replaceFragment(UsersFragment.class);
+    verify(view).setCheckedItemMenu(R.id.drawer_find_user);
+    verify(view).setTitleActionBar(R.string.find_user);
+    verify(view).replaceFragment(fragmentsManager, SearchUserFragment.class);
   }
 }

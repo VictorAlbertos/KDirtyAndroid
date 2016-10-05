@@ -21,14 +21,28 @@ package app.presentation.foundation.dialogs;
  */
 public interface Dialogs {
   /**
-   * Show alert dialog with a progress wheel
+   * Show a cancelable alert dialog with a progress wheel
    */
   void showLoading();
 
   /**
-   * Show alert dialog with a progress wheel which may be canceled by the user.
+   * Show a cancelable alert dialog with a progress wheel and custom content
+   *
+   * @param content Text to display in the dialog
+   */
+  void showLoading(String content);
+
+  /**
+   * Show a non cancelable alert dialog with a progress wheel and custom content
    */
   void showNoCancelableLoading();
+
+  /**
+   * Show a non cancelable alert dialog with a progress wheel and custom content
+   *
+   * @param content Text to display in the dialog
+   */
+  void showNoCancelableLoading(String content);
 
   /**
    * If dialog is shown, hide it.

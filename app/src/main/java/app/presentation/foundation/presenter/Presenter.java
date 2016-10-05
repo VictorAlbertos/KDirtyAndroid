@@ -16,11 +16,16 @@
 
 package app.presentation.foundation.presenter;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.transformations.Transformations;
 import javax.inject.Inject;
 import rx.Observable;
 import rx_fcm.Message;
+import rx_fcm.internal.RxFcm;
 
 /**
  * Base class for every new presenter.
@@ -31,7 +36,7 @@ public class Presenter<V extends ViewPresenter> implements SyncView.Matcher {
   protected V view;
   protected final Transformations transformations;
   protected final Notifications notifications;
-  private final SyncView syncView;
+  protected final SyncView syncView;
 
   @Inject public Presenter(Transformations transformations, Notifications notifications,
       SyncView syncView) {
@@ -64,6 +69,18 @@ public class Presenter<V extends ViewPresenter> implements SyncView.Matcher {
   }
 
   /**
+     * Called when an action bar menu item is clicked.<br/>
+     * See {@link android.support.v4.app.Fragment#setHasOptionsMenu(boolean)} and
+     * {@link android.support.v4.app.Fragment#onCreateOptionsMenu(Menu, MenuInflater)}
+     *
+     * @return true = consumed. To default behaviour use <code>super.onOptionsItemSelected(item);</code>
+     */
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //Override if sub-class requires to handle action bar menu items clicks
+        return false;
+    }
+
+    /**
    * Called when a Fcm notification is received and it matches with the key provided by {@link
    * #matchesTarget(String)}.
    */
@@ -90,4 +107,13 @@ public class Presenter<V extends ViewPresenter> implements SyncView.Matcher {
     return false;
   }
 
+  /**
+   * Gets the current Fcm token
+   *
+   * @return The Fcm token
+   */
+  protected Observable<String> tokenFcm() {
+      return RxFcm.Notifications.currentToken()
+              .onErrorResumeNext(throwable -> Observable.just(""));
+  }
 }

@@ -115,7 +115,7 @@ public final class TransformationsBehaviourTest {
 
     subscriber.assertNoErrors();
     subscriber.assertValueCount(1);
-    verify(dialogs).showLoading();
+    verify(dialogs).showNoCancelableLoading();
     verify(dialogs).hideLoading();
 
     assertEquals(SUCCESS_MESSAGE, subscriber.getOnNextEvents().get(0));

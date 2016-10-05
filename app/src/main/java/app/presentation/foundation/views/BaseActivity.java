@@ -18,15 +18,18 @@ package app.presentation.foundation.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import com.trello.rxlifecycle.android.RxLifecycleAndroid;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import javax.inject.Inject;
+
 import app.presentation.foundation.BaseApp;
 import app.presentation.foundation.dagger.PresentationComponent;
 import app.presentation.foundation.presenter.Presenter;
 import app.presentation.foundation.presenter.ViewPresenter;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.trello.rxlifecycle.android.RxLifecycleAndroid;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import javax.inject.Inject;
 import rx.Observable;
 import rx_fcm.FcmReceiverUIForeground;
 import rx_fcm.Message;

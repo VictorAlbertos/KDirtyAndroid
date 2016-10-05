@@ -22,6 +22,10 @@ import app.data.foundation.net.NetworkResponse;
 import javax.inject.Inject;
 import org.base_app_android.BuildConfig;
 import org.base_app_android.R;
+
+import java.net.ConnectException;
+import java.net.UnknownHostException;
+
 import rx.Observable;
 import rx.exceptions.CompositeException;
 
@@ -39,6 +43,11 @@ class ExceptionFormatter {
 
   Observable<String> format(Throwable throwable) {
     return Observable.defer(() -> {
+      if (throwable instanceof UnknownHostException
+              || throwable instanceof ConnectException) {
+        return Observable.just(resources.getString(R.string.connection_error));
+      }
+
       if (!isBuildConfigDebug() && !(throwable instanceof NetworkResponse.NetworkException)) {
         return Observable.just(resources.getString(R.string.errors_happen));
       }
