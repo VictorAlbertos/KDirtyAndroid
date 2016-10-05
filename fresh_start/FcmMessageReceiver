@@ -17,6 +17,8 @@
 package app.data.foundation.fcm;
 
 import android.support.annotation.VisibleForTesting;
+
+import app.data.foundation.GsonAdapterFactory;
 import app.presentation.foundation.BaseApp;
 import com.google.gson.TypeAdapterFactory;
 import io.victoralbertos.jolyglot.GsonAutoValueSpeaker;
@@ -37,10 +39,11 @@ public final class FcmMessageReceiver implements FcmReceiverData {
 
   private final JolyglotGenerics jolyglot;
 
+
   @Inject public FcmMessageReceiver() {
     this.jolyglot = new GsonAutoValueSpeaker() {
       @Override protected TypeAdapterFactory autoValueGsonTypeAdapterFactory() {
-        return null; //new AutoValueGsonTypeAdapterFactory();
+        return GsonAdapterFactory.create();
       }
     };
   }
@@ -52,8 +55,21 @@ public final class FcmMessageReceiver implements FcmReceiverData {
       //Inject the Dagger graph to access the required dependencies.
       baseApp.getPresentationComponent().inject(this);
 
-      return oMessage;
+      Observable<Message> oMessageRet = Observable.just(message);
+      String target = message.target();
+
+      if (target.equals(USERS_FCM)) {
+        oMessageRet = addNewUser(message);
+      }
+
+      return oMessageRet;
     });
+  }
+
+  private Observable<Message> addNewUser(Message message) {
+    // User user = getModel(User.class, message);
+    // return userRepository.addNewUser(user).map(ignore -> message);
+    return Observable.just(message);
   }
 
   /**

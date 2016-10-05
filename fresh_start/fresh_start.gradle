@@ -11,6 +11,8 @@ task('freshStart') << {
   Helper.moveFileDeleting(startFresh + "FcmMessageReceiver",
           data + "foundation/fcm/", "FcmMessageReceiver.java")
   Helper.removeDir(data + "sections/users")
+  Helper.moveFileDeleting(startFresh + "PlaceHolder",
+          data + "sections/launch", "PlaceHolder.java")
 
   String presentation = "app/src/main/java/app/presentation/"
   Helper.moveFileDeleting(startFresh + "PresentationComponent",
@@ -20,6 +22,10 @@ task('freshStart') << {
   Helper.removeDir(presentation + "sections/dashboard")
   Helper.removeDir(presentation + "sections/users")
   Helper.removeDir(presentation + "sections/launch")
+  Helper.moveFileDeleting(startFresh + "LaunchActivity",
+          presentation + "sections/launch", "LaunchActivity.java")
+  Helper.moveFileDeleting(startFresh + "LaunchPresenter",
+          presentation + "sections/launch", "LaunchPresenter.java")
 
 
   String resources = "app/src/main/res/"
@@ -29,12 +35,9 @@ task('freshStart') << {
   Helper.removeDir(resources+"/drawable")
   Helper.removeDir(resources+"/drawable-svg")
   Helper.removeDir(resources+"/menu")
-  Helper.moveFileDeleting(startFresh + "AndroidManifest",
-          "app/src/main/", "AndroidManifest.xml")
-  Helper.moveFileDeleting(startFresh + "strings",
-          "app/src/main/res/values/", "strings.xml")
-  Helper.moveFileDeleting(startFresh + "build",
-          "app/", "build.gradle")
+  Helper.moveFileDeleting(startFresh + "AndroidManifest", "app/src/main/", "AndroidManifest.xml")
+  Helper.moveFileDeleting(startFresh + "strings", "app/src/main/res/values/", "strings.xml")
+  Helper.moveFileDeleting(startFresh + "build", "app/", "build.gradle")
 
   Helper.moveFileDeleting(startFresh + "ApiModule",
           "app/src/prod/java/app/data/foundation/net", "ApiModule.java")
@@ -66,6 +69,7 @@ class Helper {
     File fileSrc = new File(source)
     File dir = new File(destination)
     File fileDst = new File(dir, nameNewFile)
+    dir.mkdirs()
     fileDst.delete()
     if (!fileSrc.renameTo(fileDst)) println("Failed to replace " + fileDst.getAbsolutePath())
   }

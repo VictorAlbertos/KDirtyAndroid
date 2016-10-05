@@ -17,6 +17,9 @@
 package app.presentation.foundation.dagger;
 
 import android.os.AsyncTask;
+
+import javax.inject.Named;
+
 import app.data.foundation.dagger.DataModule;
 import app.presentation.foundation.BaseApp;
 import app.presentation.foundation.dialogs.Dialogs;
@@ -27,7 +30,6 @@ import app.presentation.foundation.transformations.Transformations;
 import app.presentation.foundation.transformations.TransformationsBehaviour;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Named;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

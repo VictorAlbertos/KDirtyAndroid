@@ -127,7 +127,7 @@ public final class ExceptionFormatterTest {
 
     subscriber.assertNoErrors();
     subscriber.assertValueCount(1);
-    assertEquals("specific_error\nCAUSE",
+    assertEquals("specific_error" +  System.getProperty("line.separator") + "CAUSE",
         subscriber.getOnNextEvents().get(0));
   }
 
@@ -160,10 +160,10 @@ public final class ExceptionFormatterTest {
 
     subscriber.assertNoErrors();
     subscriber.assertValueCount(1);
-    assertEquals("2 exceptions occurred. \n"
-            + "Chain of Causes for CompositeException In Order Received =>\n"
-            + "RuntimeException -> 1\n"
-            + "NetworkException -> 2\n",
-        subscriber.getOnNextEvents().get(0));
+    assertEquals("2 exceptions occurred. " +  System.getProperty("line.separator")
+            + "Chain of Causes for CompositeException In Order Received =>" +  System.getProperty("line.separator")
+            + "RuntimeException -> 1" +  System.getProperty("line.separator")
+            + "NetworkException -> 2" +  System.getProperty("line.separator"),
+    subscriber.getOnNextEvents().get(0));
   }
 }

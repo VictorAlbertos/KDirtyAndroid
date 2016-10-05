@@ -16,13 +16,13 @@
 
 package app.data.foundation;
 
-import android.support.annotation.StringRes;
+import com.google.gson.TypeAdapterFactory;
+import com.ryanharter.auto.value.gson.GsonTypeAdapterFactory;
 
-/**
- * An abstraction layer for access Android resources without coupling with the platform.
- * This is necessary to be able to run unit tests without mocking the Android platform.
- */
-public interface Resources {
-  String getString(@StringRes int idResource);
-  String getLang();
+@GsonTypeAdapterFactory
+public abstract class GsonAdapterFactory implements TypeAdapterFactory {
+
+    public static GsonAdapterFactory create() {
+        return new AutoValueGson_GsonAdapterFactory();
+    }
 }

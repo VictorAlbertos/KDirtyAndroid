@@ -25,19 +25,14 @@ import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 
 final class LaunchPresenter extends Presenter<ViewPresenter> {
-  private final LaunchWireframe wireframe;
 
-  @Inject LaunchPresenter(Transformations transformations, LaunchWireframe wireframe,
-      Notifications notifications, SyncView syncView) {
+  @Inject
+  LaunchPresenter(Transformations transformations, Notifications notifications, SyncView syncView) {
     super(transformations, notifications, syncView);
-    this.wireframe = wireframe;
   }
 
   @Override public void onBindView(ViewPresenter view) {
     super.onBindView(view);
-    wireframe.dashboard()
-            .compose(transformations.safely())
-            .subscribe();
   }
 
 }

@@ -44,9 +44,6 @@ public final class TransformationsBehaviour implements Transformations {
     this.lifecycle = lifecycle;
   }
 
-  /**
-   * {inherit docs}
-   */
   public <T> Observable.Transformer<T, T> safely() {
     return observable -> observable
         .subscribeOn(backgroundThread)
@@ -54,9 +51,6 @@ public final class TransformationsBehaviour implements Transformations {
         .compose(lifecycle);
   }
 
-  /**
-   * {inherit docs}
-   */
   public <T> Observable.Transformer<T, T> reportOnSnackBar() {
     return observable -> observable
         .doOnError(throwable -> {
@@ -66,9 +60,6 @@ public final class TransformationsBehaviour implements Transformations {
         .onErrorResumeNext(throwable -> Observable.empty());
   }
 
-  /**
-   * {inherit docs}
-   */
   public <T> Observable.Transformer<T, T> reportOnToast() {
     return observable -> observable
         .doOnError(throwable -> {
@@ -78,12 +69,17 @@ public final class TransformationsBehaviour implements Transformations {
         .onErrorResumeNext(throwable -> Observable.empty());
   }
 
-  /**
-   * {inherit docs}
-   */
   public <T> Observable.Transformer<T, T> loading() {
     return observable -> observable
-        .doOnSubscribe(dialogs::showLoading)
-        .doOnCompleted(dialogs::hideLoading);
+        .doOnSubscribe(dialogs::showNoCancelableLoading)
+        .doOnCompleted(dialogs::hideLoading)
+        .doOnError(throwable -> dialogs.hideLoading());
+  }
+
+  public <T> Observable.Transformer<T, T> loading(String content) {
+      return observable -> observable
+        .doOnSubscribe(() -> dialogs.showNoCancelableLoading(content))
+        .doOnCompleted(dialogs::hideLoading)
+        .doOnError(throwable -> dialogs.hideLoading());
   }
 }

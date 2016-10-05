@@ -31,7 +31,7 @@ public final class FcmTokenReceiver implements FcmRefreshTokenReceiver {
       BaseApp baseApp = (BaseApp) tokenUpdate.getApplication();
       baseApp.getPresentationComponent().inject(this);
 
-      //Make use of repository to update the token on the server.
+      // TODO Make use of repository to update the token on the server.
     });
   }
 
