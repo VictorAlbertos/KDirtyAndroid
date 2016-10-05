@@ -29,6 +29,8 @@ import java.util.List;
 import miguelbcr.ok_adapters.recycler_view.OkRecyclerViewAdapter;
 import miguelbcr.ok_adapters.recycler_view.Pager;
 import org.base_app_android.R;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 @LayoutResFragment(R.layout.users_fragment)
 public final class UsersFragment extends BaseFragment<UsersPresenter> implements
@@ -67,9 +69,12 @@ public final class UsersFragment extends BaseFragment<UsersPresenter> implements
     swipeRefreshUsers.setOnRefreshListener(() -> adapter.resetPager(call));
   }
 
-  @Override public void setOnUserSelectedListener(OkRecyclerViewAdapter.Listener<User,
-      UserViewGroup> listener) {
-    adapter.setOnItemClickListener(listener);
+  @Override public Observable<User> userSelectedClicks() {
+    PublishSubject<User> clicks = PublishSubject.create();
+    adapter.setOnItemClickListener((user, userViewGroup, position) -> {
+      clicks.onNext(user);
+    });
+    return clicks;
   }
 
   @Override public void showNewUser(User user) {

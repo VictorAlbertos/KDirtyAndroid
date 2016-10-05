@@ -23,7 +23,9 @@ import app.presentation.foundation.views.BaseFragment;
 import app.presentation.foundation.views.LayoutResFragment;
 import app.presentation.sections.users.UserViewGroup;
 import butterknife.BindView;
+import com.jakewharton.rxbinding.view.RxView;
 import org.base_app_android.R;
+import rx.Observable;
 
 @LayoutResFragment(R.layout.user_search_fragment)
 public final class SearchUserFragment extends BaseFragment<SearchUserPresenter>
@@ -40,8 +42,8 @@ public final class SearchUserFragment extends BaseFragment<SearchUserPresenter>
     getApplicationComponent().inject(this);
   }
 
-  @Override public void setOnSearchUserListener(View.OnClickListener onClickListener) {
-    btFindUser.setOnClickListener(onClickListener);
+  @Override public Observable<Void> clicksSearchUser() {
+    return RxView.clicks(btFindUser);
   }
 
   @Override public String username() {

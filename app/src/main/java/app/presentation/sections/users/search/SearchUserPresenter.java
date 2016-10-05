@@ -26,6 +26,7 @@ import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 import javax.inject.Inject;
 import org.base_app_android.R;
+import rx.Observable;
 
 final class SearchUserPresenter extends Presenter<SearchUserPresenter.View> {
   private final UserRepository userRepository;
@@ -43,7 +44,8 @@ final class SearchUserPresenter extends Presenter<SearchUserPresenter.View> {
     if (userState != null) {
       view.showUser(userState);
     }
-    view.setOnSearchUserListener(button -> getUserByUserName(view.username()));
+    view.clicksSearchUser()
+        .subscribe(ignored -> getUserByUserName(view.username()));
   }
 
   @VisibleForTesting void getUserByUserName(String username) {
@@ -65,7 +67,7 @@ final class SearchUserPresenter extends Presenter<SearchUserPresenter.View> {
   interface View extends ViewPresenter {
     void showUser(User user);
 
-    void setOnSearchUserListener(android.view.View.OnClickListener onClickListener);
+    Observable<Void> clicksSearchUser();
 
     String username();
   }
