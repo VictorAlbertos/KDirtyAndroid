@@ -17,9 +17,14 @@
 package app.presentation.foundation.dialogs;
 
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+
 import app.presentation.foundation.BaseApp;
+
 import com.afollestad.materialdialogs.MaterialDialog;
+
 import javax.inject.Inject;
+
 import org.base_app_android.R;
 
 public final class DialogsBehaviour implements Dialogs {
@@ -30,26 +35,34 @@ public final class DialogsBehaviour implements Dialogs {
     this.baseApp = baseApp;
   }
 
-  /**
-   * {inherit docs}
-   */
   @Override public void showLoading() {
-    materialDialog = builderLoading()
-        .show();
+    if (materialDialog == null) {
+      materialDialog = builderLoading(null).show();
+    }
   }
 
-  /**
-   * {inherit docs}
-   */
+  @Override public void showLoading(String content) {
+    if (materialDialog == null) {
+      materialDialog = builderLoading(content).show();
+    }
+  }
+
   @Override public void showNoCancelableLoading() {
-    materialDialog = builderLoading()
-        .cancelable(false)
-        .show();
+    if (materialDialog == null) {
+      materialDialog = builderLoading(null)
+              .cancelable(false)
+              .show();
+    }
   }
 
-  /**
-   * {inherit docs}
-   */
+  @Override public void showNoCancelableLoading(String content) {
+    if (materialDialog == null) {
+      materialDialog = builderLoading(content)
+              .cancelable(false)
+              .show();
+    }
+  }
+
   @Override public void hideLoading() {
     if (materialDialog != null) {
       materialDialog.dismiss();
@@ -57,13 +70,13 @@ public final class DialogsBehaviour implements Dialogs {
     }
   }
 
-  private MaterialDialog.Builder builderLoading() {
+  private MaterialDialog.Builder builderLoading(String content) {
     return new MaterialDialog.Builder(baseApp.getLiveActivity())
-        .titleColorRes(R.color.colorPrimaryDark)
-        .contentColor(ContextCompat.getColor(baseApp, R.color.colorPrimaryDark))
-        .widgetColorRes(R.color.colorPrimaryDark)
-        .title(baseApp.getString(R.string.app_name))
-        .content(baseApp.getString(R.string.loading))
-        .progress(true, 0);
+            .titleColorRes(R.color.colorPrimaryDark)
+            .contentColor(ContextCompat.getColor(baseApp, R.color.colorPrimaryDark))
+            .widgetColorRes(R.color.colorPrimaryDark)
+            .title(baseApp.getString(R.string.app_name))
+            .content(TextUtils.isEmpty(content) ? baseApp.getString(R.string.loading) : content)
+            .progress(true, 0);
   }
 }

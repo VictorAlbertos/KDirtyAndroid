@@ -33,11 +33,11 @@ public class SyncView {
     this.pendingScreens = new ArrayList<>();
   }
 
-  void addScreen(String screen) {
+  public void addScreen(String screen) {
     if (!pendingScreens.contains(screen)) pendingScreens.add(screen);
   }
 
-  boolean needToSync(Matcher matcher) {
+  public boolean needToSync(Matcher matcher) {
     boolean needToSync = false;
 
     int index = 0;

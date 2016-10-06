@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package app.data.foundation;
+package app.presentation.sections.launch;
 
-import android.support.annotation.StringRes;
+import app.presentation.foundation.views.BaseActivity;
 
-/**
- * An abstraction layer for access Android resources without coupling with the platform.
- * This is necessary to be able to run unit tests without mocking the Android platform.
- */
-public interface Resources {
-  String getString(@StringRes int idResource);
-  String getLang();
+public final class LaunchActivity extends BaseActivity<LaunchPresenter> {
+
+  @Override protected void initViews() {
+    // Do nothing.  Exists to satisfy BaseActivity.
+  }
+
+  @Override protected void injectDagger() {
+    getApplicationComponent().inject(this);
+  }
+
 }

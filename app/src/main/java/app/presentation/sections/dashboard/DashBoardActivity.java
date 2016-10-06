@@ -27,13 +27,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import app.presentation.foundation.views.BaseActivity;
+import app.presentation.foundation.views.FragmentsManager;
 import app.presentation.foundation.views.LayoutResActivity;
 import butterknife.BindView;
 import org.base_app_android.R;
 
-@LayoutResActivity(R.layout.dashboard_activity)
-public final class DashBoardActivity extends BaseActivity<DashboardPresenter>
-    implements DashboardPresenter.View {
+@LayoutResActivity(R.layout.dashboard_activity) public final class DashBoardActivity
+    extends BaseActivity<DashboardPresenter> implements DashboardPresenter.View {
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
   @BindView(R.id.navigation_view) NavigationView navigationView;
@@ -41,6 +41,10 @@ public final class DashBoardActivity extends BaseActivity<DashboardPresenter>
 
   @Override protected void injectDagger() {
     getApplicationComponent().inject(this);
+  }
+
+  public void selectDrawerMenu(@IdRes int menuItem) {
+    navigationView.getMenu().performIdentifierAction(menuItem, 0);
   }
 
   @Override protected void initViews() {
@@ -88,19 +92,10 @@ public final class DashBoardActivity extends BaseActivity<DashboardPresenter>
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(getString(id));
   }
 
-  @Override public Fragment currentFragment() {
-    return getSupportFragmentManager()
-        .findFragmentById(R.id.fl_fragment);
-  }
-
-  @Override public void replaceFragment(Class<? extends Fragment> classFragment) {
-    try {
-      Fragment fragment = classFragment.newInstance();
-      getSupportFragmentManager().beginTransaction()
-          .replace(R.id.fl_fragment, fragment).commit();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+  @Override public boolean replaceFragment(FragmentsManager fragmentsManager,
+      Class<? extends Fragment> classFragment) {
+    return fragmentsManager.replaceFragment(getSupportFragmentManager(), R.id.fl_fragment,
+        classFragment, false);
   }
 
   @Override public void closeDrawer() {

@@ -49,4 +49,11 @@ public interface Transformations {
    * Show a loading dialog just before observables is subscribed and hide it after it is completed.
    */
   <T> ObservableTransformer<T, T> loading();
+
+  /**
+   * Show a loading dialog just before observables is subscribed and hide it after it is completed.
+   *
+   * @param content Text to display in the dialog
+   */
+  <T> ObservableTransformer<T, T> loading(String content);
 }

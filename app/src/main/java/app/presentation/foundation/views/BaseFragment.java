@@ -19,6 +19,7 @@ package app.presentation.foundation.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import app.presentation.foundation.BaseApp;
@@ -92,6 +93,13 @@ public abstract class BaseFragment<P extends Presenter> extends Rx2Fragment
   @Override public void onResume() {
     super.onResume();
     presenter.onResumeView();
+  }
+
+  /**
+   * Delegate responsibility to the presenter.
+   */
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+      return presenter.onOptionsItemSelected(item);
   }
 
   /**
