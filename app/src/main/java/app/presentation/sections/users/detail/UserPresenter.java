@@ -19,7 +19,6 @@ package app.presentation.sections.users.detail;
 import app.data.sections.users.User;
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.presenter.Presenter;
-import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.users.UsersWireframe;
@@ -29,8 +28,8 @@ final class UserPresenter extends Presenter<UserPresenter.View> {
   private final UsersWireframe wireframe;
 
   @Inject UserPresenter(Transformations transformations, UsersWireframe wireframe,
-      Notifications notifications, SyncView syncView) {
-    super(transformations, notifications, syncView);
+      Notifications notifications) {
+    super(transformations, notifications);
     this.wireframe = wireframe;
   }
 

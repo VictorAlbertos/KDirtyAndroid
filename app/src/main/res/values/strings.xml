@@ -9,7 +9,6 @@
   <string name="users">Users</string>
   <string name="go_to_list_user">Go to list users</string>
   <string name="find_user">Find user</string>
-  <string name="mock_add_user">Mock Fcm notification</string>
   <string name="user_name">Username on Github</string>
   <string name="logout">Logout</string>
   <string name="ask_logout">Do you want to exit?</string>

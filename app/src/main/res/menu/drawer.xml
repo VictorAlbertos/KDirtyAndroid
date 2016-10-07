@@ -13,10 +13,5 @@
         android:icon="@drawable/ic_search"
         android:title="@string/find_user"/>
 
-    <item
-        android:id="@+id/drawer_mock_user"
-        android:checked="false"
-        android:icon="@drawable/ic_user"
-        android:title="@string/mock_add_user"/>
   </group>
 </menu>

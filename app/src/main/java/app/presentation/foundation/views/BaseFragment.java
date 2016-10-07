@@ -19,7 +19,6 @@ package app.presentation.foundation.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import app.presentation.foundation.BaseApp;
@@ -29,12 +28,9 @@ import app.presentation.foundation.presenter.ViewPresenter;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.BackpressureStrategy;
-import io.reactivex.Observable;
 import io.victoralbertos.rxlifecycle_interop.Rx2LifecycleAndroid;
 import io.victoralbertos.rxlifecycle_interop.support.Rx2Fragment;
 import javax.inject.Inject;
-import rx_fcm.FcmReceiverUIForeground;
-import rx_fcm.Message;
 
 /**
  * Base class for every new Fragment which requires to use a Presenter. Annotate the sub-class with
@@ -43,7 +39,7 @@ import rx_fcm.Message;
  * @param <P> the presenter associated with this Fragment.
  */
 public abstract class BaseFragment<P extends Presenter> extends Rx2Fragment
-    implements ViewPresenter, FcmReceiverUIForeground {
+    implements ViewPresenter {
   @Inject P presenter;
   private Unbinder unbinder;
 
@@ -123,26 +119,5 @@ public abstract class BaseFragment<P extends Presenter> extends Rx2Fragment
   protected PresentationComponent getApplicationComponent() {
     return ((BaseApp) getActivity().getApplication())
         .getPresentationComponent();
-  }
-
-  /**
-   * Delegate the call to presenter.
-   */
-  @Override public void onTargetNotification(Observable<Message> message) {
-    presenter.onTargetNotification(message);
-  }
-
-  /**
-   * Delegate the call to presenter.
-   */
-  @Override public void onMismatchTargetNotification(Observable<Message> oMessage) {
-    presenter.onMismatchTargetNotification(oMessage);
-  }
-
-  /**
-   * Delegate the call to presenter.
-   */
-  @Override public boolean matchesTarget(String key) {
-    return presenter.matchesTarget(key);
   }
 }

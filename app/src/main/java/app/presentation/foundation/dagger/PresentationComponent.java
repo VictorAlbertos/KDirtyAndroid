@@ -16,8 +16,6 @@
 
 package app.presentation.foundation.dagger;
 
-import app.data.foundation.fcm.FcmMessageReceiver;
-import app.data.foundation.fcm.FcmTokenReceiver;
 import app.presentation.sections.dashboard.DashBoardActivity;
 import app.presentation.sections.launch.LaunchActivity;
 import app.presentation.sections.users.detail.UserActivity;
@@ -41,8 +39,4 @@ public interface PresentationComponent {
   void inject(UsersFragment usersFragment);
 
   void inject(SearchUserFragment searchUserFragment);
-
-  void inject(FcmTokenReceiver fcmTokenReceiver);
-
-  void inject(FcmMessageReceiver fcmMessageReceiver);
 }

@@ -23,7 +23,6 @@ import android.widget.Toast;
 import app.presentation.foundation.BaseApp;
 import io.reactivex.Observable;
 import javax.inject.Inject;
-import rx_fcm.Message;
 
 public final class NotificationsBehaviour implements Notifications {
   private final BaseApp baseApp;
@@ -32,16 +31,10 @@ public final class NotificationsBehaviour implements Notifications {
     this.baseApp = baseApp;
   }
 
-  /**
-   * {inherit docs}
-   */
   @Override public void showToast(Observable<String> oTitle) {
     oTitle.subscribe(title -> Toast.makeText(baseApp, title, Toast.LENGTH_LONG).show());
   }
 
-  /**
-   * {inherit docs}
-   */
   @Override public void showSnackBar(Observable<String> oTitle) {
     Activity activity = baseApp.getLiveActivity();
     if (activity != null) {
@@ -50,36 +43,16 @@ public final class NotificationsBehaviour implements Notifications {
     }
   }
 
-  /**
-   * {inherit docs}
-   */
   @Override public void showToast(@StringRes int idString) {
     Toast.makeText(baseApp, baseApp.getString(idString),
         Toast.LENGTH_LONG).show();
   }
 
-  /**
-   * {inherit docs}
-   */
   @Override public void showSnackBar(@StringRes int idString) {
     Activity activity = baseApp.getLiveActivity();
     if (activity != null) {
       Snackbar.make(activity.findViewById(android.R.id.content),
           baseApp.getString(idString), Snackbar.LENGTH_LONG).show();
     }
-  }
-
-  /**
-   * {inherit docs}
-   */
-  @Override public void showFcmNotification(Observable<Message> oMessage) {
-    Observable<String> oNotification = oMessage
-        .map(message ->
-          message.payload().getString("title")
-              + System.getProperty("line.separator")
-              + message.payload().getString("body")
-        );
-
-    showToast(oNotification);
   }
 }

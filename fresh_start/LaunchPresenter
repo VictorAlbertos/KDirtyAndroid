@@ -20,15 +20,14 @@ import javax.inject.Inject;
 
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.presenter.Presenter;
-import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 
 final class LaunchPresenter extends Presenter<ViewPresenter> {
 
   @Inject
-  LaunchPresenter(Transformations transformations, Notifications notifications, SyncView syncView) {
-    super(transformations, notifications, syncView);
+  LaunchPresenter(Transformations transformations, Notifications notifications) {
+    super(transformations, notifications);
   }
 
   @Override public void onBindView(ViewPresenter view) {

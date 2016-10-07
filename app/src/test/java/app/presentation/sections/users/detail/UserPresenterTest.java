@@ -18,7 +18,6 @@ package app.presentation.sections.users.detail;
 
 import app.data.sections.users.User;
 import app.presentation.foundation.notifications.Notifications;
-import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.TransformationsMock;
 import app.presentation.sections.users.UsersWireframe;
@@ -42,12 +41,11 @@ public final class UserPresenterTest {
   @Mock UsersWireframe wireframe;
   @Mock UserPresenter.View view;
   @Mock Notifications notifications;
-  @Mock SyncView syncView;
   private UserPresenter userPresenterUT;
 
   @Before public void init() {
     userPresenterUT = new UserPresenter(transformations, wireframe,
-        notifications, syncView);
+        notifications);
   }
 
   @Test public void Verify_OnBindView_With_Success_Response() {

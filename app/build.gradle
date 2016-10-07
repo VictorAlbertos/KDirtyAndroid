@@ -126,8 +126,6 @@ dependencies {
   provided "org.glassfish:javax.annotation:10.0-b28"
   apt "com.google.dagger:dagger-compiler:${versions.dagger}"
   compile "com.google.dagger:dagger:${versions.dagger}"
-  compile 'com.google.firebase:firebase-core:9.2.1'
-  compile 'com.github.VictorAlbertos:RxFcm:0.0.6-2.x'
   compile 'io.reactivex.rxjava2:rxjava:2.0.0-RC2'
   debugCompile "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
   releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
@@ -184,6 +182,3 @@ configurations.all {
   resolutionStrategy.force "com.android.support:support-annotations:${versions.support}"
   resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
 }
-
-// Works if you put this line at the bottom of this file, nor at the top
-apply plugin: 'com.google.gms.google-services'

@@ -21,10 +21,8 @@ import android.support.annotation.StringRes;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
-import app.data.sections.users.UserRepository;
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.presenter.Presenter;
-import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.foundation.views.FragmentsManager;
@@ -37,7 +35,6 @@ import javax.inject.Inject;
 import org.base_app_android.R;
 
 final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
-  private final UserRepository userRepository;
   private final FragmentsManager fragmentsManager;
 
   private static final Map<Integer, ItemMenu> ITEMS_MENU;
@@ -50,9 +47,8 @@ final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
   }
 
   @Inject DashboardPresenter(Transformations transformations, Notifications notifications,
-      SyncView syncView, UserRepository userRepository, FragmentsManager fragmentsManager) {
-    super(transformations, notifications, syncView);
-    this.userRepository = userRepository;
+      FragmentsManager fragmentsManager) {
+    super(transformations, notifications);
     this.fragmentsManager = fragmentsManager;
   }
 
@@ -63,11 +59,6 @@ final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
 
     view.clicksItemSelected()
         .subscribe(menuItem -> {
-          if (menuItem.getItemId() == R.id.drawer_mock_user) {
-            userRepository.mockAFcmNotification().subscribe();
-            return;
-          }
-
           replaceDrawerFragment(menuItem.getItemId());
           view.closeDrawer();
         });

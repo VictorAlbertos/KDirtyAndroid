@@ -19,7 +19,6 @@ package app.presentation.sections.users.list;
 import app.data.sections.users.User;
 import app.data.sections.users.UserRepository;
 import app.presentation.foundation.notifications.Notifications;
-import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.TransformationsMock;
 import app.presentation.sections.users.UsersWireframe;
@@ -49,12 +48,11 @@ public final class UsersPresenterTest {
   @Mock UsersPresenter.View view;
   @Mock Pager.Callback<User> callback;
   @Mock Notifications notifications;
-  @Mock SyncView syncView;
   private UsersPresenter usersPresenterUT;
 
   @Before public void init() {
     usersPresenterUT = new UsersPresenter(transformations, userRepository,
-        wireframe, syncView, notifications);
+        wireframe, notifications);
     when(view.userSelectedClicks()).thenReturn(Observable.never());
   }
 
@@ -146,25 +144,6 @@ public final class UsersPresenterTest {
     verify(transformations).safely();
     verify(transformations).reportOnSnackBar();
     verify(callback, never()).supply(any());
-  }
-
-  @Test public void Verify_On_Target_Notification() {
-    usersPresenterUT.onBindView(view);
-
-    User user = aUser();
-    when(userRepository.getRecentUser())
-        .thenReturn(Observable.just(user));
-
-    usersPresenterUT.onTargetNotification(null);
-
-    verify(userRepository).getRecentUser();
-    verify(transformations).safely();
-    verify(transformations).reportOnSnackBar();
-
-    assertEquals(1, usersPresenterUT.usersState.size());
-    assertEquals(user, usersPresenterUT.usersState.get(0));
-
-    verify(view).showNewUser(any());
   }
 
   private void mockSuccessResponse() {

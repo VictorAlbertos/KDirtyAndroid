@@ -18,28 +18,22 @@ package app.presentation.foundation.presenter;
 
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.transformations.Transformations;
-import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import javax.inject.Inject;
-import rx_fcm.Message;
-import rx_fcm.internal.RxFcm;
 
 /**
  * Base class for every new presenter.
  *
  * @param <V> the associated view abstraction with this presenter.
  */
-public class Presenter<V extends ViewPresenter> implements SyncView.Matcher {
+public class Presenter<V extends ViewPresenter> {
   protected V view;
   protected final Transformations transformations;
   protected final Notifications notifications;
-  protected final SyncView syncView;
 
-  @Inject public Presenter(Transformations transformations, Notifications notifications,
-      SyncView syncView) {
+  @Inject public Presenter(Transformations transformations, Notifications notifications) {
     this.transformations = transformations;
     this.notifications = notifications;
-    this.syncView = syncView;
   }
 
   /**
@@ -63,42 +57,5 @@ public class Presenter<V extends ViewPresenter> implements SyncView.Matcher {
    */
   public void onResumeView() {
     //Override if sub-class requires to handle some updates when the view is resumed.
-  }
-
-  /**
-   * Called when a Fcm notification is received and it matches with the key provided by {@link
-   * #matchesTarget(String)}.
-   */
-  public void onTargetNotification(Observable<Message> oMessage) {
-    //Override if sub-class requires to show A Fcm notification.
-  }
-
-  /**
-   * When a Fcm notification is received and it doesn't match with the key provided by {@link
-   * #matchesTarget(String)} a toast is shown and this key is added to syncView as a flag to notify
-   * potential screen callers.
-   */
-  public void onMismatchTargetNotification(Observable<Message> oMessage) {
-    notifications.showFcmNotification(
-        oMessage.doOnNext(message -> syncView.addScreen(message.target())));
-  }
-
-  /**
-   * Override if the Presenter requires to be notified, whether by a Fcm notification or due to some
-   * other internal event both of them handled by screensSync instance.
-   */
-  @Override public boolean matchesTarget(String key) {
-    return false;
-  }
-
-  /**
-   * Gets the current Fcm token
-   *
-   * @return The Fcm token
-   */
-  protected Observable<String> tokenFcm() {
-    return RxFcm.Notifications.currentToken().onErrorResumeNext(throwable -> {
-      return Observable.just("");
-    });
   }
 }

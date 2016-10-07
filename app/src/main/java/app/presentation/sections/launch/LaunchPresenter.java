@@ -18,7 +18,6 @@ package app.presentation.sections.launch;
 
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.presenter.Presenter;
-import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 import javax.inject.Inject;
@@ -27,8 +26,8 @@ final class LaunchPresenter extends Presenter<ViewPresenter> {
   private final LaunchWireframe wireframe;
 
   @Inject LaunchPresenter(Transformations transformations, LaunchWireframe wireframe,
-      Notifications notifications, SyncView syncView) {
-    super(transformations, notifications, syncView);
+      Notifications notifications) {
+    super(transformations, notifications);
     this.wireframe = wireframe;
   }
 

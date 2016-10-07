@@ -18,7 +18,6 @@ package app.presentation.foundation.notifications;
 
 import android.support.annotation.StringRes;
 import io.reactivex.Observable;
-import rx_fcm.Message;
 
 /**
  * A centralized notification pipeline approach. This is indirection layer allows us to run unit tests without mocking the Android platform.
@@ -43,9 +42,4 @@ public interface Notifications {
    * For output snackbar messages from the presentation layer.
    */
   void showSnackBar(@StringRes int idString);
-
-  /**
-   * For output toast messages received in fcm push notifications from the presentation layer.
-   */
-  void showFcmNotification(Observable<Message> oMessage);
 }
