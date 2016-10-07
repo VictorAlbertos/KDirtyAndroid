@@ -16,9 +16,6 @@
 
 package app.presentation.foundation.presenter;
 
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.transformations.Transformations;
 import io.reactivex.Observable;
@@ -66,17 +63,6 @@ public class Presenter<V extends ViewPresenter> implements SyncView.Matcher {
    */
   public void onResumeView() {
     //Override if sub-class requires to handle some updates when the view is resumed.
-  }
-
-  /**
-   * Called when an action bar menu item is clicked.<br/> See {@link android.support.v4.app.Fragment#setHasOptionsMenu(boolean)}
-   * and {@link android.support.v4.app.Fragment#onCreateOptionsMenu(Menu, MenuInflater)}
-   *
-   * @return true = consumed. To default behaviour use <code>super.onOptionsItemSelected(item);</code>
-   */
-  public boolean onOptionsItemSelected(MenuItem item) {
-    //Override if sub-class requires to handle action bar menu items clicks
-    return false;
   }
 
   /**

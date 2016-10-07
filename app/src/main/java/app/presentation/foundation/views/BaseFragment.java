@@ -96,13 +96,6 @@ public abstract class BaseFragment<P extends Presenter> extends Rx2Fragment
   }
 
   /**
-   * Delegate responsibility to the presenter.
-   */
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-      return presenter.onOptionsItemSelected(item);
-  }
-
-  /**
    * Unbind views injected with Butter-knife.
    */
   @Override public void onDestroyView() {

@@ -55,6 +55,7 @@ public final class UsersPresenterTest {
   @Before public void init() {
     usersPresenterUT = new UsersPresenter(transformations, userRepository,
         wireframe, syncView, notifications);
+    when(view.userSelectedClicks()).thenReturn(Observable.never());
   }
 
   @Test public void When_Call_OnBindView_Then_SetUpLoaderPager_Is_Called() {
@@ -69,10 +70,10 @@ public final class UsersPresenterTest {
     verify(view).setUpRefreshList(any());
   }
 
-  @Test public void When_Call_OnBindView_Then_SetOnUserSelectedListener_Is_Called() {
+  @Test public void When_Call_OnBindView_Then_UserSelectedClicks_Is_Called() {
     usersPresenterUT.onBindView(view);
 
-    verify(view).setOnUserSelectedListener(any());
+    verify(view).userSelectedClicks();
   }
 
   @Test public void When_Call_NextPage_Second_Time_Then_UsersState_Preserve_Users() {

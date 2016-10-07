@@ -21,8 +21,8 @@ import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.foundation.views.FragmentsManager;
 import app.presentation.sections.TransformationsMock;
-import app.presentation.sections.users.list.UsersFragment;
 import app.presentation.sections.users.search.SearchUserFragment;
+import io.reactivex.Observable;
 import org.base_app_android.R;
 import org.junit.Before;
 import org.junit.Rule;
@@ -51,19 +51,20 @@ public final class DashboardPresenterTest {
   @Before public void init() {
     dashboardPresenterUT = new DashboardPresenter(transformations,
         notifications, syncView, null, fragmentsManager);
+    when(view.clicksItemSelected()).thenReturn(Observable.never());
   }
 
   @Test public void Verify_OnBindView() {
     dashboardPresenterUT.onBindView(view);
 
-    verify(view).setNavigationItemSelectedListener(any());
+    verify(view).clicksItemSelected();
     verify(view).replaceFragment(any(FragmentsManager.class), any());
   }
 
   @Test public void Verify_OnBindView_With_Current_Fragment() {
     dashboardPresenterUT.onBindView(view);
 
-    verify(view).setNavigationItemSelectedListener(any());
+    verify(view).clicksItemSelected();
     verify(view).replaceFragment(any(FragmentsManager.class), any());
   }
 

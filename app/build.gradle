@@ -114,7 +114,8 @@ ext {
           mockery           : "0.0.5",
           autovalue         : "1.3",
           butterknife       : "8.4.0",
-          leakCanary        : "1.4-beta2"
+          leakCanary        : "1.4-beta2",
+          rxbinding         : "0.4.0"
   ]
 }
 
@@ -157,8 +158,10 @@ dependencies {
   }
   compile "com.jakewharton:butterknife:${versions.butterknife}"
   apt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
-  compile 'com.github.VictorAlbertos:RxLifecycleInterop:0.0.2'
+  compile 'com.github.VictorAlbertos:RxLifecycleInterop:0.0.3'
   compile "com.github.miguelbcr:OkAdapters:0.2.1"
+  compile "com.jakewharton.rxbinding:rxbinding:${versions.rxbinding}"
+  compile "com.jakewharton.rxbinding:rxbinding-design:${versions.rxbinding}"
 
   //Testing
   testCompile 'junit:junit:4.12'

@@ -25,6 +25,8 @@ import app.presentation.foundation.views.BaseFragment;
 import app.presentation.foundation.views.LayoutResFragment;
 import app.presentation.sections.users.UserViewGroup;
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 import java.util.List;
 import miguelbcr.ok_adapters.recycler_view.OkRecyclerViewAdapter;
 import miguelbcr.ok_adapters.recycler_view.Pager;
@@ -67,9 +69,12 @@ public final class UsersFragment extends BaseFragment<UsersPresenter> implements
     swipeRefreshUsers.setOnRefreshListener(() -> adapter.resetPager(call));
   }
 
-  @Override public void setOnUserSelectedListener(OkRecyclerViewAdapter.Listener<User,
-      UserViewGroup> listener) {
-    adapter.setOnItemClickListener(listener);
+  @Override public Observable<User> userSelectedClicks() {
+    PublishSubject<User> clicks = PublishSubject.create();
+    adapter.setOnItemClickListener((user, userViewGroup, position) -> {
+      clicks.onNext(user);
+    });
+    return clicks;
   }
 
   @Override public void showNewUser(User user) {

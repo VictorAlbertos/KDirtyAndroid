@@ -49,12 +49,13 @@ public final class SearchUserPresenterTest {
   @Before public void init() {
     searchUserPresenterUT = new SearchUserPresenter(transformations,
         userRepository, syncView, notifications);
+    when(view.clicksSearchUser()).thenReturn(Observable.never());
   }
 
   @Test public void Verify_OnBindView() {
     searchUserPresenterUT.onBindView(view);
 
-    verify(view).setOnSearchUserListener(any());
+    verify(view).clicksSearchUser();
     verify(view, never()).showUser(any());
   }
 
