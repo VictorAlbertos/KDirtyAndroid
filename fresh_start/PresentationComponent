@@ -18,6 +18,7 @@ package app.presentation.foundation.dagger;
 
 import app.data.foundation.fcm.FcmMessageReceiver;
 import app.data.foundation.fcm.FcmTokenReceiver;
+import app.presentation.sections.launch.LaunchActivity;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -28,6 +29,7 @@ import javax.inject.Singleton;
 @Singleton @Component(modules = {PresentationModule.class})
 public interface PresentationComponent {
 
+  void inject(LaunchActivity launchActivity);
   void inject(FcmTokenReceiver fcmTokenReceiver);
 
   void inject(FcmMessageReceiver fcmMessageReceiver);

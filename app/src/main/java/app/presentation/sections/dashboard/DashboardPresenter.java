@@ -27,6 +27,7 @@ import app.presentation.foundation.presenter.Presenter;
 import app.presentation.foundation.presenter.SyncView;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
+import app.presentation.foundation.views.FragmentsManager;
 import app.presentation.sections.users.list.UsersFragment;
 import app.presentation.sections.users.search.SearchUserFragment;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import org.base_app_android.R;
 
 final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
   private final UserRepository userRepository;
+  private final FragmentsManager fragmentsManager;
 
   private static final Map<Integer, ItemMenu> ITEMS_MENU;
 
@@ -47,17 +49,16 @@ final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
   }
 
   @Inject DashboardPresenter(Transformations transformations, Notifications notifications,
-      SyncView syncView, UserRepository userRepository) {
+      SyncView syncView, UserRepository userRepository, FragmentsManager fragmentsManager) {
     super(transformations, notifications, syncView);
     this.userRepository = userRepository;
+    this.fragmentsManager = fragmentsManager;
   }
 
   @Override public void onBindView(View view) {
     super.onBindView(view);
 
-    if (view.currentFragment() == null) {
-      replaceFragmentIfItIsNotCurrentOne(R.id.drawer_users);
-    }
+    replaceDrawerFragment(R.id.drawer_users);
 
     view.setNavigationItemSelectedListener(menuItem -> {
       //just for demo purpose
@@ -66,29 +67,26 @@ final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
         return true;
       }
 
-      replaceFragmentIfItIsNotCurrentOne(menuItem.getItemId());
+      replaceDrawerFragment(menuItem.getItemId());
       view.closeDrawer();
       return true;
     });
   }
 
-  @VisibleForTesting void replaceFragmentIfItIsNotCurrentOne(@IdRes int idSelectedMenu) {
+  @VisibleForTesting void replaceDrawerFragment(@IdRes int idSelectedMenu) {
     ItemMenu itemMenu = ITEMS_MENU.get(idSelectedMenu);
-
     Class<? extends Fragment> classFragment = itemMenu.classFragment();
 
-    Fragment current = view.currentFragment();
-    if (current != null && current.getClass() == classFragment) return;
-
-    view.setCheckedItemMenu(idSelectedMenu);
-    view.setTitleActionBar(itemMenu.resTitle());
-    view.replaceFragment(classFragment);
+    if (view.replaceFragment(fragmentsManager, classFragment)) {
+      view.setCheckedItemMenu(idSelectedMenu);
+      view.setTitleActionBar(itemMenu.resTitle());
+    }
   }
 
   interface View extends ViewPresenter {
-    Fragment currentFragment();
 
-    void replaceFragment(Class<? extends Fragment> classFragment);
+    boolean replaceFragment(FragmentsManager fragmentsManager,
+        Class<? extends Fragment> classFragment);
 
     void setNavigationItemSelectedListener(
         NavigationView.OnNavigationItemSelectedListener listener);

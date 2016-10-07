@@ -46,4 +46,7 @@ public class TransformationsMock implements Transformations {
     return observable -> observable;
   }
 
+  @Override public <T> ObservableTransformer<T, T> loading(String content) {
+    return observable -> observable;
+  }
 }

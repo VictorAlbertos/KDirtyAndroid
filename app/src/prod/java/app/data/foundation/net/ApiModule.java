@@ -20,7 +20,7 @@ import app.data.sections.users.GithubUsersApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.ryanharter.auto.value.gson.AutoValueGsonTypeAdapterFactory;
+import app.data.foundation.GsonAdapterFactory;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Inject;
@@ -37,7 +37,7 @@ public class ApiModule {
 
   @Inject public ApiModule() {
     Gson gson = new GsonBuilder()
-        .registerTypeAdapterFactory(new AutoValueGsonTypeAdapterFactory())
+        .registerTypeAdapterFactory(GsonAdapterFactory.create())
         .create();
 
     this.retrofit = new Retrofit.Builder()
