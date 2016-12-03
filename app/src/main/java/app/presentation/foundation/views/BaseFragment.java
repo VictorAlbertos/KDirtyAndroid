@@ -27,9 +27,8 @@ import app.presentation.foundation.presenter.Presenter;
 import app.presentation.foundation.presenter.ViewPresenter;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.BackpressureStrategy;
-import io.victoralbertos.rxlifecycle_interop.Rx2LifecycleAndroid;
-import io.victoralbertos.rxlifecycle_interop.support.Rx2Fragment;
+import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import javax.inject.Inject;
 
 /**
@@ -38,7 +37,7 @@ import javax.inject.Inject;
  *
  * @param <P> the presenter associated with this Fragment.
  */
-public abstract class BaseFragment<P extends Presenter> extends Rx2Fragment
+public abstract class BaseFragment<P extends Presenter> extends RxFragment
     implements ViewPresenter {
   @Inject P presenter;
   private Unbinder unbinder;
@@ -74,7 +73,7 @@ public abstract class BaseFragment<P extends Presenter> extends Rx2Fragment
 
     //Bind the lifecycle of this Fragment provided by RxLifecycle to the associated presenter.
     presenter.bindLifeCycle(
-        Rx2LifecycleAndroid.bindFragment(lifecycle2x(), BackpressureStrategy.LATEST));
+        RxLifecycleAndroid.bindFragment(lifecycle()));
 
     //At this point is safe calling initViews to let the sub-class to configure its views.
     initViews();
