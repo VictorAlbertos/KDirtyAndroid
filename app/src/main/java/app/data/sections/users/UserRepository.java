@@ -18,7 +18,6 @@ package app.data.sections.users;
 
 import android.support.annotation.VisibleForTesting;
 import app.data.foundation.net.NetworkResponse;
-import com.fernandocejas.frodo.annotation.RxLogObservable;
 import io.reactivecache2.ProviderGroup;
 import io.reactivecache2.ReactiveCache;
 import io.reactivex.Observable;
@@ -40,14 +39,11 @@ public class UserRepository {
         .withKey("users");
   }
 
-  @RxLogObservable
   public Observable<List<User>> getUsers(Integer lastIdQueried, final boolean refresh) {
     return getUsersReply(lastIdQueried, refresh)
         .map(Reply::getData);
   }
 
-
-  @RxLogObservable
   public Observable<User> getRecentUser() {
     return getUsersReply(FIRST_DEFAULT_ID, false)
         .map(Reply::getData)
@@ -66,7 +62,6 @@ public class UserRepository {
         : apiCall.compose(cacheProvider.readWithLoaderAsReply(safeId));
   }
 
-  @RxLogObservable
   public Observable<User> searchByUserName(final String username) {
     return githubUsersApi
         .getUserByName(username)
