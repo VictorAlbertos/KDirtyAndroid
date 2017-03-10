@@ -20,11 +20,11 @@ import android.view.View;
 import android.widget.EditText;
 import app.data.foundation.Ignore;
 import app.data.sections.users.User;
-import app.presentation.foundation.rx_bindings_interop.RxView;
 import app.presentation.foundation.views.BaseFragment;
 import app.presentation.foundation.views.LayoutResFragment;
 import app.presentation.sections.users.UserViewGroup;
 import butterknife.BindView;
+import com.jakewharton.rxbinding2.view.RxView;
 import io.reactivex.Observable;
 import org.base_app_android.R;
 
@@ -44,7 +44,7 @@ public final class SearchUserFragment extends BaseFragment<SearchUserPresenter>
   }
 
   @Override public Observable<Ignore> clicksSearchUser() {
-    return RxView.clicks(btFindUser);
+    return RxView.clicks(btFindUser).map(_I -> Ignore.Get);
   }
 
   @Override public String username() {

@@ -30,7 +30,7 @@ import app.presentation.foundation.views.BaseActivity;
 import app.presentation.foundation.views.FragmentsManager;
 import app.presentation.foundation.views.LayoutResActivity;
 import butterknife.BindView;
-import app.presentation.foundation.rx_bindings_interop.RxNavigationView;
+import com.jakewharton.rxbinding2.support.design.widget.RxNavigationView;
 import io.reactivex.Observable;
 import org.base_app_android.R;
 
