@@ -18,14 +18,15 @@ package app.presentation.foundation.transformations;
 
 import app.presentation.foundation.dialogs.Dialogs;
 import app.presentation.foundation.notifications.Notifications;
-import io.reactivex.Observable;
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.SingleTransformer;
+import java.util.concurrent.CancellationException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 public final class TransformationsBehaviour implements Transformations {
-  private ObservableTransformer lifecycle;
+  private SingleTransformer lifecycle;
   private final ExceptionFormatter exceptionFormatter;
   private final Notifications notifications;
   private final Dialogs dialogs;
@@ -41,50 +42,50 @@ public final class TransformationsBehaviour implements Transformations {
     this.backgroundThread = backgroundThread;
   }
 
-  public void setLifecycle(ObservableTransformer lifecycle) {
+  public void setLifecycle(SingleTransformer lifecycle) {
     this.lifecycle = lifecycle;
   }
 
-  public <T> ObservableTransformer<T, T> safely() {
-    return observable -> observable
+  public <T> SingleTransformer<T, T> safely() {
+    return single -> single
         .subscribeOn(backgroundThread)
-        .observeOn(mainThread)
-        .compose(lifecycle);
+        .<T>observeOn(mainThread)
+        .<T>compose(lifecycle)
+        .<T>onErrorResumeNext(error -> {
+          if (error instanceof CancellationException) return Single.never();
+          return Single.error((Throwable) error);
+        });
   }
 
-  public <T> ObservableTransformer<T, T> reportOnSnackBar() {
-    return observable -> observable
+  public <T> SingleTransformer<T, T> reportOnSnackBar() {
+    return single -> single
         .<T>doOnError(throwable -> {
-          Observable<String> formattedError = exceptionFormatter.format(throwable);
+          Single<String> formattedError = exceptionFormatter.format(throwable);
           notifications.showSnackBar(formattedError);
         })
-        .onErrorResumeNext(throwable -> {
-          return Observable.<T>empty();
-        });
+        .<T>onErrorResumeNext(error -> Single.never());
   }
 
-  public <T> ObservableTransformer<T, T> reportOnToast() {
-    return observable -> observable
+  public <T> SingleTransformer<T, T> reportOnToast() {
+    return single -> single
         .<T>doOnError(throwable -> {
-          Observable<String> formattedError = exceptionFormatter.format(throwable);
+          Single<String> formattedError = exceptionFormatter.format(throwable);
           notifications.showToast(formattedError);
         })
-        .<T>onErrorResumeNext(throwable -> {
-          return Observable.empty();
-        });
+        .<T>onErrorResumeNext(throwable -> Single.never());
   }
 
-  public <T> ObservableTransformer<T, T> loading() {
-    return observable -> observable
+  public <T> SingleTransformer<T, T> loading() {
+    return single -> single
         .doOnSubscribe(disposable -> dialogs.showLoading())
-        .doOnComplete(dialogs::hideLoading)
+        .doOnSuccess(_I -> dialogs.hideLoading())
         .doOnError(throwable -> dialogs.hideLoading());
   }
 
-  public <T> ObservableTransformer<T, T> loading(String content) {
-    return observable -> observable
+  public <T> SingleTransformer<T, T> loading(String content) {
+    return single -> single
         .doOnSubscribe(disposable -> dialogs.showNoCancelableLoading(content))
-        .doOnComplete(dialogs::hideLoading)
+        .doOnSuccess(_I -> dialogs.hideLoading())
         .doOnError(throwable -> dialogs.hideLoading());
   }
 }

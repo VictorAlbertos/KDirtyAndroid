@@ -19,14 +19,13 @@ package app.presentation.foundation.transformations;
 import android.support.annotation.VisibleForTesting;
 import app.data.foundation.Resources;
 import app.data.foundation.net.NetworkResponse;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.exceptions.CompositeException;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import javax.inject.Inject;
 import org.base_app_android.BuildConfig;
 import org.base_app_android.R;
-
-import java.net.ConnectException;
-import java.net.UnknownHostException;
 
 /**
  * Format errors to show the most meaningful message depending on the current build variant and the
@@ -40,15 +39,15 @@ class ExceptionFormatter {
     this.resources = resources;
   }
 
-  Observable<String> format(Throwable throwable) {
-    return Observable.defer(() -> {
+  Single<String> format(Throwable throwable) {
+    return Single.defer(() -> {
       if (throwable instanceof UnknownHostException
               || throwable instanceof ConnectException) {
-        return Observable.just(resources.getString(R.string.connection_error));
+        return Single.just(resources.getString(R.string.connection_error));
       }
 
       if (!isBuildConfigDebug() && !(throwable instanceof NetworkResponse.NetworkException)) {
-        return Observable.just(resources.getString(R.string.errors_happen));
+        return Single.just(resources.getString(R.string.errors_happen));
       }
 
       String message = throwable.getMessage();
@@ -68,7 +67,7 @@ class ExceptionFormatter {
         }
       }
 
-      return Observable.just(message);
+      return Single.just(message);
     });
   }
 

@@ -17,7 +17,7 @@
 package app.data.foundation.net;
 
 import app.data.foundation.MockModel;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
@@ -36,7 +36,7 @@ public final class NetworkResponseTest {
 
   @Test public void Verify_On_Success() {
     MockModel model = new MockModel();
-    TestObserver<MockModel> observer = Observable
+    TestObserver<MockModel> observer = Single
         .just(Response.success(model))
         .compose(networkResponseUT.process())
         .test();
@@ -52,7 +52,7 @@ public final class NetworkResponseTest {
     ResponseBody responseBody = ResponseBody
         .create(MediaType.parse("application/json"), jsonError);
 
-    TestObserver<MockModel> observer = Observable
+    TestObserver<MockModel> observer = Single
         .just(Response.<MockModel>error(404, responseBody))
         .compose(networkResponseUT.process())
         .test();

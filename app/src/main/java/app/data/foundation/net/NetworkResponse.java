@@ -16,8 +16,8 @@
 
 package app.data.foundation.net;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableTransformer;
+import io.reactivex.Single;
+import io.reactivex.SingleTransformer;
 import javax.inject.Inject;
 import retrofit2.Response;
 
@@ -33,15 +33,15 @@ public final class NetworkResponse {
     this.errorAdapter = new ErrorAdapter();
   }
 
-  public <T> ObservableTransformer<Response<T>, T> process() {
+  public <T> SingleTransformer<Response<T>, T> process() {
     return oResponse -> oResponse
         .flatMap(response -> {
-          if (response.isSuccessful()) return Observable.just(response.body());
+          if (response.isSuccessful()) return Single.just(response.body());
           try {
             String error = errorAdapter.adapt(response.errorBody().string());
-            return Observable.error(new NetworkException(error));
+            return Single.error(new NetworkException(error));
           } catch (java.lang.Exception exception) {
-            return Observable.error(new RuntimeException(exception));
+            return Single.error(new RuntimeException(exception));
           }
         });
   }

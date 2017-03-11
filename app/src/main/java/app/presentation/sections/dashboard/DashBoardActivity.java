@@ -45,10 +45,6 @@ import org.base_app_android.R;
     getApplicationComponent().inject(this);
   }
 
-  public void selectDrawerMenu(@IdRes int menuItem) {
-    navigationView.getMenu().performIdentifierAction(menuItem, 0);
-  }
-
   @Override protected void initViews() {
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);

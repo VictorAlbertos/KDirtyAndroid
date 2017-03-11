@@ -18,35 +18,36 @@ package app.presentation.sections;
 
 import app.presentation.foundation.transformations.Transformations;
 import io.reactivex.Observable;
-import io.reactivex.ObservableTransformer;
+import io.reactivex.Single;
+import io.reactivex.SingleTransformer;
 
 public class TransformationsMock implements Transformations {
 
-  @Override public void setLifecycle(ObservableTransformer lifecycle) {
+  @Override public void setLifecycle(SingleTransformer lifecycle) {
     // Do nothing.  Exists to satisfy Transformations.
   }
 
-  @Override public <T> ObservableTransformer<T, T> safely() {
+  @Override public <T> SingleTransformer<T, T> safely() {
     return observable -> observable;
   }
 
-  @Override public <T> ObservableTransformer<T, T> reportOnSnackBar() {
-    return observable -> observable.onErrorResumeNext(throwable -> {
-      return Observable.empty();
+  @Override public <T> SingleTransformer<T, T> reportOnSnackBar() {
+    return single -> single.onErrorResumeNext(throwable -> {
+      return Single.fromObservable(Observable.empty());
     });
   }
 
-  @Override public <T> ObservableTransformer<T, T> reportOnToast() {
-    return observable -> observable.onErrorResumeNext(throwable -> {
-      return Observable.empty();
+  @Override public <T> SingleTransformer<T, T> reportOnToast() {
+    return single -> single.onErrorResumeNext(throwable -> {
+      return Single.fromObservable(Observable.empty());
     });
   }
 
-  @Override public <T> ObservableTransformer<T, T> loading() {
-    return observable -> observable;
+  @Override public <T> SingleTransformer<T, T> loading() {
+    return single -> single;
   }
 
-  @Override public <T> ObservableTransformer<T, T> loading(String content) {
-    return observable -> observable;
+  @Override public <T> SingleTransformer<T, T> loading(String content) {
+    return single -> single;
   }
 }

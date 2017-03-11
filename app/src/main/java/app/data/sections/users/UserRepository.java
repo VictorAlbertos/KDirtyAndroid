@@ -20,7 +20,7 @@ import android.support.annotation.VisibleForTesting;
 import app.data.foundation.net.NetworkResponse;
 import io.reactivecache2.ProviderGroup;
 import io.reactivecache2.ReactiveCache;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.rx_cache2.Reply;
 import java.util.List;
 import javax.inject.Inject;
@@ -39,22 +39,22 @@ public class UserRepository {
         .withKey("users");
   }
 
-  public Observable<List<User>> getUsers(Integer lastIdQueried, final boolean refresh) {
+  public Single<List<User>> getUsers(Integer lastIdQueried, final boolean refresh) {
     return getUsersReply(lastIdQueried, refresh)
         .map(Reply::getData);
   }
 
-  public Observable<User> getRecentUser() {
+  public Single<User> getRecentUser() {
     return getUsersReply(FIRST_DEFAULT_ID, false)
         .map(Reply::getData)
         .map(users -> users.get(0));
   }
 
   @VisibleForTesting
-  Observable<Reply<List<User>>> getUsersReply(Integer lastIdQueried, final boolean refresh) {
+  Single<Reply<List<User>>> getUsersReply(Integer lastIdQueried, final boolean refresh) {
     int safeId = lastIdQueried == null ? FIRST_DEFAULT_ID : lastIdQueried;
 
-    Observable<List<User>> apiCall = githubUsersApi
+    Single<List<User>> apiCall = githubUsersApi
         .getUsers(safeId, USERS_PER_PAGE)
         .compose(networkResponse.process());
 
@@ -62,7 +62,7 @@ public class UserRepository {
         : apiCall.compose(cacheProvider.readWithLoaderAsReply(safeId));
   }
 
-  public Observable<User> searchByUserName(final String username) {
+  public Single<User> searchByUserName(final String username) {
     return githubUsersApi
         .getUserByName(username)
         .compose(networkResponse.process());

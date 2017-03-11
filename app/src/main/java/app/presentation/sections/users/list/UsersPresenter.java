@@ -47,13 +47,12 @@ final class UsersPresenter extends Presenter<UsersPresenter.View> {
   @Override public void onBindView(View view) {
     super.onBindView(view);
 
-    view.setUpLoaderPager(usersState,
-        lastItem -> callback -> nextPage(lastItem, callback));
+    view.setUpLoaderPager(usersState, lastItem -> callback -> nextPage(lastItem, callback));
 
     view.setUpRefreshList(this::refreshList);
 
     view.userSelectedClicks()
-       .flatMap(wireframe::userScreen)
+        .flatMap(user -> wireframe.userScreen(user).toObservable())
         .subscribe();
   }
 
@@ -88,8 +87,6 @@ final class UsersPresenter extends Presenter<UsersPresenter.View> {
     void setUpRefreshList(Pager.Call<User> call);
 
     Observable<User> userSelectedClicks();
-
-    void showNewUser(User user);
 
     void hideLoadingOnRefreshList();
   }

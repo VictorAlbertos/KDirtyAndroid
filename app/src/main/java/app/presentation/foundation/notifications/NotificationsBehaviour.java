@@ -21,7 +21,7 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 import app.presentation.foundation.BaseApp;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import javax.inject.Inject;
 
 public final class NotificationsBehaviour implements Notifications {
@@ -31,14 +31,14 @@ public final class NotificationsBehaviour implements Notifications {
     this.baseApp = baseApp;
   }
 
-  @Override public void showToast(Observable<String> oTitle) {
-    oTitle.subscribe(title -> Toast.makeText(baseApp, title, Toast.LENGTH_LONG).show());
+  @Override public void showToast(Single<String> sTitle) {
+    sTitle.subscribe(title -> Toast.makeText(baseApp, title, Toast.LENGTH_LONG).show());
   }
 
-  @Override public void showSnackBar(Observable<String> oTitle) {
+  @Override public void showSnackBar(Single<String> sTitle) {
     Activity activity = baseApp.getLiveActivity();
     if (activity != null) {
-      oTitle.subscribe(title -> Snackbar.make(activity.findViewById(android.R.id.content),
+      sTitle.subscribe(title -> Snackbar.make(activity.findViewById(android.R.id.content),
           title, Snackbar.LENGTH_LONG).show());
     }
   }

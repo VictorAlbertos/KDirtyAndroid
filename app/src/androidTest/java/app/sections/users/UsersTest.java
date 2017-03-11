@@ -22,10 +22,12 @@ import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 import android.widget.TextView;
 import app.presentation.sections.launch.LaunchActivity;
+import io.victoralbertos.device_animation_test_rule.DeviceAnimationTestRule;
 import org.base_app_android.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.junit.ClassRule;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +45,9 @@ import static app.common.ViewActions.openDrawer;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UsersTest {
+  @ClassRule static public DeviceAnimationTestRule
+      deviceAnimationTestRule = new DeviceAnimationTestRule();
+
   @Rule public ActivityTestRule<LaunchActivity> mActivityRule =
       new ActivityTestRule<>(LaunchActivity.class);
 

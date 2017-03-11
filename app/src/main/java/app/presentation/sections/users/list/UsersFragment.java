@@ -77,11 +77,6 @@ public final class UsersFragment extends BaseFragment<UsersPresenter> implements
     return clicks;
   }
 
-  @Override public void showNewUser(User user) {
-    adapter.getAll().add(0, user);
-    adapter.notifyDataSetChanged();
-  }
-
   @Override public void hideLoadingOnRefreshList() {
     swipeRefreshUsers.setRefreshing(false);
   }

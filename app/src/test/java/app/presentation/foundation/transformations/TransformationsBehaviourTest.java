@@ -17,9 +17,10 @@ package app.presentation.foundation.transformations;
 
 import app.presentation.foundation.dialogs.Dialogs;
 import app.presentation.foundation.notifications.Notifications;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
+import java.util.concurrent.CancellationException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,16 +45,51 @@ public final class TransformationsBehaviourTest {
 
   @Before public void init() {
     when(exceptionFormatter.format(any()))
-        .thenReturn(Observable.just(FORMATTED_ERROR));
+        .thenReturn(Single.just(FORMATTED_ERROR));
 
     transformationsBehaviourUT = new TransformationsBehaviour(exceptionFormatter,
         notifications, dialogs, Schedulers.io(), Schedulers.io());
 
-    transformationsBehaviourUT.setLifecycle(observable -> observable);
+    transformationsBehaviourUT.setLifecycle(single -> single);
+  }
+
+  @Test public void Verify_Safely_Success() {
+    TestObserver<String> observer = Single.just(SUCCESS_MESSAGE)
+        .compose(transformationsBehaviourUT.safely())
+        .test();
+
+    observer.awaitTerminalEvent();
+
+    observer.assertNoErrors();
+    observer.assertValueCount(1);
+    assertEquals(SUCCESS_MESSAGE, observer.values().get(0));
+  }
+
+  @Test public void Verify_Safely_Error() {
+    transformationsBehaviourUT.setLifecycle(single -> Single.error(new RuntimeException()));
+
+    TestObserver<String> observer = Single.just(SUCCESS_MESSAGE)
+        .compose(transformationsBehaviourUT.safely())
+        .test();
+
+    observer.awaitTerminalEvent();
+    observer.assertError(RuntimeException.class);
+    observer.assertNoValues();
+  }
+
+  @Test public void Verify_Safely_CancellationException() {
+    transformationsBehaviourUT.setLifecycle(single -> Single.error(new CancellationException()));
+
+    TestObserver<String> observer = Single.just(SUCCESS_MESSAGE)
+        .compose(transformationsBehaviourUT.safely())
+        .test();
+
+    observer.assertNoValues();
+    observer.assertNoErrors();
   }
 
   @Test public void Verify_ReportOnSnackBar_Success() {
-    TestObserver<String> observer = Observable.just(SUCCESS_MESSAGE)
+    TestObserver<String> observer = Single.just(SUCCESS_MESSAGE)
         .compose(transformationsBehaviourUT.reportOnSnackBar())
         .test();
 
@@ -62,24 +98,23 @@ public final class TransformationsBehaviourTest {
     observer.assertNoErrors();
     observer.assertValueCount(1);
     verify(exceptionFormatter, never()).format(any());
-    verify(notifications, never()).showSnackBar(any(Observable.class));
+    verify(notifications, never()).showSnackBar(any(Single.class));
     assertEquals(SUCCESS_MESSAGE, observer.values().get(0));
   }
 
   @Test public void Verify_ReportOnSnackBar_Error() {
-    TestObserver<String> observer = Observable.<String>error(new RuntimeException())
+    TestObserver<String> observer = Single.<String>error(new RuntimeException())
         .compose(transformationsBehaviourUT.reportOnSnackBar())
         .test();
-    observer.awaitTerminalEvent();
 
     observer.assertNoErrors();
     observer.assertNoValues();
     verify(exceptionFormatter).format(any());
-    verify(notifications).showSnackBar(any(Observable.class));
+    verify(notifications).showSnackBar(any(Single.class));
   }
 
   @Test public void Verify_ReportOnToast_Success() {
-    TestObserver<String> observer = Observable.just(SUCCESS_MESSAGE)
+    TestObserver<String> observer = Single.just(SUCCESS_MESSAGE)
         .compose(transformationsBehaviourUT.reportOnToast())
         .test();
     observer.awaitTerminalEvent();
@@ -87,27 +122,25 @@ public final class TransformationsBehaviourTest {
     observer.assertNoErrors();
     observer.assertValueCount(1);
     verify(exceptionFormatter, never()).format(any());
-    verify(notifications, never()).showToast(any(Observable.class));
+    verify(notifications, never()).showToast(any(Single.class));
     assertEquals(SUCCESS_MESSAGE, observer.values().get(0));
   }
 
   @Test public void Verify_ReportOnToast_Error() {
-    TestObserver<String> observer = Observable.<String>error(new RuntimeException())
+    TestObserver<String> observer = Single.<String>error(new RuntimeException())
         .compose(transformationsBehaviourUT.reportOnToast())
         .test();
-    observer.awaitTerminalEvent();
 
     observer.assertNoErrors();
     observer.assertNoValues();
     verify(exceptionFormatter).format(any());
-    verify(notifications).showToast(any(Observable.class));
+    verify(notifications).showToast(any(Single.class));
   }
 
   @Test public void Verify_Loading() {
-    TestObserver<String> observer = Observable.just(SUCCESS_MESSAGE)
+    TestObserver<String> observer = Single.just(SUCCESS_MESSAGE)
         .compose(transformationsBehaviourUT.loading())
         .test();
-    observer.awaitTerminalEvent();
 
     observer.assertNoErrors();
     observer.assertValueCount(1);

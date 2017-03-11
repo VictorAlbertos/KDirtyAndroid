@@ -18,7 +18,7 @@ package app.presentation.foundation.presenter;
 
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.transformations.Transformations;
-import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
 import javax.inject.Inject;
 
 /**
@@ -37,11 +37,11 @@ public class Presenter<V extends ViewPresenter> {
   }
 
   /**
-   * Called from BaseFragment or BaseActivity to be able to sync observable with their lifecycle.
+   * Called from BaseFragment or BaseActivity to be able to sync single with their lifecycle.
    *
    * @param lifeCycle the Transformer supplied by RxLifecycle for both Fragment and Activity.
    */
-  public void bindLifeCycle(ObservableTransformer lifeCycle) {
+  public void bindLifeCycle(SingleTransformer lifeCycle) {
     this.transformations.setLifecycle(lifeCycle);
   }
 

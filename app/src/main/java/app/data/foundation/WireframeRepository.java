@@ -18,7 +18,7 @@ package app.data.foundation;
 
 import io.reactivecache2.ProviderGroup;
 import io.reactivecache2.ReactiveCache;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import javax.inject.Inject;
 
 /**
@@ -38,13 +38,13 @@ public final class WireframeRepository {
    * @param key the key with the associated object.
    */
   @SuppressWarnings("unchecked")
-  public <T> Observable<T> get(String key) {
+  public <T> Single<T> get(String key) {
     return cacheProvider
         .read(key)
         .onErrorResumeNext(error -> {
           String message = String
               .format("There is not cached data in wireframe repository for key %s", key);
-          return Observable.error(new RuntimeException(message, (Throwable) error));
+          return Single.error(new RuntimeException(message, (Throwable) error));
         });
   }
 
@@ -55,15 +55,15 @@ public final class WireframeRepository {
    * @return
    */
   @SuppressWarnings("unchecked")
-  public Observable<Ignore> put(String key, Object object) {
+  public Single<Ignore> put(String key, Object object) {
     if (object == null) {
       String message = String
           .format("A null reference was supplied to be cached "
               + "on the wireframe with key %s", key);
-      return Observable.error(new RuntimeException(message));
+      return Single.error(new RuntimeException(message));
     }
 
-    return Observable.just(object)
+    return Single.just(object)
         .compose(cacheProvider.replace(key))
         .map(ignored -> Ignore.Get);
   }

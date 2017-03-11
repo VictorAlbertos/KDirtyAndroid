@@ -16,44 +16,44 @@
 
 package app.presentation.foundation.transformations;
 
-import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
 
 public interface Transformations {
 
   /**
-   * Set the associated lifecycle to RxLifecycle be able to handle the observable subscriptions, for
+   * Set the associated lifecycle to RxLifecycle be able to handle the single subscriptions, for
    * both Fragments and Activities.
    */
-  void setLifecycle(ObservableTransformer lifecycle);
+  void setLifecycle(SingleTransformer lifecycle);
 
   /**
-   * Bind the subscription observable to the {@link Transformations#setLifecycle} supplied. Prepare
-   * the observable to use an io thread for subscription and to observe on the UI thread only after
+   * Bind the subscription single to the {@link Transformations#setLifecycle} supplied. Prepare
+   * the single to use an io thread for subscription and to observe on the UI thread only after
    * the stream of data has reached this point.
    */
-  <T> ObservableTransformer<T, T> safely();
+  <T> SingleTransformer<T, T> safely();
 
   /**
    * Outputs the formatted exception on {@link android.support.design.widget.Snackbar} and resume
-   * the error returning an empty observable.
+   * the error returning an empty single.
    */
-  <T> ObservableTransformer<T, T> reportOnSnackBar();
+  <T> SingleTransformer<T, T> reportOnSnackBar();
 
   /**
    * Outputs the formatted exception on {@link android.widget.Toast} and resume the error returning
-   * an empty observable.
+   * an empty single.
    */
-  <T> ObservableTransformer<T, T> reportOnToast();
+  <T> SingleTransformer<T, T> reportOnToast();
 
   /**
-   * Show a loading dialog just before observables is subscribed and hide it after it is completed.
+   * Show a loading dialog just before single is subscribed and hide it after it is completed.
    */
-  <T> ObservableTransformer<T, T> loading();
+  <T> SingleTransformer<T, T> loading();
 
   /**
-   * Show a loading dialog just before observables is subscribed and hide it after it is completed.
+   * Show a loading dialog just before single is subscribed and hide it after it is completed.
    *
    * @param content Text to display in the dialog
    */
-  <T> ObservableTransformer<T, T> loading(String content);
+  <T> SingleTransformer<T, T> loading(String content);
 }

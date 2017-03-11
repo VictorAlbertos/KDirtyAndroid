@@ -22,6 +22,7 @@ import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.TransformationsMock;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -101,12 +102,12 @@ public final class SearchUserPresenterTest {
 
   private void mockSuccessResponse() {
     when(userRepository.searchByUserName(any()))
-        .thenReturn(Observable.just(User.create(1, "user", "avatar")));
+        .thenReturn(Single.just(User.create(1, "user", "avatar")));
   }
 
   private void mockErrorResponse() {
     when(userRepository.searchByUserName(any()))
-        .thenReturn(Observable.error(new RuntimeException()));
+        .thenReturn(Single.error(new RuntimeException()));
   }
 
 }

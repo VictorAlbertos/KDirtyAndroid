@@ -23,6 +23,7 @@ import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.TransformationsMock;
 import app.presentation.sections.users.UsersWireframe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import java.util.Arrays;
 import miguelbcr.ok_adapters.recycler_view.Pager;
 import org.junit.Before;
@@ -148,12 +149,12 @@ public final class UsersPresenterTest {
 
   private void mockSuccessResponse() {
     when(userRepository.getUsers(any(), any(boolean.class)))
-        .thenReturn(Observable.just(Arrays.asList(aUser())));
+        .thenReturn(Single.just(Arrays.asList(aUser())));
   }
 
   private void mockErrorResponse() {
     when(userRepository.getUsers(any(), any(boolean.class)))
-        .thenReturn(Observable.error(new RuntimeException()));
+        .thenReturn(Single.error(new RuntimeException()));
   }
 
   private User aUser() {

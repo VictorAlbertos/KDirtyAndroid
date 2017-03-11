@@ -19,7 +19,9 @@ package app.sections.dashboard;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import app.presentation.sections.launch.LaunchActivity;
+import io.victoralbertos.device_animation_test_rule.DeviceAnimationTestRule;
 import org.base_app_android.R;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -34,6 +36,9 @@ import static app.common.ViewActions.openDrawer;
 import static org.hamcrest.Matchers.allOf;
 
 public class DashboardTest {
+  @ClassRule static public DeviceAnimationTestRule
+      deviceAnimationTestRule = new DeviceAnimationTestRule();
+
   @Rule public ActivityTestRule<LaunchActivity> mActivityRule =
       new ActivityTestRule<>(LaunchActivity.class);
 

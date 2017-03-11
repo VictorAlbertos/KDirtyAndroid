@@ -17,7 +17,7 @@
 package app.data.sections.users;
 
 import app.data.foundation.net.ErrorAdapter;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.victoralbertos.mockery.api.built_in_interceptor.Rx2Retrofit;
 import io.victoralbertos.mockery.api.built_in_mockery.DTOArgs;
 import io.victoralbertos.mockery.api.built_in_mockery.Optional;
@@ -31,7 +31,6 @@ import retrofit2.http.Query;
 
 import static app.data.sections.users.UsersMockery.UserDTO;
 import static app.data.sections.users.UsersMockery.UsersDTO;
-
 import static io.victoralbertos.mockery.api.built_in_mockery.Valid.Template.STRING;
 
 /**
@@ -43,11 +42,11 @@ public interface GithubUsersApi {
 
   @Headers({HEADER_API_VERSION})
   @GET("/users/{username}")
-  @DTOArgs(UserDTO.class) Observable<Response<User>> getUserByName(@Valid(value = STRING, legal = "google") @Path("username") String username);
+  @DTOArgs(UserDTO.class) Single<Response<User>> getUserByName(@Valid(value = STRING, legal = "google") @Path("username") String username);
 
   @Headers({HEADER_API_VERSION})
   @GET("/users")
-  @DTOArgs(UsersDTO.class) Observable<Response<List<User>>> getUsers(
+  @DTOArgs(UsersDTO.class) Single<Response<List<User>>> getUsers(
       @Optional @Query("since") int lastIdQueried,
       @Optional @Query("per_page") int perPage);
 }

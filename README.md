@@ -20,7 +20,7 @@ The architecture which conducts this project has been designed with a clair purp
 
 ## What are you going to find in this repository:
 
-* An uncertain ammount of [bugs](https://en.wikipedia.org/wiki/Software_bug).
+* An uncertain amount of [bugs](httpss://en.wikipedia.org/wiki/Software_bug).
 * [Retrolambda](https://github.com/evant/gradle-retrolambda) 'cos nobody likes boilerplate. 
 * [RxJava](https://github.com/ReactiveX/RxJava) as THE pipeline to *fetch, cache, draw, fetch, cache, draw, fetch, cache, draw, fetch, cache, draw, fetch, cache, draw*.
 * [Dagger 2](https://github.com/google/dagger) to resolve dependencies for both data and presentation layer as well as those dependencies which depends on an specific Android build variant.

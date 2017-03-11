@@ -17,7 +17,7 @@
 package app.presentation.foundation.notifications;
 
 import android.support.annotation.StringRes;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * A centralized notification pipeline approach. This is indirection layer allows us to run unit tests without mocking the Android platform.
@@ -26,12 +26,12 @@ public interface Notifications {
   /**
    * For output toast messages from the data layer.
    */
-  void showToast(Observable<String> oTitle);
+  void showToast(Single<String> oTitle);
 
   /**
    * For output output snackbar messages from the data layer.
    */
-  void showSnackBar(Observable<String> oTitle);
+  void showSnackBar(Single<String> oTitle);
 
   /**
    * For output output toast messages from the presentation layer.

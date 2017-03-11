@@ -22,7 +22,7 @@ import app.data.foundation.WireframeRepository;
 import app.data.sections.users.User;
 import app.presentation.foundation.BaseApp;
 import app.presentation.sections.users.detail.UserActivity;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import javax.inject.Inject;
 
 public class UsersWireframe {
@@ -35,16 +35,17 @@ public class UsersWireframe {
     this.wireframeRepository = wireframeRepository;
   }
 
-  public Observable<Ignore> userScreen(User user) {
+  public Single<Ignore> userScreen(User user) {
     return wireframeRepository
         .put(UserActivity.class.getName(), user)
-        .doOnNext(_I ->
-            baseApp.getLiveActivity()
-                .startActivity(new Intent(baseApp, UserActivity.class))
-        );
+        .map(_I -> {
+          baseApp.getLiveActivity()
+              .startActivity(new Intent(baseApp, UserActivity.class));
+          return _I;
+        });
   }
 
-  public Observable<User> getUserScreen() {
+  public Single<User> getUserScreen() {
     return wireframeRepository
         .<User>get(UserActivity.class.getName());
   }
