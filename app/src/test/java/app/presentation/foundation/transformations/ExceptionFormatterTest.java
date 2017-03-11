@@ -34,6 +34,8 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 public final class ExceptionFormatterTest {
+  private static final String LINE_SEPARATOR = "line.separator";
+  
   @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
   private static final String GENERIC_ERROR = "error",
       SPECIFIC_ERROR = "specific_error";
@@ -42,7 +44,9 @@ public final class ExceptionFormatterTest {
 
   @Before public void init() {
     exceptionFormatterUT = Mockito.spy(new ExceptionFormatter(resources, new Timber.Tree() {
-      @Override protected void log(int priority, String tag, String message, Throwable t) {}
+      @Override protected void log(int priority, String tag, String message, Throwable t) {
+        // This method is intentionally empty to provide a dummy implementation for Timber.
+      }
     }));
     when(resources.getString(R.string.errors_happen)).thenReturn(GENERIC_ERROR);
   }
@@ -118,7 +122,7 @@ public final class ExceptionFormatterTest {
 
     observer.assertNoErrors();
     observer.assertValueCount(1);
-    assertEquals("specific_error" +  System.getProperty("line.separator") + "CAUSE",
+    assertEquals("specific_error" +  System.getProperty(LINE_SEPARATOR) + "CAUSE",
         observer.values().get(0));
   }
 
@@ -148,10 +152,10 @@ public final class ExceptionFormatterTest {
 
     observer.assertNoErrors();
     observer.assertValueCount(1);
-    assertEquals("2 exceptions occurred. " +  System.getProperty("line.separator")
-            + "Chain of Causes for CompositeException In Order Received =>" +  System.getProperty("line.separator")
-            + "RuntimeException -> 1" +  System.getProperty("line.separator")
-            + "NetworkException -> 2" +  System.getProperty("line.separator"),
+    assertEquals("2 exceptions occurred. " +  System.getProperty(LINE_SEPARATOR)
+            + "Chain of Causes for CompositeException In Order Received =>" +  System.getProperty(LINE_SEPARATOR)
+            + "RuntimeException -> 1" +  System.getProperty(LINE_SEPARATOR)
+            + "NetworkException -> 2" +  System.getProperty(LINE_SEPARATOR),
         observer.values().get(0));
   }
 }

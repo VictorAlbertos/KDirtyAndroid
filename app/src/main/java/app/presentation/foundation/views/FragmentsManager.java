@@ -27,6 +27,7 @@ import javax.inject.Inject;
 public class FragmentsManager {
 
   @Inject public FragmentsManager() {
+    // This constructor is intentionally empty to be annotated with Inject annotation.
   }
 
   /**

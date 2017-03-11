@@ -71,8 +71,11 @@ import org.base_app_android.R;
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
-    if (drawerToggle.onOptionsItemSelected(item)) return true;
-    else if (item.getItemId() == android.R.id.home) onBackPressed();
+    if (drawerToggle.onOptionsItemSelected(item)) {
+      return true;
+    } else if (item.getItemId() == android.R.id.home) {
+      onBackPressed();
+    }
     return super.onOptionsItemSelected(item);
   }
 
