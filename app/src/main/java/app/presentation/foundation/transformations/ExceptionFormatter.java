@@ -26,21 +26,24 @@ import java.net.UnknownHostException;
 import javax.inject.Inject;
 import org.base_app_android.BuildConfig;
 import org.base_app_android.R;
+import timber.log.Timber;
 
 /**
  * Format errors to show the most meaningful message depending on the current build variant and the
- * exception type. This would be a good place to plug-in analytics tools to gather
- * errors on production releases.
+ * exception type.
  */
 class ExceptionFormatter {
   private final Resources resources;
 
-  @Inject public ExceptionFormatter(Resources resources) {
+  @Inject public ExceptionFormatter(Resources resources, Timber.Tree timberTree) {
     this.resources = resources;
+    Timber.plant(timberTree);
   }
 
   Single<String> format(Throwable throwable) {
     return Single.defer(() -> {
+      Timber.e(throwable);
+
       if (throwable instanceof UnknownHostException
               || throwable instanceof ConnectException) {
         return Single.just(resources.getString(R.string.connection_error));

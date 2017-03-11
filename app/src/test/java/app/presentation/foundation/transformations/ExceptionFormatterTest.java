@@ -28,6 +28,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import timber.log.Timber;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -40,7 +41,9 @@ public final class ExceptionFormatterTest {
   private ExceptionFormatter exceptionFormatterUT;
 
   @Before public void init() {
-    exceptionFormatterUT = Mockito.spy(new ExceptionFormatter(resources));
+    exceptionFormatterUT = Mockito.spy(new ExceptionFormatter(resources, new Timber.Tree() {
+      @Override protected void log(int priority, String tag, String message, Throwable t) {}
+    }));
     when(resources.getString(R.string.errors_happen)).thenReturn(GENERIC_ERROR);
   }
 

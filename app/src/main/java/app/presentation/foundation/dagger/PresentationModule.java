@@ -31,6 +31,9 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import javax.inject.Named;
+import javax.inject.Singleton;
+import org.base_app_android.BuildConfig;
+import timber.log.Timber;
 
 @Module(includes = DataModule.class) public class PresentationModule {
   private final BaseApp baseApp;
@@ -72,4 +75,20 @@ import javax.inject.Named;
   @Provides Scheduler provideSchedulerBackgroundThread() {
     return Schedulers.from(AsyncTask.THREAD_POOL_EXECUTOR);
   }
+
+  /**
+   * Resolve a Timber tree which logs important information for crash reporting.
+   */
+  @Provides @Singleton Timber.Tree provideTimberTree() {
+    if (BuildConfig.DEBUG) {
+      return new Timber.DebugTree();
+    } else {
+      return new Timber.Tree() {
+        @Override protected void log(int priority, String tag, String message, Throwable t) {
+          //FakeCrashLibrary.logError(t);
+        }
+      };
+    }
+  }
+
 }
