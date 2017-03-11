@@ -19,6 +19,7 @@ package app.data.foundation;
 import io.reactivecache2.ReactiveCache;
 import io.reactivex.observers.TestObserver;
 import io.victoralbertos.jolyglot.GsonSpeaker;
+import java.util.concurrent.TimeUnit;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public final class WireframeRepositoryTest {
   @Test public void Verify_Put_And_Get_Success() {
     wireframeRepositoryUT.put(KEY, new MockModel()).subscribe();
     TestObserver<MockModel> observer = wireframeRepositoryUT.<MockModel>get(KEY).test();
-    observer.awaitTerminalEvent();
+    observer.awaitTerminalEvent(1, TimeUnit.SECONDS);
 
     observer.assertNoErrors();
     observer.assertValueCount(1);
@@ -50,7 +51,7 @@ public final class WireframeRepositoryTest {
 
   @Test public void Verify_Get_Failure() {
     TestObserver<MockModel> observer = wireframeRepositoryUT.<MockModel>get(KEY).test();
-    observer.awaitTerminalEvent();
+    observer.awaitTerminalEvent(1, TimeUnit.SECONDS);
     observer.assertNoValues();
 
     Throwable error = observer.errors().get(0);
@@ -60,7 +61,7 @@ public final class WireframeRepositoryTest {
 
   @Test public void Verify_Put_Failure() {
     TestObserver<Ignore> observer = wireframeRepositoryUT.put(KEY, null).test();
-    observer.awaitTerminalEvent();
+    observer.awaitTerminalEvent(1, TimeUnit.SECONDS);
 
     observer.assertNoValues();
     Throwable error = observer.errors().get(0);
