@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,9 @@
  * limitations under the License.
  */
 
-package app.presentation.sections.dashboard;
+package app.presentation.sections.dashboard
 
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import com.google.auto.value.AutoValue;
+import android.support.annotation.StringRes
+import android.support.v4.app.Fragment
 
-@AutoValue
-abstract class ItemMenu {
-  public abstract Class<? extends Fragment> classFragment();
-  @StringRes public abstract int resTitle();
-
-  public static ItemMenu create(Class<? extends Fragment> classFragment, int resTitle) {
-    return new AutoValue_ItemMenu(classFragment, resTitle);
-  }
-}
+data class ItemMenu(val classFragment : Class<out Fragment>, @StringRes val resTitle : Int)

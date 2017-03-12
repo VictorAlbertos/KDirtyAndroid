@@ -58,7 +58,7 @@ final class UsersPresenter extends Presenter<UsersPresenter.View> {
 
   @VisibleForTesting void nextPage(User user, Pager.Callback<User> callback) {
     Integer id = null;
-    if (user != null) id = user.id();
+    if (user != null) id = user.getId();
 
     repository.getUsers(id, false)
         .compose(transformations.safely())

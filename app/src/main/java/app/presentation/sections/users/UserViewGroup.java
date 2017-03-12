@@ -50,11 +50,11 @@ public final class UserViewGroup extends FrameLayout implements OkRecyclerViewAd
   }
 
   @Override public void bind(User user, int position, int count) {
-    tvName.setText(user.id() + " : " + user.login());
+    tvName.setText(user.getId() + " : " + user.getLogin());
 
-    if (user.avatarUrl() == null || user.avatarUrl().isEmpty()) return;
+    if (user.getAvatar_url() == null || user.getAvatar_url().isEmpty()) return;
 
-    Picasso.with(getContext()).load(user.avatarUrl())
+    Picasso.with(getContext()).load(user.getAvatar_url())
         .centerCrop()
         .fit()
         .into(ivAvatar);

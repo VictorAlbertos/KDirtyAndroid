@@ -49,7 +49,7 @@ public final class UserRepositoryTest {
     observer.assertValueCount(1);
 
     List<User> users = observer.values().get(0);
-    assertEquals(users.get(0).id(), 1);
+    assertEquals(users.get(0).getId(), 1);
   }
 
   @Test public void Verify_GetUsers_Success() {
@@ -63,7 +63,7 @@ public final class UserRepositoryTest {
     observer.assertValueCount(1);
 
     List<User> users = observer.values().get(0);
-    assertEquals(users.get(0).id(), id + 1);
+    assertEquals(users.get(0).getId(), id + 1);
   }
 
   @Test public void Verify_GetUsers_Refresh() {
@@ -108,7 +108,7 @@ public final class UserRepositoryTest {
     observer.assertValueCount(1);
 
     User user = observer.values().get(0);
-    assertEquals(username, user.login());
+    assertEquals(username, user.getLogin());
   }
 
   @Test public void Verify_SearchByUserName_Failure() {

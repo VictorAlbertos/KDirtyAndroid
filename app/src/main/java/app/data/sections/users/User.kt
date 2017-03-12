@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-package app.data.foundation;
+package app.data.sections.users
 
-import com.google.gson.TypeAdapterFactory;
-import com.ryanharter.auto.value.gson.GsonTypeAdapterFactory;
-
-@GsonTypeAdapterFactory
-public abstract class GsonAdapterFactory implements TypeAdapterFactory {
-
-    public static GsonAdapterFactory create() {
-        return new AutoValueGson_GsonAdapterFactory();
-    }
-}
+data class User(val id : Int, val login : String, val avatar_url : String?)

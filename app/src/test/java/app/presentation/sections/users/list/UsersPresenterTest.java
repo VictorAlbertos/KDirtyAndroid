@@ -158,6 +158,6 @@ public final class UsersPresenterTest {
   }
 
   private User aUser() {
-    return User.create(USER_ID, "user", "avatar");
+    return new User(USER_ID, "user", "avatar");
   }
 }

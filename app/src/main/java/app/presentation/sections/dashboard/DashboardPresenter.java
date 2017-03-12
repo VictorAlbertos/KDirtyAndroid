@@ -41,9 +41,9 @@ final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
 
   static {
     ITEMS_MENU = new HashMap<>();
-    ITEMS_MENU.put(R.id.drawer_users, ItemMenu.create(UsersFragment.class, R.string.users));
+    ITEMS_MENU.put(R.id.drawer_users, new ItemMenu(UsersFragment.class, R.string.users));
     ITEMS_MENU.put(R.id.drawer_find_user,
-        ItemMenu.create(SearchUserFragment.class, R.string.find_user));
+        new ItemMenu(SearchUserFragment.class, R.string.find_user));
   }
 
   @Inject DashboardPresenter(Transformations transformations, Notifications notifications,
@@ -66,11 +66,11 @@ final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
 
   @VisibleForTesting void replaceDrawerFragment(@IdRes int idSelectedMenu) {
     ItemMenu itemMenu = ITEMS_MENU.get(idSelectedMenu);
-    Class<? extends Fragment> classFragment = itemMenu.classFragment();
+    Class<? extends Fragment> classFragment = itemMenu.getClassFragment();
 
     if (view.replaceFragment(fragmentsManager, classFragment)) {
       view.setCheckedItemMenu(idSelectedMenu);
-      view.setTitleActionBar(itemMenu.resTitle());
+      view.setTitleActionBar(itemMenu.getResTitle());
     }
   }
 

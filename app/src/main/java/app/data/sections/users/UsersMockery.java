@@ -29,15 +29,15 @@ final class UsersMockery {
   static class UserDTO implements DTOArgs.Behaviour<User> {
     @Override public User legal(Object[] args) {
       String userName = (String) args[0];
-      User user = User.create(1, userName,
+      User user = new User(1, userName,
           "https://cdn0.iconfinder.com/data/icons/octicons/1024/mark-github-256.png");
       return user;
     }
 
     @Override public void validate(User candidate) throws AssertionError {
       MatcherAssert.assertThat(candidate, notNullValue());
-      MatcherAssert.assertThat(candidate.id(), is(not(0)));
-      MatcherAssert.assertThat(candidate.login().isEmpty(), is(not(true)));
+      MatcherAssert.assertThat(candidate.getId(), is(not(0)));
+      MatcherAssert.assertThat(candidate.getLogin().isEmpty(), is(not(true)));
     }
   }
 
@@ -50,7 +50,7 @@ final class UsersMockery {
       perPage = perPage == 0 ? 30 : perPage;
 
       for (int i = lastIdQueried; i <= lastIdQueried + perPage; i++) {
-        users.add(User.create(i, "User " + i,
+        users.add(new User(i, "User " + i,
             "https://cdn0.iconfinder.com/data/icons/octicons/1024/mark-github-256.png"));
       }
 
@@ -62,8 +62,8 @@ final class UsersMockery {
       MatcherAssert.assertThat(candidate.isEmpty(), is(not(true)));
 
       User user = candidate.get(0);
-      MatcherAssert.assertThat(user.id(), is(not(0)));
-      MatcherAssert.assertThat(user.login().isEmpty(), is(not(true)));
+      MatcherAssert.assertThat(user.getId(), is(not(0)));
+      MatcherAssert.assertThat(user.getLogin().isEmpty(), is(not(true)));
     }
   }
 }

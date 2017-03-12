@@ -102,7 +102,7 @@ public final class SearchUserPresenterTest {
 
   private void mockSuccessResponse() {
     when(userRepository.searchByUserName(any()))
-        .thenReturn(Single.just(User.create(1, "user", "avatar")));
+        .thenReturn(Single.just(new User(1, "user", "avatar")));
   }
 
   private void mockErrorResponse() {

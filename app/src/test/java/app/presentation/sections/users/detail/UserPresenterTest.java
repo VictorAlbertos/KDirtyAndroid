@@ -50,7 +50,7 @@ public final class UserPresenterTest {
 
   @Test public void Verify_OnBindView_With_Success_Response() {
     when(wireframe.getUserScreen())
-        .thenReturn(Single.just(User.create(1, "name", "avatar")));
+        .thenReturn(Single.just(new User(1, "name", "avatar")));
     userPresenterUT.onBindView(view);
 
     verify(transformations).safely();

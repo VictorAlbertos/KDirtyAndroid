@@ -17,15 +17,13 @@
 package app.data.foundation.dagger;
 
 import android.support.annotation.StringRes;
-import app.data.foundation.GsonAdapterFactory;
 import app.data.foundation.Resources;
 import app.data.foundation.net.ApiModule;
 import app.presentation.foundation.BaseApp;
-import com.google.gson.TypeAdapterFactory;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivecache2.ReactiveCache;
-import io.victoralbertos.jolyglot.GsonAutoValueSpeaker;
+import io.victoralbertos.jolyglot.GsonSpeaker;
 import java.util.Locale;
 import javax.inject.Singleton;
 
@@ -54,10 +52,6 @@ public final class DataModule {
   @Singleton
   @Provides public ReactiveCache provideReactiveCache(BaseApp baseApp) {
     return new ReactiveCache.Builder()
-        .using(baseApp.getFilesDir(), new GsonAutoValueSpeaker() {
-          @Override protected TypeAdapterFactory autoValueGsonTypeAdapterFactory() {
-            return GsonAdapterFactory.create();
-          }
-        });
+        .using(baseApp.getFilesDir(), new GsonSpeaker());
   }
 }
