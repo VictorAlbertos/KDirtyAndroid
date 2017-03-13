@@ -18,6 +18,10 @@ package app.data.foundation
 
 import android.support.annotation.StringRes
 
+/**
+ * An abstraction layer for access Android resources without coupling with the platform.
+ * This is necessary to be able to run unit tests without mocking the Android platform.
+ */
 interface Resources {
     fun getString(@StringRes idResource : Int) : String
     fun getLang() : String
