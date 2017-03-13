@@ -18,15 +18,10 @@ package app.data.foundation.net
 
 import io.victoralbertos.jolyglot.GsonSpeaker
 import junit.framework.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 
 class ErrorAdapterTest {
-    private lateinit var errorAdapterUT : ErrorAdapter
-
-    @Before fun before() {
-        errorAdapterUT = ErrorAdapter(GsonSpeaker())
-    }
+    private val errorAdapterUT = ErrorAdapter(GsonSpeaker())
 
     @Test fun Verify_Adapt() {
         val json = "{\"message\":\"such a nice error\"}"

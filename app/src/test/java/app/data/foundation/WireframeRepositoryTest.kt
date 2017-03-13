@@ -27,13 +27,12 @@ import java.util.concurrent.TimeUnit
 
 class WireframeRepositoryTest {
     @get:Rule val testFolder = TemporaryFolder()
-    private lateinit var wireframeRepositoryUT: WireframeRepository
+    private lateinit var wireframeRepositoryUT : WireframeRepository
     private val KEY = "mockModel"
 
     @Before fun before() {
-        wireframeRepositoryUT = WireframeRepository(
-                ReactiveCache.Builder().using(testFolder.root, GsonSpeaker())
-        )
+        wireframeRepositoryUT = WireframeRepository(ReactiveCache.Builder()
+                .using(testFolder.root, GsonSpeaker()))
     }
 
     @Test fun Verify_Put_And_Get_Success() {
