@@ -12,7 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *//*
+
 
 package app.data.foundation;
 
@@ -21,10 +22,12 @@ import io.reactivecache2.ReactiveCache;
 import io.reactivex.Single;
 import javax.inject.Inject;
 
+*/
 /**
  * A repository to persist on both memory and disk layer the data shared between screens. It's
  * intended to be used by specifics wireframes.
- */
+ *//*
+
 public final class WireframeRepository {
   private final ProviderGroup cacheProvider;
 
@@ -33,10 +36,12 @@ public final class WireframeRepository {
         .withKey("wireframe");
   }
 
-  /**
+  */
+/**
    * Given a key, return an observable containing the previously cached data.
    * @param key the key with the associated object.
-   */
+   *//*
+
   @SuppressWarnings("unchecked")
   public <T> Single<T> get(String key) {
     return cacheProvider
@@ -48,12 +53,13 @@ public final class WireframeRepository {
         });
   }
 
-  /**
+  */
+/**
    * Given a key, cache the associated data.
    * @param key the key with the associated object.
    * @param object the object to be cached.
-   * @return
-   */
+   *//*
+
   @SuppressWarnings("unchecked")
   public Single<Ignore> put(String key, Object object) {
     if (object == null) {
@@ -68,3 +74,4 @@ public final class WireframeRepository {
         .map(ignored -> Ignore.Get);
   }
 }
+*/

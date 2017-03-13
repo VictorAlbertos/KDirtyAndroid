@@ -17,11 +17,11 @@
 package app.presentation.sections.users;
 
 import android.content.Intent;
-import app.data.foundation.Ignore;
 import app.data.foundation.WireframeRepository;
 import app.data.sections.users.User;
 import app.presentation.foundation.BaseApp;
 import app.presentation.sections.users.detail.UserActivity;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import javax.inject.Inject;
 
@@ -35,14 +35,13 @@ public class UsersWireframe {
     this.wireframeRepository = wireframeRepository;
   }
 
-  public Single<Ignore> userScreen(User user) {
+  public Completable userScreen(User user) {
     return wireframeRepository
         .put(UserActivity.class.getName(), user)
-        .map(_I -> {
+        .doOnComplete(() ->
           baseApp.getLiveActivity()
-              .startActivity(new Intent(baseApp, UserActivity.class));
-          return _I;
-        });
+              .startActivity(new Intent(baseApp, UserActivity.class))
+        );
   }
 
   public Single<User> getUserScreen() {
