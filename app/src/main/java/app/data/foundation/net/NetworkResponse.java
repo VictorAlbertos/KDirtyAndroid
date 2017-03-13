@@ -29,8 +29,8 @@ import retrofit2.Response;
 public final class NetworkResponse {
   private final ErrorAdapter errorAdapter;
 
-  @Inject public NetworkResponse() {
-    this.errorAdapter = new ErrorAdapter();
+  @Inject public NetworkResponse(ErrorAdapter errorAdapter) {
+    this.errorAdapter = errorAdapter;
   }
 
   public <T> SingleTransformer<Response<T>, T> process() {

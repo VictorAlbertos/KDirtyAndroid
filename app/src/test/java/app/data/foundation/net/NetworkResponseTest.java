@@ -19,6 +19,7 @@ package app.data.foundation.net;
 import app.data.foundation.MockModel;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
+import io.victoralbertos.jolyglot.GsonSpeaker;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import org.junit.Before;
@@ -31,7 +32,7 @@ public final class NetworkResponseTest {
   private NetworkResponse networkResponseUT;
 
   @Before public void init() {
-    networkResponseUT = new NetworkResponse();
+    networkResponseUT = new NetworkResponse(new ErrorAdapter(new GsonSpeaker()));
   }
 
   @Test public void Verify_On_Success() {

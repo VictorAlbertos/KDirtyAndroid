@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package app.data.foundation.net;
+package app.data.foundation.net
 
-import org.junit.Before;
-import org.junit.Test;
+import io.victoralbertos.jolyglot.GsonSpeaker
+import junit.framework.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
 
-import static org.junit.Assert.assertEquals;
+class ErrorAdapterTest {
+    private lateinit var errorAdapterUT : ErrorAdapter
 
-public final class ErrorAdapterTest {
-  private ErrorAdapter errorAdapterUT;
+    @Before fun before() {
+        errorAdapterUT = ErrorAdapter(GsonSpeaker())
+    }
 
-  @Before public void init() {
-    errorAdapterUT = new ErrorAdapter();
-  }
-
-  @Test public void Verify_Adapt() {
-    String json = "{\"message\":\"such a nice error\"}";
-    String prettified = errorAdapterUT.adapt(json);
-    assertEquals(prettified, "such a nice error");
-  }
+    @Test fun Verify_Adapt() {
+        val json = "{\"message\":\"such a nice error\"}"
+        val prettified = errorAdapterUT.adapt(json)
+        assertEquals(prettified, "such a nice error")
+    }
 }

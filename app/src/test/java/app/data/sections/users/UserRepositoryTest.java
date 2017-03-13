@@ -16,6 +16,7 @@
 
 package app.data.sections.users;
 
+import app.data.foundation.net.ErrorAdapter;
 import app.data.foundation.net.NetworkResponse;
 import io.reactivecache2.ReactiveCache;
 import io.reactivex.exceptions.CompositeException;
@@ -132,7 +133,7 @@ public final class UserRepositoryTest {
   }
 
   private void mockApiForSuccess() {
-    NetworkResponse networkResponse = new NetworkResponse();
+    NetworkResponse networkResponse = new NetworkResponse(new ErrorAdapter(new GsonSpeaker()));
 
     GithubUsersApi githubUsersApi = new Mockery.Builder<ApiSuccess>()
         .mock(ApiSuccess.class)
@@ -146,7 +147,7 @@ public final class UserRepositoryTest {
   }
 
   private void mockApiForFailure() {
-    NetworkResponse networkResponse = new NetworkResponse();
+    NetworkResponse networkResponse = new NetworkResponse(new ErrorAdapter(new GsonSpeaker()));
 
     GithubUsersApi githubUsersApi = new Mockery.Builder<ApiFailure>()
         .mock(ApiFailure.class)

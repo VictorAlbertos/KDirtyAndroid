@@ -24,6 +24,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.reactivecache2.ReactiveCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
+import io.victoralbertos.jolyglot.JolyglotGenerics;
 import java.util.Locale;
 import javax.inject.Singleton;
 
@@ -50,8 +51,13 @@ public final class DataModule {
   }
 
   @Singleton
-  @Provides public ReactiveCache provideReactiveCache(BaseApp baseApp) {
+  @Provides public ReactiveCache provideReactiveCache(BaseApp baseApp, JolyglotGenerics jolyglot) {
     return new ReactiveCache.Builder()
-        .using(baseApp.getFilesDir(), new GsonSpeaker());
+        .using(baseApp.getFilesDir(), jolyglot);
+  }
+
+  @Singleton
+  @Provides public JolyglotGenerics provideJolyglot() {
+    return new GsonSpeaker();
   }
 }
