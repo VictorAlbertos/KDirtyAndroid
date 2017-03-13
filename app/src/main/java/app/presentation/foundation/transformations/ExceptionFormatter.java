@@ -18,7 +18,7 @@ package app.presentation.foundation.transformations;
 
 import android.support.annotation.VisibleForTesting;
 import app.data.foundation.Resources;
-import app.data.foundation.net.NetworkResponse;
+import app.data.foundation.net.NetworkException;
 import io.reactivex.Single;
 import io.reactivex.exceptions.CompositeException;
 import java.net.ConnectException;
@@ -49,7 +49,7 @@ class ExceptionFormatter {
         return Single.just(resources.getString(R.string.connection_error));
       }
 
-      if (!isBuildConfigDebug() && !(throwable instanceof NetworkResponse.NetworkException)) {
+      if (!isBuildConfigDebug() && !(throwable instanceof NetworkException)) {
         return Single.just(resources.getString(R.string.errors_happen));
       }
 

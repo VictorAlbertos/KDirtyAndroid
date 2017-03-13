@@ -17,7 +17,7 @@
 package app.presentation.foundation.transformations;
 
 import app.data.foundation.Resources;
-import app.data.foundation.net.NetworkResponse;
+import app.data.foundation.net.NetworkException;
 import io.reactivex.exceptions.CompositeException;
 import io.reactivex.observers.TestObserver;
 import org.base_app_android.R;
@@ -65,7 +65,7 @@ public final class ExceptionFormatterTest {
   @Test public void When_Build_Is_Production_And_Exception_Is_Networking_Then_Show_Its_Error() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(false);
     TestObserver<String> observer =
-        exceptionFormatterUT.format(new NetworkResponse.NetworkException(SPECIFIC_ERROR)).test();
+        exceptionFormatterUT.format(new NetworkException(SPECIFIC_ERROR)).test();
     observer.awaitTerminalEvent();
 
     observer.assertNoErrors();
@@ -87,7 +87,7 @@ public final class ExceptionFormatterTest {
   @Test public void When_Build_Is_Debug_And_Exception_Is_Networking_Then_Show_Its_Error() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(true);
     TestObserver<String> observer =
-        exceptionFormatterUT.format(new NetworkResponse.NetworkException(SPECIFIC_ERROR)).test();
+        exceptionFormatterUT.format(new NetworkException(SPECIFIC_ERROR)).test();
     observer.awaitTerminalEvent();
 
     observer.assertNoErrors();
@@ -98,9 +98,9 @@ public final class ExceptionFormatterTest {
   @Test public void When_Build_Is_Production_And_Exception_Has_Cause_Do_Not_Show_It() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(false);
 
-    NetworkResponse.NetworkException networkException =
-        Mockito.spy(new NetworkResponse.NetworkException(SPECIFIC_ERROR));
-    when(networkException.getCause()).thenReturn(new NetworkResponse.NetworkException("CAUSE"));
+    NetworkException networkException =
+        Mockito.spy(new NetworkException(SPECIFIC_ERROR));
+    when(networkException.getCause()).thenReturn(new NetworkException("CAUSE"));
 
     TestObserver<String> observer = exceptionFormatterUT.format(networkException).test();
     observer.awaitTerminalEvent();
@@ -113,9 +113,9 @@ public final class ExceptionFormatterTest {
   @Test public void When_Build_Is_Debug_And_Exception_Has_Cause_Show_It() {
     when(exceptionFormatterUT.isBuildConfigDebug()).thenReturn(true);
 
-    NetworkResponse.NetworkException networkException =
-        Mockito.spy(new NetworkResponse.NetworkException(SPECIFIC_ERROR));
-    when(networkException.getCause()).thenReturn(new NetworkResponse.NetworkException("CAUSE"));
+    NetworkException networkException =
+        Mockito.spy(new NetworkException(SPECIFIC_ERROR));
+    when(networkException.getCause()).thenReturn(new NetworkException("CAUSE"));
 
     TestObserver<String> observer = exceptionFormatterUT.format(networkException).test();
     observer.awaitTerminalEvent();
@@ -145,7 +145,7 @@ public final class ExceptionFormatterTest {
 
     CompositeException exception =
         new CompositeException(new RuntimeException("1"),
-            new NetworkResponse.NetworkException("2"));
+            new NetworkException("2"));
 
     TestObserver<String> observer = exceptionFormatterUT.format(exception).test();
     observer.awaitTerminalEvent();
