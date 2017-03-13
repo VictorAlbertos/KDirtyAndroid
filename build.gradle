@@ -2,6 +2,7 @@
 
 buildscript {
   ext.kotlin_version = '1.1.0'
+
   repositories {
     mavenCentral()
     jcenter()
@@ -17,6 +18,18 @@ buildscript {
 
   // Exclude the version that the android plugin depends on.
   configurations.classpath.exclude group: 'com.android.tools.external.lombok'
+}
+
+subprojects {
+  ext.kotlin_version = '1.1.0'
+  configurations.all {
+    resolutionStrategy {
+      forcedModules = [
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+              "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+      ]
+    }
+  }
 }
 
 allprojects {
