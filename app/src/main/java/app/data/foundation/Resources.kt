@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-package app.data.foundation;
+package app.data.foundation
 
-import android.support.annotation.StringRes;
+import android.support.annotation.StringRes
 
-/**
- * An abstraction layer for access Android resources without coupling with the platform.
- * This is necessary to be able to run unit tests without mocking the Android platform.
- */
-public interface Resources {
-  String getString(@StringRes int idResource);
-  String getLang();
+interface Resources {
+    fun getString(@StringRes idResource : Int) : String
+    fun getLang() : String
 }
