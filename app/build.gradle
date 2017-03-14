@@ -102,7 +102,7 @@ ext {
           support           : "25.2.0",
           retrofit          : "2.2.0",
           dagger            : "2.9",
-          mockery           : "1.0.0",
+          mockery           : "1.0.2",
           butterknife       : "8.5.1",
           leakCanary        : "1.5",
           rxbinding         : "2.0.0",

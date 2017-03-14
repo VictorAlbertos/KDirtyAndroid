@@ -29,8 +29,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import static app.data.sections.users.UsersMockery.UserDTO;
-import static app.data.sections.users.UsersMockery.UsersDTO;
 import static io.victoralbertos.mockery.api.built_in_mockery.Valid.Template.STRING;
 
 /**
