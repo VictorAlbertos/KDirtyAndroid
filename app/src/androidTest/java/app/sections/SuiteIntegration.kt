@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package app.sections;
+package app.sections
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import app.sections.dashboard.DashboardTest
+import app.sections.users.UsersTest
+import org.junit.runner.RunWith
+import org.junit.runners.Suite
 
-import app.sections.dashboard.DashboardTest;
-import app.sections.users.UsersTest;
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    DashboardTest.class,
-    UsersTest.class
-})
-public class SuiteIntegration {
-
-}
+@RunWith(Suite::class)
+@Suite.SuiteClasses(DashboardTest::class, UsersTest::class)
+class SuiteIntegration
