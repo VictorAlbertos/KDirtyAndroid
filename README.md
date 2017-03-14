@@ -4,7 +4,7 @@ A dirty approach for truly client Android applications.
 
 ![DirtyAndroid](dirty.jpg)
 
-It's time to admit an awfull fact: **almost every Android application is a pure client application**. There is no such a thing as a *domain layer*. In the unlikely event of some *bussines logic* were required, it would be wiped out as a whole new system (there you go a new library!). 
+It's time to admit an awful fact: **almost every Android application is a pure client application**. There is no such a thing as a *domain layer*. In the unlikely event of some *bussines logic* were required, it would be wiped out as a whole new system (there you go a new library!).
 
 > The story of my life does not exist. Such a thing does not exist. There is no purpose. Neither a line or a path.  Vast passages suggest that someone was there. That’s not true, no one was there. 
 
@@ -21,13 +21,11 @@ The architecture which conducts this project has been designed with a clair purp
 ## What are you going to find in this repository:
 
 * An uncertain amount of [bugs](httpss://en.wikipedia.org/wiki/Software_bug).
-* [Retrolambda](https://github.com/evant/gradle-retrolambda) 'cos nobody likes boilerplate. 
 * [RxJava](https://github.com/ReactiveX/RxJava) as THE pipeline to *fetch, cache, draw, fetch, cache, draw, fetch, cache, draw, fetch, cache, draw, fetch, cache, draw*.
 * [Dagger 2](https://github.com/google/dagger) to resolve dependencies for both data and presentation layer as well as those dependencies which depends on an specific Android build variant.
 * [Retrofit](https://github.com/square/retrofit) for making HTTP calls.
 * [Mockery](https://github.com/VictorAlbertos/Mockery) to mocking and auto-testing retrofit HTTP calls. 
 * [ReactiveCache](https://github.com/VictorAlbertos/ReactiveCache) to caching the data retrieved from HTTP calls.
-* [Autovalue](https://github.com/google/auto/blob/master/value/userguide/index.md) to create immutable value classes. 
 * A centralized pipeline for handling error using `Observable.Transformer` and `Presenter`.
 * Repositories, presenters, wireframes and views. 
   * *Repositories* get/post data to/from cloud (Server) and local (ReactiveCache) datasources. 
