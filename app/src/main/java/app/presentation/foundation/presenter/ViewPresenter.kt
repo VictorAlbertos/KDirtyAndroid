@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package app.presentation.foundation.presenter;
+package app.presentation.foundation.presenter
 
 /**
  * Base class for every presenter view. It's required to be able to perform the binding
  * using generics at base level class.
  */
-public interface ViewPresenter {
-
-}
+interface ViewPresenter
