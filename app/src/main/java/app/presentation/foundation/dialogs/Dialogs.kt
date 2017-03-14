@@ -16,36 +16,76 @@
 
 package app.presentation.foundation.dialogs
 
-/*
- * A centralized dialog pipeline. This is indirection layer allows us to run unit tests without mocking the Android platform.
- */
-interface Dialogs {
+import android.support.v4.content.ContextCompat
+import app.presentation.foundation.BaseApp
+import com.afollestad.materialdialogs.MaterialDialog
+import org.base_app_android.R
+import javax.inject.Inject
+
+class Dialogs @Inject constructor(private val baseApp: BaseApp) {
+    private var materialDialog: MaterialDialog? = null
+
     /**
      * Show a cancelable alert dialog with a progress wheel
      */
-    fun showLoading()
+    fun showLoading() {
+        if (materialDialog == null) {
+            materialDialog = builderLoading(null).show()
+        }
+    }
 
     /**
      * Show a cancelable alert dialog with a progress wheel and custom content
 
      * @param content Text to display in the dialog
      */
-    fun showLoading(content: String)
+    fun showLoading(content: String) {
+        if (materialDialog == null) {
+            materialDialog = builderLoading(content).show()
+        }
+    }
 
     /**
      * Show a non cancelable alert dialog with a progress wheel and custom content
      */
-    fun showNoCancelableLoading()
+    fun showNoCancelableLoading() {
+        if (materialDialog == null) {
+            materialDialog = builderLoading(null)
+                    .cancelable(false)
+                    .show()
+        }
+    }
 
     /**
      * Show a non cancelable alert dialog with a progress wheel and custom content
 
      * @param content Text to display in the dialog
      */
-    fun showNoCancelableLoading(content: String)
+    fun showNoCancelableLoading(content: String) {
+        if (materialDialog == null) {
+            materialDialog = builderLoading(content)
+                    .cancelable(false)
+                    .show()
+        }
+    }
 
     /**
      * If dialog is shown, hide it.
      */
-    fun hideLoading()
+    fun hideLoading() {
+        if (materialDialog != null) {
+            materialDialog!!.dismiss()
+            materialDialog = null
+        }
+    }
+
+    private fun builderLoading(content: String?): MaterialDialog.Builder {
+        return MaterialDialog.Builder(baseApp.liveActivity!!)
+                .titleColorRes(R.color.colorPrimaryDark)
+                .contentColor(ContextCompat.getColor(baseApp, R.color.colorPrimaryDark))
+                .widgetColorRes(R.color.colorPrimaryDark)
+                .title(baseApp.getString(R.string.app_name))
+                .content(content ?: baseApp.getString(R.string.loading))
+                .progress(true, 0)
+    }
 }

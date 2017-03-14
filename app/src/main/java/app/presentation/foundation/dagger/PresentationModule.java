@@ -19,8 +19,6 @@ package app.presentation.foundation.dagger;
 import android.os.AsyncTask;
 import app.data.foundation.dagger.DataModule;
 import app.presentation.foundation.BaseApp;
-import app.presentation.foundation.dialogs.Dialogs;
-import app.presentation.foundation.dialogs.DialogsBehaviour;
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.notifications.NotificationsBehaviour;
 import app.presentation.foundation.transformations.Transformations;
@@ -53,10 +51,6 @@ import timber.log.Timber;
 
   @Provides Notifications provideNotifications(NotificationsBehaviour notificationsBehaviour) {
     return notificationsBehaviour;
-  }
-
-  @Provides Dialogs provideDialogs(DialogsBehaviour dialogsBehaviour) {
-    return dialogsBehaviour;
   }
 
   /**
