@@ -16,13 +16,13 @@
 
 package app.presentation.sections.launch;
 
-import app.presentation.foundation.widgets.Notifications;
 import app.presentation.foundation.presenter.Presenter;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
+import app.presentation.foundation.widgets.Notifications;
 import javax.inject.Inject;
 
-final class LaunchPresenter extends Presenter<ViewPresenter> {
+final class LaunchPresenter extends Presenter<LaunchPresenter.View> {
   private final LaunchWireframe wireframe;
 
   @Inject LaunchPresenter(Transformations transformations, LaunchWireframe wireframe,
@@ -31,8 +31,10 @@ final class LaunchPresenter extends Presenter<ViewPresenter> {
     this.wireframe = wireframe;
   }
 
-  @Override public void onBindView(ViewPresenter view) {
+  @Override public void onBindView(LaunchPresenter.View view) {
     super.onBindView(view);
     wireframe.dashboard().subscribe();
   }
+
+  interface View extends ViewPresenter {}
 }

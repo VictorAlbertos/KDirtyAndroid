@@ -18,7 +18,8 @@ package app.presentation.sections.launch;
 
 import app.presentation.foundation.views.BaseActivity;
 
-public final class LaunchActivity extends BaseActivity<LaunchPresenter> {
+public final class LaunchActivity extends BaseActivity<LaunchPresenter.View, LaunchPresenter>
+    implements LaunchPresenter.View {
 
   @Override protected void initViews() {
     // Do nothing.  Exists to satisfy BaseActivity.
@@ -27,5 +28,4 @@ public final class LaunchActivity extends BaseActivity<LaunchPresenter> {
   @Override protected void injectDagger() {
     getApplicationComponent().inject(this);
   }
-
 }

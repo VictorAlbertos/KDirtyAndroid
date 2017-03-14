@@ -35,7 +35,7 @@ import io.reactivex.Observable;
 import org.base_app_android.R;
 
 @LayoutResActivity(R.layout.dashboard_activity) public final class DashBoardActivity
-    extends BaseActivity<DashboardPresenter> implements DashboardPresenter.View {
+    extends BaseActivity<DashboardPresenter.View, DashboardPresenter> implements DashboardPresenter.View {
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
   @BindView(R.id.navigation_view) NavigationView navigationView;

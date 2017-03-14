@@ -26,7 +26,7 @@ import butterknife.BindView;
 import org.base_app_android.R;
 
 @LayoutResActivity(R.layout.user_activity)
-public final class UserActivity extends BaseActivity<UserPresenter>
+public final class UserActivity extends BaseActivity<UserPresenter.View, UserPresenter>
     implements UserPresenter.View {
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.user_view_group) UserViewGroup userViewGroup;
