@@ -41,7 +41,7 @@ public final class BaseApp extends Application {
     }
 
     LeakCanary.install(this);
-    AppCare.YesSir.takeCareOn(this);
+    AppCare.INSTANCE.registerActivityLifeCycle(this);
     initDaggerComponent();
   }
 
@@ -65,6 +65,6 @@ public final class BaseApp extends Application {
    * @see Notifications as an example.
    */
   @Nullable public Activity getLiveActivity() {
-    return AppCare.YesSir.getLiveActivity();
+    return AppCare.INSTANCE.getLiveActivity();
   }
 }
