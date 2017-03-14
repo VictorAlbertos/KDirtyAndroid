@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-package app.data.foundation;
+package app.data.foundation
 
-public class MockModel {
-  private final String s1;
-
-  public MockModel() {
-    this.s1  = "s1";
-  }
-
-  public String getS1() {
-    return s1;
-  }
-
-}
+data class MockModel(val s1: String = "s1")
