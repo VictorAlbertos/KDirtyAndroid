@@ -30,7 +30,7 @@ import org.base_app_android.R;
 @LayoutResFragment(R.layout.user_search_fragment)
 public final class SearchUserFragment extends BaseFragment<SearchUserPresenter.View, SearchUserPresenter>
     implements SearchUserPresenter.View {
-  @BindView(R.id.user_view_group) UserViewGroup userViewGroup;
+  @BindView(R.id.userViewGroup) UserViewGroup userViewGroup;
   @BindView(R.id.et_name) EditText etName;
   @BindView(R.id.bt_find_user) View btFindUser;
 
