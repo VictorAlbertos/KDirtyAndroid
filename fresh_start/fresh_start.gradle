@@ -5,10 +5,7 @@ task('freshStart') << {
   Helper.removeDir(androidTest + "common")
   Helper.removeDir(androidTest + "sections")
 
-  String data = "app/src/main/java/app/data/"
-  Helper.removeDir(data + "sections/users")
-  Helper.moveFileDeleting(startFresh + "PlaceHolder",
-          data + "sections/launch", "PlaceHolder.java")
+  Helper.removeDir("app/src/main/java/app/data/sections/users")
 
   String presentation = "app/src/main/java/app/presentation/"
   Helper.moveFileDeleting(startFresh + "PresentationComponent",
@@ -16,8 +13,6 @@ task('freshStart') << {
   Helper.removeDir(presentation + "sections/dashboard")
   Helper.removeDir(presentation + "sections/users")
   Helper.removeDir(presentation + "sections/launch")
-  Helper.moveFileDeleting(startFresh + "LaunchActivity",
-          presentation + "sections/launch", "LaunchActivity.java")
   Helper.moveFileDeleting(startFresh + "LaunchPresenter",
           presentation + "sections/launch", "LaunchPresenter.java")
 

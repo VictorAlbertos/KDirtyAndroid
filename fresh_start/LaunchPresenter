@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package app.presentation.sections.launch;
+package app.presentation.sections.launch
 
-import javax.inject.Inject;
+import app.presentation.foundation.presenter.Presenter
+import app.presentation.foundation.presenter.ViewPresenter
+import app.presentation.foundation.transformations.Transformations
+import app.presentation.foundation.widgets.Notifications
+import javax.inject.Inject
 
-import app.presentation.foundation.widgets.Notifications;
-import app.presentation.foundation.presenter.Presenter;
-import app.presentation.foundation.presenter.ViewPresenter;
-import app.presentation.foundation.transformations.Transformations;
+class LaunchPresenter @Inject constructor(transformations: Transformations,
+                                          notifications: Notifications) : Presenter<LaunchPresenter.View>(transformations, notifications) {
 
-final class LaunchPresenter extends Presenter<ViewPresenter> {
+    override fun onBindView(view: LaunchPresenter.View) {
+        super.onBindView(view)
+    }
 
-  @Inject
-  LaunchPresenter(Transformations transformations, Notifications notifications) {
-    super(transformations, notifications);
-  }
-
-  @Override public void onBindView(ViewPresenter view) {
-    super.onBindView(view);
-  }
-
+    interface View : ViewPresenter
 }
