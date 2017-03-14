@@ -16,9 +16,8 @@
 
 package app.presentation.sections.launch;
 
-import app.presentation.foundation.widgets.Notifications;
-import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
+import app.presentation.foundation.widgets.Notifications;
 import app.presentation.sections.TransformationsMock;
 import io.reactivex.Completable;
 import org.junit.Before;
@@ -37,7 +36,7 @@ public final class LaunchPresenterTest {
   Transformations transformations = Mockito.spy(TransformationsMock.class);
   private LaunchPresenter launchPresenterUT;
   @Mock LaunchWireframe wireframe;
-  @Mock ViewPresenter view;
+  @Mock LaunchPresenter.View view;
   @Mock Notifications notifications;
 
   @Before public void init() {
