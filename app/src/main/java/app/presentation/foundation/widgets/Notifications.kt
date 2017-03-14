@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package app.presentation.foundation.notifications
+package app.presentation.foundation.widgets
 
+import android.R
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.widget.Toast
@@ -39,7 +40,7 @@ class Notifications @Inject constructor(private val baseApp: BaseApp) {
         val activity = baseApp.liveActivity
         if (activity != null) {
             sTitle.subscribe { title ->
-                Snackbar.make(activity.findViewById(android.R.id.content),
+                Snackbar.make(activity.findViewById(R.id.content),
                         title, Snackbar.LENGTH_LONG).show()
             }
         }
@@ -59,7 +60,7 @@ class Notifications @Inject constructor(private val baseApp: BaseApp) {
     fun showSnackBar(@StringRes idString: Int) {
         val activity = baseApp.liveActivity
         if (activity != null) {
-            Snackbar.make(activity.findViewById(android.R.id.content),
+            Snackbar.make(activity.findViewById(R.id.content),
                     baseApp.getString(idString), Snackbar.LENGTH_LONG).show()
         }
     }

@@ -17,7 +17,7 @@
 package app.presentation.sections.users.detail;
 
 import app.data.sections.users.User;
-import app.presentation.foundation.notifications.Notifications;
+import app.presentation.foundation.widgets.Notifications;
 import app.presentation.foundation.presenter.Presenter;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;

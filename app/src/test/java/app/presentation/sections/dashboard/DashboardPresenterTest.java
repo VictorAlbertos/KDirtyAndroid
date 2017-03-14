@@ -16,7 +16,7 @@
 
 package app.presentation.sections.dashboard;
 
-import app.presentation.foundation.notifications.Notifications;
+import app.presentation.foundation.widgets.Notifications;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.foundation.views.FragmentsManager;
 import app.presentation.sections.TransformationsMock;

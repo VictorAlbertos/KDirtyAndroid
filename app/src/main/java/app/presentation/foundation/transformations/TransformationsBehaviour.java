@@ -16,8 +16,8 @@
 
 package app.presentation.foundation.transformations;
 
-import app.presentation.foundation.dialogs.Dialogs;
-import app.presentation.foundation.notifications.Notifications;
+import app.presentation.foundation.widgets.Dialogs;
+import app.presentation.foundation.widgets.Notifications;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleTransformer;

@@ -18,7 +18,7 @@ package app.presentation.sections.users.search;
 
 import app.data.sections.users.User;
 import app.data.sections.users.UserRepository;
-import app.presentation.foundation.notifications.Notifications;
+import app.presentation.foundation.widgets.Notifications;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.TransformationsMock;
 import io.reactivex.Observable;

@@ -22,6 +22,7 @@ import android.support.annotation.Nullable;
 import app.presentation.foundation.dagger.DaggerPresentationComponent;
 import app.presentation.foundation.dagger.PresentationComponent;
 import app.presentation.foundation.dagger.PresentationModule;
+import app.presentation.foundation.widgets.Notifications;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -61,7 +62,7 @@ public final class BaseApp extends Application {
   /**
    * Expose a reference to current Activity to be used for other classes which may depend on it.
    *
-   * @see app.presentation.foundation.notifications.Notifications as an example.
+   * @see Notifications as an example.
    */
   @Nullable public Activity getLiveActivity() {
     return AppCare.YesSir.getLiveActivity();

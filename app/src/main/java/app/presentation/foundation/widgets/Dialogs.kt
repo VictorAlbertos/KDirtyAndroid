@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package app.presentation.foundation.dialogs
+package app.presentation.foundation.widgets
 
 import android.support.v4.content.ContextCompat
 import app.presentation.foundation.BaseApp
