@@ -34,7 +34,7 @@ open class Presenter<V : ViewPresenter> @Inject constructor(protected val transf
      * @param lifeCycle the Transformer supplied by RxLifecycle for both Fragment and Activity.
      */
     fun bindLifeCycle(lifeCycle: SingleTransformer<*, *>) {
-        this.transformations.setLifecycle(lifeCycle)
+        this.transformations.lifecycle = lifeCycle
     }
 
     /**

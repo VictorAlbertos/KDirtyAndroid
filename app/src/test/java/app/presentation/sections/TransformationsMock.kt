@@ -21,25 +21,23 @@ import io.reactivex.Single
 import io.reactivex.SingleTransformer
 
 class TransformationsMock : Transformations {
-    override fun setLifecycle(lifecycle: SingleTransformer<*, *>) {
-        // Do nothing.  Exists to satisfy Transformations.
-    }
+    override var lifecycle: SingleTransformer<*, *> = SingleTransformer<Any, Any> { Single.just(it) }
 
-    override fun <T : Any> safely(): SingleTransformer<T, T> = SingleTransformer { it }
+    override fun <T> safely(): SingleTransformer<T, T> = SingleTransformer { it }
 
-    override fun <T : Any> reportOnSnackBar(): SingleTransformer<T, T> = SingleTransformer {
+    override fun <T> reportOnSnackBar(): SingleTransformer<T, T> = SingleTransformer {
         it.onErrorResumeNext {
             Single.never()
         }
     }
 
-    override fun <T : Any> reportOnToast(): SingleTransformer<T, T> = SingleTransformer {
+    override fun <T> reportOnToast(): SingleTransformer<T, T> = SingleTransformer {
         it.onErrorResumeNext {
             Single.never()
         }
     }
 
-    override fun <T : Any> loading(): SingleTransformer<T, T> = SingleTransformer { it }
+    override fun <T> loading(): SingleTransformer<T, T> = SingleTransformer { it }
 
-    override fun <T : Any> loading(content: String?): SingleTransformer<T, T> = SingleTransformer { it }
+    override fun <T> loading(content: String): SingleTransformer<T, T> = SingleTransformer { it }
 }

@@ -32,7 +32,7 @@ import timber.log.Timber;
  * Format errors to show the most meaningful message depending on the current build variant and the
  * exception type.
  */
-class ExceptionFormatter {
+public class ExceptionFormatter {
   private final Resources resources;
 
   @Inject public ExceptionFormatter(Resources resources, Timber.Tree timberTree) {
