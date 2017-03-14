@@ -43,23 +43,23 @@ public class DashboardTest {
       new ActivityTestRule<>(LaunchActivity.class);
 
   @Test public void _1_Verify_Open_And_Close_Users() {
-    onView(withId(R.id.drawer_layout)).perform(openDrawer());
+    onView(withId(R.id.drawerLayout)).perform(openDrawer());
 
-    onView(withId(R.id.navigation_view)).check(matches(isDisplayed()));
+    onView(withId(R.id.navigationView)).check(matches(isDisplayed()));
 
-    onView(allOf(withId(R.id.navigation_view),
+    onView(allOf(withId(R.id.navigationView),
         ViewMatchers.hasDescendant(withText(R.string.users)))).perform(click());
 
-    onView(withId(R.id.drawer_layout)).perform(closeDrawer());
+    onView(withId(R.id.drawerLayout)).perform(closeDrawer());
   }
 
   @Test public void _2_Verify_Open_And_Close_Search_User() {
-    onView(withId(R.id.drawer_layout)).perform(openDrawer());
+    onView(withId(R.id.drawerLayout)).perform(openDrawer());
 
-    onView(allOf(withId(R.id.navigation_view),
+    onView(allOf(withId(R.id.navigationView),
         ViewMatchers.hasDescendant(withText(R.string.find_user)))).perform(click());
 
-    onView(withId(R.id.drawer_layout)).perform(closeDrawer());
+    onView(withId(R.id.drawerLayout)).perform(closeDrawer());
   }
 
 }

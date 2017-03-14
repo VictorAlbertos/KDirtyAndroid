@@ -66,9 +66,9 @@ public class UsersTest {
   }
 
   @Test public void _3_Verify_Search_User() {
-    onView(withId(R.id.drawer_layout)).perform(openDrawer());
+    onView(withId(R.id.drawerLayout)).perform(openDrawer());
 
-    onView(Matchers.allOf(withId(R.id.navigation_view),
+    onView(Matchers.allOf(withId(R.id.navigationView),
         hasDescendant(withText(R.string.find_user)))).perform(click());
 
     onView(withId(R.id.et_name)).perform(click(), replaceText(USERNAME), closeSoftKeyboard());
