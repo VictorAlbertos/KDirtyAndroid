@@ -22,6 +22,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import org.base_app_android.R
 import javax.inject.Inject
 
+/*
+ * A centralized dialog pipeline.
+ */
 class Dialogs @Inject constructor(private val baseApp: BaseApp) {
     private var materialDialog: MaterialDialog? = null
 

@@ -61,7 +61,7 @@ public final class BaseApp extends Application {
   /**
    * Expose a reference to current Activity to be used for other classes which may depend on it.
    *
-   * @see app.presentation.foundation.notifications.NotificationsBehaviour as an example.
+   * @see app.presentation.foundation.notifications.Notifications as an example.
    */
   @Nullable public Activity getLiveActivity() {
     return AppCare.YesSir.getLiveActivity();

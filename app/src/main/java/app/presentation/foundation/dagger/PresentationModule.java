@@ -19,8 +19,6 @@ package app.presentation.foundation.dagger;
 import android.os.AsyncTask;
 import app.data.foundation.dagger.DataModule;
 import app.presentation.foundation.BaseApp;
-import app.presentation.foundation.notifications.Notifications;
-import app.presentation.foundation.notifications.NotificationsBehaviour;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.foundation.transformations.TransformationsBehaviour;
 import dagger.Module;
@@ -47,10 +45,6 @@ import timber.log.Timber;
   @Provides Transformations provideTransformations(TransformationsBehaviour
       transformationsBehaviour) {
     return transformationsBehaviour;
-  }
-
-  @Provides Notifications provideNotifications(NotificationsBehaviour notificationsBehaviour) {
-    return notificationsBehaviour;
   }
 
   /**
