@@ -24,7 +24,7 @@ import io.reactivex.Single
 import io.rx_cache2.Reply
 import javax.inject.Inject
 
-open class UserRepository @Inject constructor(private val githubUsersApi: GithubUsersApi,
+class UserRepository @Inject constructor(private val githubUsersApi: GithubUsersApi,
                                          private val networkResponse: NetworkResponse,
                                          reactiveCache: ReactiveCache) {
     private val FIRST_DEFAULT_ID = 0;
@@ -32,12 +32,12 @@ open class UserRepository @Inject constructor(private val githubUsersApi: Github
     private val cacheProvider = reactiveCache.providerGroup<List<User>>()
             .withKey<ProviderGroup<List<User>>>("users")
 
-    open fun getUsers(lastIdQueried: Int?, refresh: Boolean): Single<List<User>> =
+    fun getUsers(lastIdQueried: Int?, refresh: Boolean): Single<List<User>> =
             getUsersReply(lastIdQueried, refresh).map { it.data }
 
-    open fun getRecentUser(): Single<User> = getUsersReply(FIRST_DEFAULT_ID, false).map { it.data[0] }
+    fun getRecentUser(): Single<User> = getUsersReply(FIRST_DEFAULT_ID, false).map { it.data[0] }
 
-    open fun searchByUserName(username : String) : Single<User> =
+    fun searchByUserName(username : String) : Single<User> =
             githubUsersApi.getUserByName(username).compose(networkResponse.process())
 
     @VisibleForTesting
