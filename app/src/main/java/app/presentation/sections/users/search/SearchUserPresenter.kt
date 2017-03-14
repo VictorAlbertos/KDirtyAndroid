@@ -60,7 +60,7 @@ class SearchUserPresenter @Inject constructor(private val userRepository: UserRe
     interface View : ViewPresenter {
         fun showUser(user: User)
 
-        fun clicksSearchUser(): Observable<Any>
+        fun clicksSearchUser(): Observable<Unit>
 
         fun username(): String
     }

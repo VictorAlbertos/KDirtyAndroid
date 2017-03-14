@@ -21,6 +21,7 @@ import app.data.sections.users.User
 import app.presentation.foundation.views.BaseFragment
 import app.presentation.foundation.views.LayoutResFragment
 import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.user_search_fragment.*
 import org.base_app_android.R
@@ -36,8 +37,8 @@ class SearchUserFragment : BaseFragment<SearchUserPresenter.View, SearchUserPres
         getApplicationComponent().inject(this)
     }
 
-    override fun clicksSearchUser(): Observable<Any> {
-        return RxView.clicks(btFindUser)
+    override fun clicksSearchUser(): Observable<Unit> {
+        return btFindUser.clicks()
     }
 
     override fun username(): String {

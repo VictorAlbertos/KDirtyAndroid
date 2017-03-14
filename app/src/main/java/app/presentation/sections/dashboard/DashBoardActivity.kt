@@ -26,7 +26,7 @@ import android.view.MenuItem
 import app.presentation.foundation.views.BaseActivity
 import app.presentation.foundation.views.FragmentsManager
 import app.presentation.foundation.views.LayoutResActivity
-import com.jakewharton.rxbinding2.support.design.widget.RxNavigationView
+import com.jakewharton.rxbinding2.support.design.widget.itemSelections
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -74,7 +74,7 @@ class DashBoardActivity : BaseActivity<DashboardPresenter.View, DashboardPresent
     }
 
     override fun clicksItemSelected(): Observable<MenuItem> {
-        return RxNavigationView.itemSelections(navigationView)
+        return navigationView.itemSelections()
     }
 
     override fun setCheckedItemMenu(@IdRes id: Int) {
