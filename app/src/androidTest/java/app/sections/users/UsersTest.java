@@ -54,15 +54,15 @@ public class UsersTest {
   private static final String USERNAME = "FuckBoilerplate";
 
   @Test public void _1_Verify_Get_Users() {
-    onView(withId(R.id.rv_users))
+    onView(withId(R.id.rvUsers))
         .perform(RecyclerViewActions.scrollToPosition(10));
   }
 
   @Test public void _2_Verify_Get_User() {
-    onView(withId(R.id.rv_users))
+    onView(withId(R.id.rvUsers))
         .perform(RecyclerViewActions.actionOnItemAtPosition(8, click()));
 
-    onView(withId(R.id.tv_name)).check(matches(isNotEmpty()));
+    onView(withId(R.id.tvName)).check(matches(isNotEmpty()));
   }
 
   @Test public void _3_Verify_Search_User() {
@@ -71,10 +71,10 @@ public class UsersTest {
     onView(Matchers.allOf(withId(R.id.navigationView),
         hasDescendant(withText(R.string.find_user)))).perform(click());
 
-    onView(withId(R.id.et_name)).perform(click(), replaceText(USERNAME), closeSoftKeyboard());
-    onView(withId(R.id.bt_find_user)).perform(click());
+    onView(withId(R.id.etName)).perform(click(), replaceText(USERNAME), closeSoftKeyboard());
+    onView(withId(R.id.btFindUser)).perform(click());
 
-    onView(withId(R.id.tv_name)).check(matches(isNotEmpty()));
+    onView(withId(R.id.tvName)).check(matches(isNotEmpty()));
   }
 
   private static Matcher<View> isNotEmpty() {

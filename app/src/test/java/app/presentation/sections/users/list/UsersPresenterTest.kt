@@ -35,13 +35,13 @@ class UsersPresenterTest {
     val transformations: Transformations = spy(TransformationsMock())
     val userRepository: UserRepository = mock()
     val wireframe: UsersWireframe = mock()
-    private val view: UsersPresenter.View = mock()
+    val view: UsersPresenter.View = mock()
     var callback: Pager.Callback<User> = mock()
     val notifications: Notifications = mock()
-    private lateinit var usersPresenterUT: UsersPresenter
+    lateinit var usersPresenterUT: UsersPresenter
 
     @Before fun init() {
-        usersPresenterUT = UsersPresenter(transformations, userRepository, wireframe, notifications)
+        usersPresenterUT = UsersPresenter(userRepository, wireframe, transformations, notifications)
         whenever(view.userSelectedClicks()).thenReturn(Observable.never())
     }
 
