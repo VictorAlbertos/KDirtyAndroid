@@ -14,8 +14,9 @@ task('freshStart') << {
   Helper.removeDir(presentation + "sections/users")
   Helper.removeDir(presentation + "sections/launch")
   Helper.moveFileDeleting(startFresh + "LaunchPresenter",
-          presentation + "sections/launch", "LaunchPresenter.java")
-
+          presentation + "sections/launch", "LaunchPresenter.kt")
+  Helper.moveFileDeleting(startFresh + "LaunchActivity",
+          presentation + "sections/launch", "LaunchActivity.kt")
 
   String resources = "app/src/main/res/"
   Helper.removeDir(resources+"sections/common")

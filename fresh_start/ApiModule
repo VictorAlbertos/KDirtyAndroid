@@ -16,13 +16,10 @@
 
 package app.data.foundation.net;
 
-import app.data.foundation.GsonAdapterFactory;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import dagger.Module;
 import javax.inject.Inject;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -33,15 +30,11 @@ public class ApiModule {
   private final Retrofit retrofit;
 
   @Inject public ApiModule() {
-    Gson gson = new GsonBuilder()
-        .registerTypeAdapterFactory(GsonAdapterFactory.create())
-        .create();
 
     this.retrofit = new Retrofit.Builder()
-        .baseUrl("api_url")
+        .baseUrl("https://api.github.com")
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addConverterFactory(GsonConverterFactory.create())
         .build();
   }
-
 }
