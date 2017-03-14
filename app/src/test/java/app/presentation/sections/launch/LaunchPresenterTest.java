@@ -16,12 +16,11 @@
 
 package app.presentation.sections.launch;
 
-import app.data.foundation.Ignore;
 import app.presentation.foundation.notifications.Notifications;
 import app.presentation.foundation.presenter.ViewPresenter;
 import app.presentation.foundation.transformations.Transformations;
 import app.presentation.sections.TransformationsMock;
-import io.reactivex.Single;
+import io.reactivex.Completable;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,7 +46,7 @@ public final class LaunchPresenterTest {
   }
 
   @Test public void Verify_OnBindView() {
-    when(wireframe.dashboard()).thenReturn(Single.just(Ignore.Get));
+    when(wireframe.dashboard()).thenReturn(Completable.complete());
     launchPresenterUT.onBindView(view);
 
     verify(wireframe).dashboard();

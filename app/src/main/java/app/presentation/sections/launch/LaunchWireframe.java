@@ -17,25 +17,23 @@
 package app.presentation.sections.launch;
 
 import android.content.Intent;
-import app.data.foundation.Ignore;
 import app.presentation.foundation.BaseApp;
 import app.presentation.sections.dashboard.DashBoardActivity;
-import io.reactivex.Single;
+import io.reactivex.Completable;
 import javax.inject.Inject;
 
-class LaunchWireframe  {
+class LaunchWireframe {
   private final BaseApp baseApp;
 
   @Inject LaunchWireframe(BaseApp baseApp) {
     this.baseApp = baseApp;
   }
 
-  public Single<Ignore> dashboard() {
-    return Single.defer(() -> {
+  public Completable dashboard() {
+    return Completable.defer(() -> {
       baseApp.getLiveActivity()
           .startActivity(new Intent(baseApp, DashBoardActivity.class));
-      return Single.just(Ignore.Get);
+      return Completable.complete();
     });
   }
-
 }

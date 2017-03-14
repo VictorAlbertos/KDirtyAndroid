@@ -33,8 +33,6 @@ final class LaunchPresenter extends Presenter<ViewPresenter> {
 
   @Override public void onBindView(ViewPresenter view) {
     super.onBindView(view);
-    wireframe.dashboard()
-        .compose(transformations.safely())
-        .subscribe();
+    wireframe.dashboard().subscribe();
   }
 }

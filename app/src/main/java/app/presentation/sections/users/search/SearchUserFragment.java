@@ -18,7 +18,6 @@ package app.presentation.sections.users.search;
 
 import android.view.View;
 import android.widget.EditText;
-import app.data.foundation.Ignore;
 import app.data.sections.users.User;
 import app.presentation.foundation.views.BaseFragment;
 import app.presentation.foundation.views.LayoutResFragment;
@@ -43,8 +42,8 @@ public final class SearchUserFragment extends BaseFragment<SearchUserPresenter>
     getApplicationComponent().inject(this);
   }
 
-  @Override public Observable<Ignore> clicksSearchUser() {
-    return RxView.clicks(btFindUser).map(_I -> Ignore.Get);
+  @Override public Observable<Object> clicksSearchUser() {
+    return RxView.clicks(btFindUser);
   }
 
   @Override public String username() {

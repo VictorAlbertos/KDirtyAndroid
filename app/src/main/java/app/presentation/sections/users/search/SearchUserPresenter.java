@@ -17,7 +17,6 @@
 package app.presentation.sections.users.search;
 
 import android.support.annotation.VisibleForTesting;
-import app.data.foundation.Ignore;
 import app.data.sections.users.User;
 import app.data.sections.users.UserRepository;
 import app.presentation.foundation.notifications.Notifications;
@@ -67,7 +66,7 @@ final class SearchUserPresenter extends Presenter<SearchUserPresenter.View> {
   interface View extends ViewPresenter {
     void showUser(User user);
 
-    Observable<Ignore> clicksSearchUser();
+    Observable<Object> clicksSearchUser();
 
     String username();
   }
