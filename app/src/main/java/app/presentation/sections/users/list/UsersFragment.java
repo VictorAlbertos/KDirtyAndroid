@@ -33,7 +33,7 @@ import miguelbcr.ok_adapters.recycler_view.Pager;
 import org.base_app_android.R;
 
 @LayoutResFragment(R.layout.users_fragment)
-public final class UsersFragment extends BaseFragment<UsersPresenter> implements
+public final class UsersFragment extends BaseFragment<UsersPresenter.View, UsersPresenter> implements
     UsersPresenter.View {
   @BindView(R.id.rv_users) RecyclerView rvUsers;
   @BindView(R.id.srl_users) SwipeRefreshLayout swipeRefreshUsers;
