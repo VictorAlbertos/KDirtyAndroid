@@ -49,17 +49,17 @@ final class SearchUserPresenter extends Presenter<SearchUserPresenter.View> {
 
   @VisibleForTesting void getUserByUserName(String username) {
     if (username.isEmpty()) {
-      notifications.showSnackBar(R.string.fill_missing_fields);
+      getNotifications().showSnackBar(R.string.fill_missing_fields);
       return;
     }
 
     userRepository.searchByUserName(username)
-        .compose(transformations.safely())
-        .compose(transformations.loading())
-        .compose(transformations.reportOnSnackBar())
+        .compose(getTransformations().safely())
+        .compose(getTransformations().loading())
+        .compose(getTransformations().reportOnSnackBar())
         .subscribe(user -> {
           userState = user;
-          view.showUser(user);
+          getView().showUser(user);
         });
   }
 

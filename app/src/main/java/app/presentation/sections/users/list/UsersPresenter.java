@@ -61,8 +61,8 @@ final class UsersPresenter extends Presenter<UsersPresenter.View> {
     if (user != null) id = user.getId();
 
     repository.getUsers(id, false)
-        .compose(transformations.safely())
-        .compose(transformations.reportOnSnackBar())
+        .compose(getTransformations().safely())
+        .compose(getTransformations().reportOnSnackBar())
         .subscribe(users -> {
           callback.supply(users);
           usersState.addAll(users);
@@ -71,13 +71,13 @@ final class UsersPresenter extends Presenter<UsersPresenter.View> {
 
   @VisibleForTesting void refreshList(Pager.Callback<User> callback) {
     repository.getUsers(null, true)
-        .compose(transformations.safely())
-        .compose(transformations.reportOnSnackBar())
+        .compose(getTransformations().safely())
+        .compose(getTransformations().reportOnSnackBar())
         .subscribe(users -> {
           callback.supply(users);
           usersState.clear();
           usersState.addAll(users);
-          view.hideLoadingOnRefreshList();
+          getView().hideLoadingOnRefreshList();
         });
   }
 

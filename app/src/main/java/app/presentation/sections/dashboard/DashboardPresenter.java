@@ -68,9 +68,9 @@ final class DashboardPresenter extends Presenter<DashboardPresenter.View> {
     ItemMenu itemMenu = ITEMS_MENU.get(idSelectedMenu);
     Class<? extends Fragment> classFragment = itemMenu.getClassFragment();
 
-    if (view.replaceFragment(fragmentsManager, classFragment)) {
-      view.setCheckedItemMenu(idSelectedMenu);
-      view.setTitleActionBar(itemMenu.getResTitle());
+    if (getView().replaceFragment(fragmentsManager, classFragment)) {
+      getView().setCheckedItemMenu(idSelectedMenu);
+      getView().setTitleActionBar(itemMenu.getResTitle());
     }
   }
 

@@ -37,9 +37,9 @@ final class UserPresenter extends Presenter<UserPresenter.View> {
     super.onBindView(view);
 
     wireframe.getUserScreen()
-        .compose(transformations.safely())
-        .compose(transformations.loading())
-        .compose(transformations.reportOnSnackBar())
+        .compose(getTransformations().safely())
+        .compose(getTransformations().loading())
+        .compose(getTransformations().reportOnSnackBar())
         .subscribe(view::showUser);
   }
 
