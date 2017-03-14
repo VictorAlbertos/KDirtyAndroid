@@ -21,8 +21,6 @@ import app.presentation.foundation.BaseApp
 import app.presentation.foundation.dagger.PresentationComponent
 import app.presentation.foundation.presenter.Presenter
 import app.presentation.foundation.presenter.ViewPresenter
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import javax.inject.Inject
@@ -35,7 +33,6 @@ import javax.inject.Inject
  */
 abstract class BaseActivity<V : ViewPresenter, P : Presenter<V>> : RxAppCompatActivity(), ViewPresenter {
     @Inject lateinit internal var presenter: P
-    private lateinit var unbinder: Unbinder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +40,6 @@ abstract class BaseActivity<V : ViewPresenter, P : Presenter<V>> : RxAppCompatAc
         //Get the value ResLayout from the annotation if provided.
         val layoutRes : LayoutResActivity? = this.javaClass.getAnnotation(LayoutResActivity::class.java)
         if (layoutRes != null) setContentView(layoutRes?.value)
-
-        //Inject the views with butter-knife.
-        unbinder = ButterKnife.bind(this)
 
         //Try to get the Holder data if the Activity has been destroyed due to config changes in order to prevent
         // injecting the dependency graph again.
@@ -81,14 +75,6 @@ abstract class BaseActivity<V : ViewPresenter, P : Presenter<V>> : RxAppCompatAc
      */
     override fun onRetainCustomNonConfigurationInstance(): Any {
         return presenter
-    }
-
-    /**
-     * Unbind views injected with Butter-knife.
-     */
-    override fun onDestroy() {
-        super.onDestroy()
-        unbinder.unbind()
     }
 
     /**

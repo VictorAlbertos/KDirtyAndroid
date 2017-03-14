@@ -16,12 +16,10 @@
 
 package app.presentation.sections.users.detail
 
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import app.data.sections.users.User
 import app.presentation.foundation.views.BaseActivity
 import app.presentation.foundation.views.LayoutResActivity
-import butterknife.BindView
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.user_activity.*
 import org.base_app_android.R

@@ -44,7 +44,7 @@ class UsersTest {
     @Rule @JvmField var mActivityRule = ActivityTestRule(LaunchActivity::class.java)
 
     companion object {
-        @ClassRule @JvmField  var deviceAnimationTestRule = DeviceAnimationTestRule()
+        @ClassRule @JvmField var deviceAnimationTestRule = DeviceAnimationTestRule()
     }
 
     private val USERNAME = "FuckBoilerplate"

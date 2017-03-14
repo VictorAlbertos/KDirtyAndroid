@@ -24,8 +24,6 @@ import app.presentation.foundation.BaseApp
 import app.presentation.foundation.dagger.PresentationComponent
 import app.presentation.foundation.presenter.Presenter
 import app.presentation.foundation.presenter.ViewPresenter
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid
 import com.trello.rxlifecycle2.components.support.RxFragment
 import javax.inject.Inject
@@ -38,7 +36,6 @@ import javax.inject.Inject
  */
 abstract class BaseFragment<V : ViewPresenter, P : Presenter<V>> : RxFragment(), ViewPresenter {
     @Inject internal lateinit var presenter: P
-    private lateinit var unbinder: Unbinder
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -62,8 +59,6 @@ abstract class BaseFragment<V : ViewPresenter, P : Presenter<V>> : RxFragment(),
             injectDagger()
         }
 
-        //Inject the views with butter-knife.
-        unbinder = ButterKnife.bind(this, view!!)
         return view
     }
 
@@ -86,14 +81,6 @@ abstract class BaseFragment<V : ViewPresenter, P : Presenter<V>> : RxFragment(),
     override fun onResume() {
         super.onResume()
         presenter.onResumeView()
-    }
-
-    /**
-     * Unbind views injected with Butter-knife.
-     */
-    override fun onDestroyView() {
-        super.onDestroyView()
-        unbinder.unbind()
     }
 
     /**

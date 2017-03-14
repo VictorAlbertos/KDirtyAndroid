@@ -104,7 +104,6 @@ ext {
           retrofit          : "2.2.0",
           dagger            : "2.9",
           mockery           : "1.0.2",
-          butterknife       : "8.5.1",
           leakCanary        : "1.5",
           rxbinding         : "2.0.0",
           rxlifecycle       : "2.0.1"
@@ -144,9 +143,6 @@ dependencies {
   compile("com.afollestad.material-dialogs:core:0.9.4.1") {
     transitive = true
   }
-  compile "com.jakewharton:butterknife:${versions.butterknife}"
-  apt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
-
   compile "com.trello.rxlifecycle2:rxlifecycle:${versions.rxlifecycle}"
   compile "com.trello.rxlifecycle2:rxlifecycle-android:${versions.rxlifecycle}"
   compile "com.trello.rxlifecycle2:rxlifecycle-components:${versions.rxlifecycle}"
