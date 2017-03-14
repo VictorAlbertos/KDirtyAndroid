@@ -32,8 +32,9 @@ import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.base_app_android.R
 
-@LayoutResActivity(R.layout.dashboard_activity) class DashBoardActivity : BaseActivity<DashboardPresenter.View, DashboardPresenter>(), DashboardPresenter.View {
-    private var drawerToggle: ActionBarDrawerToggle? = null
+@LayoutResActivity(R.layout.dashboard_activity)
+class DashBoardActivity : BaseActivity<DashboardPresenter.View, DashboardPresenter>(), DashboardPresenter.View {
+    lateinit var drawerToggle: ActionBarDrawerToggle
 
     override fun injectDagger() {
         getApplicationComponent().inject(this)
@@ -45,26 +46,26 @@ import org.base_app_android.R
         supportActionBar!!.setHomeButtonEnabled(true)
 
         drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
-        drawerLayout.addDrawerListener(drawerToggle!!)
+        drawerLayout.addDrawerListener(drawerToggle)
     }
 
     override fun onDestroy() {
-        drawerLayout.removeDrawerListener(drawerToggle!!)
+        drawerLayout.removeDrawerListener(drawerToggle)
         super.onDestroy()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        drawerToggle!!.syncState()
+        drawerToggle.syncState()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        drawerToggle!!.onConfigurationChanged(newConfig)
+        drawerToggle.onConfigurationChanged(newConfig)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle!!.onOptionsItemSelected(item)) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         } else if (item.itemId == android.R.id.home) {
             onBackPressed()
@@ -73,7 +74,7 @@ import org.base_app_android.R
     }
 
     override fun clicksItemSelected(): Observable<MenuItem> {
-        return RxNavigationView.itemSelections(navigationView!!)
+        return RxNavigationView.itemSelections(navigationView)
     }
 
     override fun setCheckedItemMenu(@IdRes id: Int) {

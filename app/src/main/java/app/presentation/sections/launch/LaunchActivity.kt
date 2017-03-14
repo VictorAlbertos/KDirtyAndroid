@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package app.presentation.sections.launch;
+package app.presentation.sections.launch
 
-import app.presentation.foundation.views.BaseActivity;
+import app.presentation.foundation.views.BaseActivity
 
-public final class LaunchActivity extends BaseActivity<LaunchPresenter.View, LaunchPresenter>
-    implements LaunchPresenter.View {
+class LaunchActivity : BaseActivity<LaunchPresenter.View, LaunchPresenter>(), LaunchPresenter.View {
 
-  @Override protected void initViews() {
-    // Do nothing.  Exists to satisfy BaseActivity.
-  }
+    override fun initViews() {
+        // Do nothing.  Exists to satisfy BaseActivity.
+    }
 
-  @Override protected void injectDagger() {
-    getApplicationComponent().inject(this);
-  }
+    override fun injectDagger() {
+        getApplicationComponent().inject(this)
+    }
 }
