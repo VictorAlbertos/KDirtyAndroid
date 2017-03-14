@@ -36,7 +36,7 @@ import javax.inject.Singleton;
 @Module(includes = {ApiModule.class})
 public final class DataModule {
 
-  @Singleton @Provides Resources provideUiUtils(BaseApp baseApp) {
+  @Singleton @Provides Resources provideUiUtils(final BaseApp baseApp) {
     return new Resources() {
         @Override
         public String getString(@StringRes int idResource) {

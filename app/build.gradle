@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'android-apt'
-apply plugin: 'me.tatarka.retrolambda'
 apply from: '../code_quality_tools/quality.gradle'
 apply from: '../fresh_start/fresh_start.gradle'
 
@@ -61,12 +60,6 @@ android {
                       'src/main/res'
               ]
     }
-  }
-
-  //retrolambda
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
   }
 
   packagingOptions {
