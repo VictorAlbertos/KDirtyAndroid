@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Victor Albertos
+ * Copyright 2017 Victor Albertos
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-package app.presentation.foundation.views;
+package app.presentation.foundation.views
 
-import android.support.annotation.LayoutRes;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import android.support.annotation.LayoutRes
 
 /**
- * Set the layout resource for every Fragment which extends from {@link BaseFragment}
+ * Set the layout resource for every Activity which extends from [BaseActivity]
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface LayoutResFragment {
-    @LayoutRes int value();
-}
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
+annotation class LayoutResActivity(@LayoutRes val value: Int)
