@@ -16,7 +16,7 @@ That's a real Android application. *Vast passages* filled with nothing. The same
 
 Those actions refer only to two layers. Data and presentation. Where is the domain layer? How knows? Probably in the server.
 
-The architecture which conducts this project has been designed with a clair purpose: keeping things as simple as possible wihout loosing the right abstraction to provide just the precise amount of indirection to make a testeable and maintainable application. There is no ceremony, no *Uncle Bob*, no clean code; just Android itself, naked, truly exposed with its dirtiness. This architecture is just a window to this reality.
+The architecture which conducts this project has been designed with a clear purpose: keeping things as simple as possible wihout losing the right abstraction to provide just the precise amount of indirection to make a testeable and maintainable application. There is no ceremony, no *Uncle Bob*, no clean code; just Android itself, naked, truly exposed with its dirtiness. This architecture is just a window to this reality.
 
 ## What are you going to find in this repository:
 
@@ -44,9 +44,9 @@ The architecture which conducts this project has been designed with a clair purp
 ## A dirty architecture
 Why is it dirty? Because it's not clean.  
 
-There aren't `interface`s to comunicate between boundaries, no data models to limit their responsability to parse json documents, no use cases and so on. To sump up, there is no makeup. What there is instead is coupling, a helthy one to provide enought identity to the project to know that this is an Android project from top to bottom. The abstractions exist because of necesity, to provide a way to unit testing components.
+There aren't `interface`s to comunicate between boundaries, no data models to limit their responsability to parse json documents, no use cases and so on. To sump up, there is no makeup. What there is instead is coupling, a healthy one to provide enought identity to the project to know that this is an Android project from top to bottom. The abstractions exist because of necesity, to provide a way to unit testing components.
 
-Therefore, there only 2 layers: [data](https://github.com/VictorAlbertos/DirtyAndroid/tree/master/app/src/main/java/app/data) and [presentation](https://github.com/VictorAlbertos/DirtyAndroid/tree/master/app/src/main/java/app/presentation) (the domain layer was killed before it was born). And every one of them is divided into two packages, foundation and sections:
+Therefore, there only 2 layers: [data](https://github.com/VictorAlbertos/DirtyAndroid/tree/master/app/src/main/java/app/data) and [presentation](https://github.com/VictorAlbertos/DirtyAndroid/tree/master/app/src/main/java/app/presentation). The domain layer was killed before it was born. And every one of them is divided into two packages, foundation and sections:
 
 ### Foundation package
 Here is where all the *foundation classes* are placed. And by *foundation classes* I mean the classes which are unlikely to be modified due to app specs. They are the identity of the project, the code base, those which stands up as the backbone of your architecture; those which remind you that this is an Android application and nothing else. This package is the only one who survives the [freshStart gradle task](#freshStart), because only few things need to be tunned to start another Android application. 
@@ -58,31 +58,31 @@ Here is where all the funcionality to resolve the application specs are placed. 
 This module is called data because it just manages data. Its main purpose is retrieving data from specific repositories. These repositories are classes which manage data from/to server endpoints or from/to the local cache depending on the current call from the presentation layer. This layer is in charge too of updating the local cache when a new Fcm notifications is received. 
 
 ### Presentation layer
-This is where all the UI logic is placed. The presenter orchestrates the view (Fragment or Activitiy) telling what to do through the view interface which acts as a bridge between them. This indirection layer is not just makeup, it's completely justified by the fact that only using an abstraction layer here we are going to be able to unit test the presenter without beeing coupled to the Android platform. 
+This is where all the UI logic is placed. The presenter orchestrates the view (Fragment or Activitiy) telling what to do through the view interface, which acts as a bridge between them. This indirection layer is not just makeup, it's completely justified by the fact that only using an abstraction layer here we are going to be able to unit test the presenter without being coupled with the Android platform. 
 
 The presenter is the only reference that survives config changes. This is the place to store any kind of data which isn't stored in the cache system, but it still needs to survive to config changes. The presenter syncronizes the `Observable` subscriptions using RxLifeCycle. 
 
 ## Two build variants for mock and real data.
-In the `build.gradle` file two variants has been specified, mock and prod. Everyone of them is linked with an specific sourceset (*app/src/mod* and *app/src/prod*) in order to provide a real and a mock implementation respectively for the ApiModule which provides the networking layer dependencies. In the mock variant the API dependency is resolved using Mockery, and in the production one is resolved by Retrofit. 
+In the `build.gradle` file two variants has been specified, mock and prod. Each one of them is linked with an specific sourceset (*app/src/mod* and *app/src/prod*) in order to provide a real and a mock implementation respectively for the ApiModule which provides the networking layer dependencies. In the mock variant the API dependency is resolved using Mockery, and in the production one is resolved by Retrofit. 
 
 ## Testing
-Both presentation and data layer have a suit of unit tests. Both can be run using the mock or the production variant. For the data layer only JUnit, Mockery and Mockito has been used to isolate dependencies. For the presentation layer -in addition to the preivous one- Espresso has been used to provide a set of UI testing. 
+Both presentation and data layer have a suite of unit tests. Both can be run using the mock or the production variant. For the data layer only JUnit, Mockery and Mockito has been used to isolate dependencies. For the presentation layer -in addition to the previous one- Espresso has been used to provide a set of UI testing. 
 
 ## Run quality tools. 
-To run with a single gradle task all the code quality tools, you need to excute the next command in the terminal:
+To run with a single gradle task all the code quality tools, you need to execute the following command in the terminal:
 
 ```
  ./gradlew check
 ```
 
 ## <a name="freshStart"></a> FreshStart gradle task. 
-To get rid of the example and be able to start your own Android CLIENT application using this architecture, run the next command:
+To get rid of the example and be able to start your own Android CLIENT application using this architecture, run the following command:
 
 ```
  ./gradlew freshStart
 ```
 
-It will destroy all the classes/resources linked to the example and it will leave the project in an ideal state to craft your own app.
+It will destroy all the classes/resources linked to the example and will leave the project in an ideal state to craft your own app.
 
 ## Author
 
