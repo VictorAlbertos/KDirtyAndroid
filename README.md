@@ -1,6 +1,6 @@
 # DirtyAndroid
 
-A dirty approach for truly client Android applications. 
+A dirty approach for truly client Android applications using Kotlin. 
 
 ![DirtyAndroid](dirty.jpg)
 
