@@ -25,7 +25,7 @@ import org.junit.Before
 import org.junit.Test
 import presentation.foundation.transformations.Transformations
 import presentation.foundation.widgets.Notifications
-import presentation.sections.TransformationsMock
+import presentation.foundation.TransformationsMock
 
 class SearchUserPresenterTest {
     private val userRepository: UserRepository = mock()

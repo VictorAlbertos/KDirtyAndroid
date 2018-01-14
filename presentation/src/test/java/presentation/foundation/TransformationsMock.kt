@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package presentation.sections
+package presentation.foundation
 
 import presentation.foundation.transformations.Transformations
 import io.reactivex.Single

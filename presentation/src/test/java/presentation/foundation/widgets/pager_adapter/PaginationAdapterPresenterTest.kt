@@ -7,7 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import presentation.foundation.transformations.Transformations
-import presentation.sections.TransformationsMock
+import presentation.foundation.TransformationsMock
 import timber.log.Timber
 
 class PaginationAdapterPresenterTest {
