@@ -5,7 +5,7 @@ task('freshStart') << {
   Helper.removeDir(androidTest + "sections")
 
   Helper.removeDir("data/src/main/java/data/sections/users")
-
+  Helper.removeDir("data/src/test/java/data/sections/users")
 
   String presentation = "presentation/src/main/java/presentation/"
 
@@ -19,10 +19,11 @@ task('freshStart') << {
   Helper.moveFileDeleting(startFresh + "LaunchPresenter",
           presentation + "sections/launch", "LaunchPresenter.kt")
 
+  Helper.moveFileDeleting(startFresh + "LaunchWireframe",
+          presentation + "sections/launch", "LaunchWireframe.kt")
 
   String resources = "presentation/src/main/res/"
 
-  Helper.removeDir(resources+"sections/common")
   Helper.removeDir(resources+"sections/dashboard")
   Helper.removeDir(resources+"sections/users")
   Helper.removeDir(resources+"/drawable")
@@ -34,13 +35,9 @@ task('freshStart') << {
   Helper.moveFileDeleting(startFresh + "build", "presentation/", "build.gradle")
 
   Helper.moveFileDeleting(startFresh + "DataModule",
-          "data/src/main/java/app/data/foundation/dagger", "DataModule.kt")
+          "data/src/main/java/data/foundation/dagger", "DataModule.kt")
 
-  String unitTest = "presentation/src/test/java/presentation/"
-  Helper.removeDir(unitTest+"/data/sections/users")
-  Helper.removeDir(unitTest+"/presentation/sections/dashboard")
-  Helper.removeDir(unitTest+"/presentation/sections/users")
-  Helper.removeDir(unitTest+"/presentation/sections/launch")
+  Helper.removeDir("presentation/src/test/java/presentation/sections")
 
   Helper.moveFileDeleting(startFresh + "README.md", ".", "README.md")
   Helper.moveFileDeleting(startFresh + "LICENSE.txt", ".", "LICENSE.txt")

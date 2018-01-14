@@ -41,8 +41,6 @@ android {
             res.srcDirs =
                     [
                             'src/main/res/sections/common',
-                            'src/main/res/sections/users',
-                            'src/main/res/sections/dashboard',
                             'src/main/res/sections',
                             'src/main/res'
                     ]
