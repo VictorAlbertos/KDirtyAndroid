@@ -1,41 +1,42 @@
 task('freshStart') << {
   String startFresh = "fresh_start/"
 
-  String androidTest = "app/src/androidTest/java/app/"
-  Helper.removeDir(androidTest + "common")
+  String androidTest = "presentation/src/androidTest/java/presentation/"
   Helper.removeDir(androidTest + "sections")
 
-  Helper.removeDir("app/src/main/java/app/data/sections/users")
+  Helper.removeDir("data/src/main/java/data/sections/users")
 
-  String presentation = "app/src/main/java/app/presentation/"
+
+  String presentation = "presentation/src/main/java/presentation/"
+
   Helper.moveFileDeleting(startFresh + "PresentationComponent",
-          presentation + "foundation/dagger/", "PresentationComponent.java")
+          presentation + "foundation/dagger/", "PresentationComponent.kt")
+
   Helper.removeDir(presentation + "sections/dashboard")
+
   Helper.removeDir(presentation + "sections/users")
-  Helper.removeDir(presentation + "sections/launch")
+
   Helper.moveFileDeleting(startFresh + "LaunchPresenter",
           presentation + "sections/launch", "LaunchPresenter.kt")
-  Helper.moveFileDeleting(startFresh + "LaunchActivity",
-          presentation + "sections/launch", "LaunchActivity.kt")
 
-  String resources = "app/src/main/res/"
+
+  String resources = "presentation/src/main/res/"
+
   Helper.removeDir(resources+"sections/common")
   Helper.removeDir(resources+"sections/dashboard")
   Helper.removeDir(resources+"sections/users")
   Helper.removeDir(resources+"/drawable")
-  Helper.removeDir(resources+"/drawable-svg")
+  Helper.removeDir(resources+"/drawable-anydpi")
   Helper.removeDir(resources+"/menu")
-  Helper.moveFileDeleting(startFresh + "AndroidManifest", "app/src/main/", "AndroidManifest.xml")
-  Helper.moveFileDeleting(startFresh + "strings", "app/src/main/res/values/", "strings.xml")
-  Helper.moveFileDeleting(startFresh + "build", "app/", "build.gradle")
 
-  Helper.moveFileDeleting(startFresh + "ApiModule",
-          "app/src/prod/java/app/data/foundation/net", "ApiModule.java")
-  Helper.moveFileDeleting(startFresh + "ApiModuleMock",
-          "app/src/mock/java/app/data/foundation/net", "ApiModule.java")
+  Helper.moveFileDeleting(startFresh + "AndroidManifest", "presentation/src/main/", "AndroidManifest.xml")
+  Helper.moveFileDeleting(startFresh + "strings", "presentation/src/main/res/values/", "strings.xml")
+  Helper.moveFileDeleting(startFresh + "build", "presentation/", "build.gradle")
 
+  Helper.moveFileDeleting(startFresh + "DataModule",
+          "data/src/main/java/app/data/foundation/dagger", "DataModule.kt")
 
-  String unitTest = "app/src/test/java/app/"
+  String unitTest = "presentation/src/test/java/presentation/"
   Helper.removeDir(unitTest+"/data/sections/users")
   Helper.removeDir(unitTest+"/presentation/sections/dashboard")
   Helper.removeDir(unitTest+"/presentation/sections/users")
