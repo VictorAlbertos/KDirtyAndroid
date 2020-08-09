@@ -1,4 +1,4 @@
-task('freshStart') << {
+task('freshStart') doLast {
   String startFresh = "fresh_start/"
 
   String androidTest = "presentation/src/androidTest/java/presentation/"

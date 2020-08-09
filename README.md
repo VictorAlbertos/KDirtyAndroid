@@ -35,7 +35,7 @@ The architecture which conducts this project has been designed with a clear purp
 * A mechanism to restore screen's data bewteen config changes combining ReactiveCache, RxLifecycle, `Activity#onRetainCustomNonConfigurationInstance` and `Fragment#setRetainInstance(true)`.
 * Plenty of unit testing using [Mockito](https://github.com/mockito/mockito).
 * A little of UI testing using [Espresso](https://developer.android.com/training/testing/ui-testing/espresso-testing.html).
-* Static code analysis such as Checkstyle, FindBugs, Lint, and PMD.
+* Static code analysis such as Checkstyle, Lint, and PMD.
 * A gradle task to clean the example and leave only the foundation structure.
 * A disgusting UI.
 

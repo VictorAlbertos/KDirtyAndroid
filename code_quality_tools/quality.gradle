@@ -1,41 +1,15 @@
 apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
 apply plugin: 'pmd'
 
 // Add checkstyle, findbugs, pmd and lint to the check task.
 // check.dependsOn 'checkstyle', 'findbugs', 'pmd', 'lint' -> lint crashing due to some really werid butterknife error
-check.dependsOn 'checkstyle', 'findbugs', 'pmd'
+check.dependsOn 'checkstyle', 'pmd'
 
 task checkstyle(type: Checkstyle) {
     configFile file("${project.rootDir}/code_quality_tools/checkstyle/checkstyle.xml")
     source 'src'
     include '**/*.java'
     exclude '**/gen/**'
-    classpath = files()
-}
-
-task findbugs(type: FindBugs, dependsOn: "assembleDebug") {
-    ignoreFailures = false
-    effort = "max"
-    reportLevel = "high"
-    excludeFilter = new File("${project.rootDir}/code_quality_tools/findbugs/findbugs-filter.xml")
-    classes = files("${project.rootDir}/app/build/intermediates/classes")
-
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
-
-    reports {
-        xml.enabled = false
-        html.enabled = true
-        xml {
-            destination "$project.buildDir/reports/findbugs/findbugs.xml"
-        }
-        html {
-            destination "$project.buildDir/reports/findbugs/findbugs.html"
-        }
-    }
-
     classpath = files()
 }
 
@@ -52,10 +26,10 @@ task pmd(type: Pmd) {
         xml.enabled = false
         html.enabled = true
         xml {
-            destination "$project.buildDir/reports/pmd/pmd.xml"
+            destination file("$project.buildDir/reports/pmd/pmd.xml")
         }
         html {
-            destination "$project.buildDir/reports/pmd/pmd.html"
+            destination file("$project.buildDir/reports/pmd/pmd.html")
         }
     }
 }
