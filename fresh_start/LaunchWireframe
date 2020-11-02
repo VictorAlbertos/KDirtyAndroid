@@ -1,8 +1,0 @@
-package presentation.sections.launch
-
-import presentation.foundation.BaseApp
-import javax.inject.Inject
-
-class LaunchWireframe @Inject constructor(private val baseApp: BaseApp) {
-
-}

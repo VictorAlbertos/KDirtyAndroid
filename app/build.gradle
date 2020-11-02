@@ -1,0 +1,84 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    compileSdkVersion config.compileSdk
+    buildToolsVersion config.buildTools
+
+    defaultConfig {
+        applicationId "io.victor.kdirtyandroid"
+        minSdkVersion config.minSdk
+        targetSdkVersion config.compileSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation libs.kotlin
+
+    implementation libs.moshi
+    implementation libs.moshiAdapters
+    implementation libs.retrofit
+    implementation libs.retrofitMoshi
+
+    implementation googleLibs.recyclerView
+    implementation googleLibs.swipeToRefresh
+    implementation googleLibs.design
+    implementation googleLibs.appCompat
+    implementation googleLibs.cardView
+    implementation googleLibs.paging
+    implementation googleLibs.navigation
+    implementation googleLibs.navigationUi
+    implementation googleLibs.constraintLayout
+    implementation googleLibs.viewModel
+    implementation googleLibs.liveData
+    implementation googleLibs.hilt
+    implementation googleLibs.hiltViewModel
+    implementation googleLibs.ktxCore
+    implementation googleLibs.ktxFragment
+
+    kapt googleLibs.hiltCompiler
+    kapt googleLibs.hiltViewModelCompiler
+    kapt libs.moshiCodegen
+
+    implementation libs.glide
+}
+
+androidExtensions {
+    experimental = true
+}

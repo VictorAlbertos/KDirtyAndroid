@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/usersFragment">
+
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="io.victoralbertos.kdirtyandroid.presentation.home.users.UsersFragment"
+        tools:layout="@layout/user_fragment">
+        <action
+            android:id="@+id/actionUserFragment"
+            app:destination="@id/userFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="io.victoralbertos.kdirtyandroid.presentation.detail.UserFragment"
+        tools:layout="@layout/user_fragment">
+
+        <argument
+            android:name="user"
+            app:argType="io.victoralbertos.kdirtyandroid.entities.User" />
+    </fragment>
+
+</navigation>

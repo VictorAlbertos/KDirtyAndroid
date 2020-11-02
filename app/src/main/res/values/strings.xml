@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">KDirtyAndroid</string>
+    <string name="list_of_users">List of users</string>
+    <string name="error_message">Error message</string>
+    <string name="retry">Retry</string>
+</resources>

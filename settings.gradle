@@ -1,1 +1,2 @@
-include ':presentation', ':data'
+include ':app'
+rootProject.name = "KDirtyAndroid"
