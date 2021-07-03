@@ -1,6 +1,7 @@
 package io.victoralbertos.kdirtyandroid.paging
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import io.victoralbertos.kdirtyandroid.entities.User
 import io.victoralbertos.kdirtyandroid.repository.UserRepository
 import javax.inject.Inject
@@ -19,4 +20,6 @@ class UsersPagingSource @Inject constructor(
     } catch (e: Exception) {
         LoadResult.Error(e)
     }
+
+    override fun getRefreshKey(state: PagingState<Int, User>) = null
 }
