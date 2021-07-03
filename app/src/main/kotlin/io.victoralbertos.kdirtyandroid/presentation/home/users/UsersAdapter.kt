@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.victor.kdirtyandroid.R
 import io.victoralbertos.kdirtyandroid.entities.User
-import kotlinx.android.synthetic.main.user_item.view.ivAvatar
 
 class UsersAdapter(private val contex: Fragment, private val onUserClick: (User) -> Unit) :
     PagingDataAdapter<User, UsersAdapter.UserViewHolder>(UserComparator) {
@@ -22,7 +21,7 @@ class UsersAdapter(private val contex: Fragment, private val onUserClick: (User)
             Glide.with(contex)
                 .load(user.avatar)
                 .centerCrop()
-                .into(ivAvatar)
+                .into(findViewById(R.id.ivAvatar))
         }
     }
 

@@ -2,9 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -45,6 +45,12 @@ android {
 
     buildFeatures {
         viewBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion "1.5.10"
+        kotlinCompilerExtensionVersion "1.0.0-rc01"
     }
 }
 
@@ -68,17 +74,16 @@ dependencies {
     implementation googleLibs.viewModel
     implementation googleLibs.liveData
     implementation googleLibs.hilt
-    implementation googleLibs.hiltViewModel
     implementation googleLibs.ktxCore
     implementation googleLibs.ktxFragment
+    implementation googleLibs.compose
 
     kapt googleLibs.hiltCompiler
-    kapt googleLibs.hiltViewModelCompiler
     kapt libs.moshiCodegen
 
     implementation libs.glide
 }
 
-androidExtensions {
-    experimental = true
+kapt {
+    correctErrorTypes true
 }

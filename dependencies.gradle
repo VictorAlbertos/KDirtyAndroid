@@ -13,7 +13,7 @@ ext.versions = [
         retrofit        : '2.9.0',
         glide           : "4.11.0",
         navigation      : navigationVersion,
-        hilt            : '2.35',
+        hilt            : '2.37',
         hiltViewModel   : '1.0.0-alpha03'
 ]
 
@@ -32,9 +32,9 @@ ext.googleLibs = [
         navigationUi         : "androidx.navigation:navigation-ui-ktx:$versions.navigation",
         swipeToRefresh       : "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0",
         hilt                 : "com.google.dagger:hilt-android:$versions.hilt",
-        hiltCompiler         : "com.google.dagger:hilt-android-compiler:$versions.hilt",
+        hiltCompiler         : "com.google.dagger:hilt-compiler:$versions.hilt",
         hiltViewModel        : "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hiltViewModel",
-        hiltViewModelCompiler: "androidx.hilt:hilt-compiler:$versions.hiltViewModel"
+        compose              : "androidx.compose.runtime:runtime:1.0.0-rc01"
 ]
 
 ext.libs = [

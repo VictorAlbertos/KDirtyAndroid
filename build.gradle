@@ -3,7 +3,7 @@ apply from: 'dependencies.gradle'
 buildscript {
     ext.kotlinVersion = "1.5.10"
     ext.navigationVersion = '2.3.0'
-    ext.hilt = "2.35"
+    ext.hilt = "2.37"
 
     repositories {
         google()
