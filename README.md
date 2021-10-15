@@ -18,4 +18,4 @@ The current architecture has a clear purpose: keeping things as simple as possib
 * The [Navigation component](https://developer.android.com/guide/navigation/navigation-getting-started) for navigating between screens and passing data safely with [SafeArgs](https://developer.android.com/guide/navigation/navigation-pass-data).
 * [Paging](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) for loading and displaying pages of data from the Github Api.
 * Repositories, ViewModel(s) and Fragments.
-* A disgusting UI.
+* A Compose disgusting UI.
