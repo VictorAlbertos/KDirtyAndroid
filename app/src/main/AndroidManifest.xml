@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KDirtyAndroid">
 
-        <activity android:name="io.victoralbertos.kdirtyandroid.presentation.home.HomeActivity">
+        <activity
+            android:name="io.victoralbertos.kdirtyandroid.presentation.home.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

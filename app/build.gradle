@@ -81,6 +81,8 @@ dependencies {
     implementation googleLibs.composeAnimation
     implementation googleLibs.composeTooling
     implementation googleLibs.composeActivity
+    implementation googleLibs.landscapistGlide
+    implementation googleLibs.pagingCompose
 
     kapt googleLibs.hiltCompiler
     kapt libs.moshiCodegen

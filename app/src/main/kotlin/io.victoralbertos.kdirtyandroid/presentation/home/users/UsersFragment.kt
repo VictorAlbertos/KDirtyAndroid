@@ -1,59 +1,93 @@
 package io.victoralbertos.kdirtyandroid.presentation.home.users
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
+import android.view.ViewGroup
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.skydoves.landscapist.glide.GlideImage
 import dagger.hilt.android.AndroidEntryPoint
 import io.victor.kdirtyandroid.R
-import io.victor.kdirtyandroid.databinding.UsersFragmentBinding
-import io.victoralbertos.kdirtyandroid.paging.DefaultLoadStateAdapter
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import io.victoralbertos.kdirtyandroid.entities.User
+import io.victoralbertos.kdirtyandroid.presentation.AppScaffold
 
 @AndroidEntryPoint
-class UsersFragment : Fragment(R.layout.users_fragment) {
+class UsersFragment : Fragment() {
     private val usersViewModel: UsersViewModel by viewModels()
 
-    private val usersAdapter = UsersAdapter(this) { user ->
-        findNavController().navigate(UsersFragmentDirections.actionUserFragment(user))
+    @ExperimentalFoundationApi
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                AppScaffold(
+                    showBack = false,
+                    titleToolBar = stringResource(id = R.string.list_of_users),
+                    content = {
+                        val items: LazyPagingItems<User> = usersViewModel.pagingData.collectAsLazyPagingItems()
+                        LazyVerticalGrid(cells = GridCells.Fixed(3)) {
+                            items(items.itemCount) { index ->
+                                UserItem(items[index]!!)
+                            }
+                        }
+                    }
+                )
+            }
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        UsersFragmentBinding.bind(view).apply {
-            toolbar.setupWithNavController(findNavController(), AppBarConfiguration(findNavController().graph))
-            toolbar.setTitle(R.string.list_of_users)
-
-            rvUsers.apply {
-                adapter = usersAdapter
-                    .withLoadStateFooter(footer = DefaultLoadStateAdapter { usersAdapter.retry() })
-                layoutManager = GridLayoutManager(context, 3)
-
-                setHasFixedSize(true)
-
-                addItemDecoration(DividerItemDecoration(context, LinearLayout.HORIZONTAL))
-                addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
-            }
-
-            swipeRefreshLayout.setOnRefreshListener {
-                usersAdapter.refresh()
-                swipeRefreshLayout.isRefreshing = false
+    @Composable
+    fun UserItem(user: User) {
+        Row(
+            modifier = Modifier
+                .clickable {
+                    findNavController().navigate(UsersFragmentDirections.actionUserFragment(user))
+                }
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            user.avatar?.let {
+                GlideImage(
+                    modifier = Modifier
+                        .height(125.dp),
+                    imageModel = user.avatar,
+                    contentScale = ContentScale.Crop
+                )
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            usersViewModel.pagingData.collectLatest {
-                usersAdapter.submitData(it)
-            }
-        }
+    @Composable
+    fun UserImage(
+        imageUrl: String,
+        modifier: Modifier = Modifier
+    ) {
+        GlideImage(
+            modifier = modifier,
+            imageModel = imageUrl,
+            contentScale = ContentScale.Crop
+        )
     }
 }

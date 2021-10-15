@@ -1,7 +1,7 @@
 ext.config = [
         buildTools: "30.0.2",
         minSdk    : 21,
-        compileSdk: 30
+        compileSdk: 31
 ]
 
 ext.versions = [
@@ -39,7 +39,9 @@ ext.googleLibs = [
         composeMaterial : "androidx.compose.material:material:$versions.compose",
         composeAnimation: "androidx.compose.animation:animation:$versions.compose",
         composeTooling  : "androidx.compose.ui:ui-tooling:$versions.compose",
-        composeActivity : "androidx.activity:activity-compose:1.3.1"
+        composeActivity : "androidx.activity:activity-compose:1.3.1",
+        landscapistGlide: "com.github.skydoves:landscapist-glide:1.3.8",
+        pagingCompose   : "androidx.paging:paging-compose:1.0.0-alpha14"
 ]
 
 ext.libs = [
